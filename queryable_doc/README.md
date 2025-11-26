@@ -1,5 +1,7 @@
 # 📚 RAG Document Q&A System
 
+Demo Preview: [https://queryable-doc.streamlit.app/](https://queryable-doc.streamlit.app/)
+
 This is a demo application that showcases a Retrieval-Augmented Generation (RAG) pipeline using LangChain, OpenAI, and ChromaDB. It allows you to upload your documents and ask questions about their content. The application is built with Streamlit.
 
 ## Key Features
