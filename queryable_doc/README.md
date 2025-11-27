@@ -38,8 +38,8 @@ The `setup.sh` script automates the setup process.
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-name>
+    git clone git@github.com:Prosen-Ghosh/llm_demo.git
+    cd queryable_doc
     ```
 
 2.  **Run the setup script:**
