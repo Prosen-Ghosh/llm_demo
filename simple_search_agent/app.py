@@ -36,10 +36,8 @@ st.sidebar.info("💡 **Tip:** Get your API key from [OpenRouter](https://openro
 model_options = [
     "openai/gpt-3.5-turbo",  # Most affordable
     "meta-llama/llama-3.1-8b-instruct",  # Very cheap
-    "google/gemini-flash-1.5",  # Fast and cheap
+    "meta-llama/llama-3.2-3b-instruct",  # Fast and cheap
     "deepseek/deepseek-r1-0528",  # More expensive
-    "anthropic/claude-3.5-sonnet",  # Premium
-    "openai/gpt-4-turbo",  # Premium
 ]
 selected_model = st.sidebar.selectbox(
     "Select Model:",
