@@ -15,7 +15,7 @@ The application provides a web interface where you can ask a question. The agent
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/prosen-s/simple_search_agent.git
+    git clone git@github.com:Prosen-Ghosh/llm_demo.git
     cd simple_search_agent
     ```
 
@@ -44,6 +44,10 @@ The application provides a web interface where you can ask a question. The agent
     streamlit run app.py
     ```
     The application will be available at `http://localhost:8501`.
+
+## Demo App Preview
+
+You can try the demo app live here: https://simple-search-agent.streamlit.app/
 
 ## Purpose and Learnings
 
