@@ -1,8 +1,14 @@
 # 📚 RAG Document Q&A System
 
-Demo Preview: [https://queryable-doc.streamlit.app/](https://queryable-doc.streamlit.app/)
+![Demo GIF](./docs/app_demo.gif)
 
 This is a demo application that showcases a Retrieval-Augmented Generation (RAG) pipeline using LangChain, OpenAI, and ChromaDB. It allows you to upload your documents and ask questions about their content. The application is built with Streamlit.
+
+## 🚀 Getting Started
+
+1.  **Clone & Setup**: Run `bash setup.sh` to create a virtual environment and install dependencies.
+2.  **Set API Key**: Create a `.env` file and add your `OPENROUTER_API_KEY`.
+3.  **Run the App**: Execute `streamlit run app.py` to start the application.
 
 ## Key Features
 
@@ -89,3 +95,7 @@ The application will open in your web browser.
 │   └── footer.py       # Renders the application footer.
 └── utils.py            # Utility functions, including session state initialization.
 ```
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.

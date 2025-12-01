@@ -1,6 +1,14 @@
 # Simple Search Agent (LangChain + SerpAPI)
 
+![Demo GIF](./docs/app_demo.gif)
+
 This project is a simple web-based AI agent that can answer questions about current events by searching the web. It's built using Python, LangChain, Streamlit, SerpAPI, and OpenRouter.
+
+## 🚀 Getting Started
+
+1.  **Clone & Setup**: Create a virtual environment and install dependencies using `pip install -r requirements.txt`.
+2.  **Set API Keys**: Create a `.env` file and add your `SERPAPI_API_KEY`. You will be prompted for your `OPENROUTER_API_KEY` in the app.
+3.  **Run the App**: Execute `streamlit run app.py` to start the application.
 
 ## What it does
 
@@ -59,3 +67,7 @@ This project serves as a practical example of how to build a simple but powerful
 -   **Streamlit for UI:** Learn how to quickly build an interactive and user-friendly web interface for an AI application using Streamlit.
 -   **Accessing LLMs via OpenRouter:** Understand how to use OpenRouter to access a variety of LLMs from different providers with a single API key.
 -   **Environment and Key Management:** Best practices for managing API keys and environment variables using a `.env` file.
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.

@@ -2,6 +2,13 @@
 
 This project is part of a 60-day bootcamp, and this specific service is a **Profile Enricher**.
 
+## 🚀 Getting Started
+
+1.  **Navigate to the project directory**: `cd 60-day-bootcamp/day-1/profile-enricher`
+2.  **Setup**: Create a virtual environment, install dependencies from `requirements.txt`.
+3.  **Environment Variables**: Copy `.env.example` to `.env`.
+4.  **Run**: Execute `uvicorn app.main:app --reload` to start the application.
+
 ## What does this codebase do?
 
 The Profile Enricher is a FastAPI-based microservice that takes a user's profile, validates it, and enriches it with additional information from an external service.
@@ -98,3 +105,7 @@ If the request is successful, you will receive a JSON response containing the or
 ```
 
 If the user profile validation fails, you will receive a `422 Unprocessable Entity` response with details about the validation errors. If the enrichment service fails, you will receive a `502 Bad Gateway` response.
+
+## 🤝 Contributing
+
+Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.
