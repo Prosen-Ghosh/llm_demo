@@ -1,8 +1,8 @@
 import json
 import time
-from typing import AsyncIterator
+from typing import AsyncIterator, Optional, Callable
 import httpx
-
+import asyncio
 from app.providers.base import StreamingProviderBase
 from app.models.chat import ChatRequest, ChatResponse, StreamChunk
 
@@ -34,7 +34,12 @@ class OpenRouterProvider(StreamingProviderBase):
             "X-Title": "AI Engineering Bootcamp Day 2"
         }
     
-    async def stream(self, request: ChatRequest) -> AsyncIterator[StreamChunk]:
+    async def stream(
+            self, 
+            request: ChatRequest,
+            disconnect_check: Optional[Callable[[], bool]] = None
+        ) -> AsyncIterator[StreamChunk]:
+
         payload = self._prepare_payload(request)
         payload["stream"] = True
         
@@ -51,6 +56,18 @@ class OpenRouterProvider(StreamingProviderBase):
                 response.raise_for_status()
                 
                 async for line in response.aiter_lines():
+                    if disconnect_check and await disconnect_check():
+                        print(f"Client disconnected, stopping stream (chunk {index})")
+                        await response.aclose()
+                        yield StreamChunk(
+                            id=chunk_id,
+                            model=request.model,
+                            provider="openrouter",
+                            delta="[CANCELLED: Client disconnected]",
+                            finish_reason="cancelled",
+                            index=index
+                        )
+                        return
                     # Skip empty lines and done marker
                     if not line.strip() or line.strip() == "data: [DONE]":
                         continue
@@ -82,7 +99,17 @@ class OpenRouterProvider(StreamingProviderBase):
                         
                         except json.JSONDecodeError:
                             continue
-        
+        except asyncio.CancelledError:
+            print(f"Stream cancelled (asyncio.CancelledError)")
+            yield StreamChunk(
+                id=chunk_id,
+                model=request.model,
+                provider="openrouter",
+                delta="[CANCELLED: Request cancelled]",
+                finish_reason="cancelled",
+                index=index
+            )
+            raise
         except httpx.HTTPStatusError as e:
             # Graceful error handling in stream
             error_msg = f"HTTP {e.response.status_code}: {e.response.text[:100]}"

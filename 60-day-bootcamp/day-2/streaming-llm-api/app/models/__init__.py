@@ -7,7 +7,8 @@ from app.models.chat import (
 )
 from app.models.usage import (
     RateLimitInfo,
-    RequestContext
+    RequestContext,
+    UsageStats
 )
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
     "StreamChunk",
     "RateLimitInfo",
     "RequestContext",
+    "UsageStats",
 ]

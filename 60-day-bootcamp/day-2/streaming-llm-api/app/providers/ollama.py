@@ -1,29 +1,23 @@
 import json
 import time
-from typing import AsyncIterator
+from typing import AsyncIterator, Callable, Optional
 import httpx
-
+import asyncio
 from app.providers.base import StreamingProviderBase
 from app.models.chat import ChatRequest, ChatResponse, StreamChunk
-
 
 class OllamaProvider(StreamingProviderBase):
     def __init__(self, base_url: str = "http://localhost:11434", timeout: int = 60):
         super().__init__(timeout)
         self.base_url = base_url.rstrip("/")
     
-    async def stream(self, request: ChatRequest) -> AsyncIterator[StreamChunk]:
-        url = f"{self.base_url}/api/chat"
+    async def stream(
+            self, 
+            request: ChatRequest,
+            disconnect_check: Optional[Callable[[], bool]] = None
+        ) -> AsyncIterator[StreamChunk]:
 
-         # ADD DEBUG LOGGING HERE
-        print(f"=== OLLAMA DEBUG ===")
-        print(f"Base URL: {self.base_url}")
-        print(f"Full URL: {url}")
-        print(f"Client timeout: {self.timeout}")
-        print(f"Client config: {self.client}")
-        print(f"Model requested: {request.model}")
-        print(f"===================")
-        
+        url = f"{self.base_url}/api/chat"        
         payload = {
             "model": request.model,
             "messages": [
@@ -36,25 +30,33 @@ class OllamaProvider(StreamingProviderBase):
                 "num_predict": request.max_tokens
             }
         }
-        print(f"OLLAMA:: {url} -> {payload}")
         
         index = 0
         chunk_id = f"ollama-{int(time.time())}"
         
         try:
             async with self.client.stream("POST", url, json=payload) as response:
-                print(f"response => {response}")
                 response.raise_for_status()
 
-                
-                
                 async for line in response.aiter_lines():
+                    if disconnect_check and await disconnect_check():
+                        print(f"Client disconnected (Ollama), stopping stream")
+                        await response.aclose()
+                        yield StreamChunk(
+                            id=chunk_id,
+                            model=request.model,
+                            provider="ollama",
+                            delta="[CANCELLED: Client disconnected]",
+                            finish_reason="cancelled",
+                            index=index
+                        )
+                        return
+                    
                     if not line.strip():
                         continue
                     
                     try:
                         data = json.loads(line)
-                        print(f"data => {data}")
                         content = data.get("message", {}).get("content", "")
                         
                         if content:
@@ -73,7 +75,17 @@ class OllamaProvider(StreamingProviderBase):
                     
                     except json.JSONDecodeError:
                         continue
-        
+        except asyncio.CancelledError:
+            print(f"Ollama stream cancelled")
+            yield StreamChunk(
+                id=chunk_id,
+                model=request.model,
+                provider="ollama",
+                delta="[CANCELLED]",
+                finish_reason="cancelled",
+                index=index
+            )
+            raise
         except httpx.HTTPError as e:
             yield StreamChunk(
                 id=chunk_id,

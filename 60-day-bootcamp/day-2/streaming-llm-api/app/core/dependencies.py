@@ -3,10 +3,23 @@ import uuid
 from collections import defaultdict
 from datetime import datetime
 from typing import Annotated, Optional
+import asyncio
 from fastapi import Depends, Header, HTTPException, Request, status
 from cachetools import TTLCache
+
 from app.core.config import settings
-from app.models.usage import RateLimitInfo, RequestContext
+from app.models.usage import UsageStats, RateLimitInfo, RequestContext
+
+async def check_client_disconnect(request: Request):
+    async def is_disconnected() -> bool:
+        try:
+            if await request.is_disconnected():
+                return True
+            return False
+        except Exception:
+            return True
+    
+    return is_disconnected
 
 async def verify_api_key(
     x_api_key: Annotated[Optional[str], Header()] = None,
@@ -42,6 +55,7 @@ class RateLimiter:
         self.buckets: TTLCache = TTLCache(maxsize=10000, ttl=60)
     
     def _get_client_id(self, request: Request) -> str:
+        """Extract client identifier from request"""
         # Check X-Forwarded-For for proxied requests
         forwarded_for = request.headers.get("X-Forwarded-For")
         if forwarded_for:

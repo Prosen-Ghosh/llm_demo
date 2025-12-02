@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import AsyncIterator
+from typing import AsyncIterator, Callable, Optional
 import httpx
-
+import asyncio
 from app.models.chat import ChatRequest, ChatResponse, StreamChunk
 
 
@@ -14,7 +14,11 @@ class StreamingProviderBase(ABC):
         await self.client.aclose()
     
     @abstractmethod
-    async def stream(self, request: ChatRequest) -> AsyncIterator[StreamChunk]:
+    async def stream(
+        self, 
+        request: ChatRequest, 
+        disconnect_check: Optional[Callable[[], bool]] = None
+    ) -> AsyncIterator[StreamChunk]:
         pass
     
     @abstractmethod
