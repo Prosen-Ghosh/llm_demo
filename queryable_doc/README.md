@@ -83,6 +83,8 @@ The application will open in your web browser.
 
 ```
 .
+├── Dockerfile          # Dockerfile for building the application container.
+├── README.md           # This README file.
 ├── app.py              # Main entry point for the Streamlit application.
 ├── chat.py             # Handles the core RAG chain logic and chat history display.
 ├── document_handler.py # Manages loading and processing of uploaded documents.
@@ -93,7 +95,9 @@ The application will open in your web browser.
 │   ├── main.py         # Renders the main body of the app (upload and chat columns).
 │   ├── sidebar_config.py # Renders the sidebar for configuration.
 │   └── footer.py       # Renders the application footer.
-└── utils.py            # Utility functions, including session state initialization.
+├── utils.py            # Utility functions, including session state initialization.
+├── __pycache__/        # Directory for compiled Python files.
+└── venv/               # Virtual environment directory.
 ```
 
 ## 🤝 Contributing

@@ -53,6 +53,23 @@ The application provides a web interface where you can ask a question. The agent
     ```
     The application will be available at `http://localhost:8501`.
 
+## Project Structure
+
+```
+.
+├── Dockerfile          # Dockerfile for building the application container.
+├── README.md           # This README file.
+├── agent_tools.py      # Defines the tools available to the LangChain agent (e.g., web search).
+├── app.py              # Main entry point for the Streamlit application.
+├── example.env         # Example environment file for API keys.
+├── requirements.txt    # Lists all Python dependencies.
+├── setup.sh            # A shell script to automate the setup process.
+├── simple_agent.py     # Contains the core logic for the LangChain agent.
+├── utils.py            # Utility functions for the application.
+├── __pycache__/        # Directory for compiled Python files.
+└── venv/               # Virtual environment directory.
+```
+
 ## Demo App Preview
 
 You can try the demo app live here: https://simple-search-agent.streamlit.app/

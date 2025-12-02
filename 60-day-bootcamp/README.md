@@ -9,6 +9,6 @@ This directory contains projects developed during a 60-day bootcamp, showcasing 
 
 ## Day 2 Projects
 
-*   **[LLM Proxy](./day-2/llm-proxy/README.md):** A proxy service for Large Language Models (LLMs). This project is designed to act as an intermediary between client applications and various LLM providers, offering features like request routing, load balancing, and potentially caching or API key management.
+*   **[Streaming LLM API](./day-2/streaming-llm-api/README.md):** A production-grade RESTful API for interacting with Large Language Models (LLMs) with a focus on streaming responses, modular provider integration, and robust architecture.
 
 Each project within the day-specific folders has its own `README.md` with detailed setup and usage instructions.

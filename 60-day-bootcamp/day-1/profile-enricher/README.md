@@ -106,6 +106,32 @@ If the request is successful, you will receive a JSON response containing the or
 
 If the user profile validation fails, you will receive a `422 Unprocessable Entity` response with details about the validation errors. If the enrichment service fails, you will receive a `502 Bad Gateway` response.
 
+## Project Structure
+
+```
+.
+├── Dockerfile              # Dockerfile for building the application container.
+├── README.md               # This README file.
+├── app/                    # Source code for the application.
+│   ├── __init__.py         #
+│   ├── main.py             # Main entry point for the FastAPI application.
+│   ├── models/             # Pydantic models for data validation.
+│   │   ├── __init__.py
+│   │   ├── address.py
+│   │   └── user_profile.py
+│   ├── routers/            # API routers for different endpoints.
+│   │   ├── __init__.py
+│   │   ├── enrich.py
+│   │   ├── health.py
+│   │   └── users.py
+│   └── utils/              # Utility functions.
+│       ├── __init__.py
+│       ├── enrichment.py
+│       └── logging.py
+├── docker-compose.yml      # Docker Compose file for running the application.
+└── requirements.txt        # Lists all Python dependencies.
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.
