@@ -1,0 +1,14 @@
+# Core Dependencies
+fastapi[standard]
+uvicorn[standard]
+pydantic
+pydantic-settings
+
+# Async HTTP
+httpx
+sse-starlette
+
+# Utilities
+python-dotenv
+tenacity
+cachetools
