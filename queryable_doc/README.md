@@ -4,12 +4,6 @@
 
 This is a demo application that showcases a Retrieval-Augmented Generation (RAG) pipeline using LangChain, OpenAI, and ChromaDB. It allows you to upload your documents and ask questions about their content. The application is built with Streamlit.
 
-## 🚀 Getting Started
-
-1.  **Clone & Setup**: Run `bash setup.sh` to create a virtual environment and install dependencies.
-2.  **Set API Key**: Create a `.env` file and add your `OPENROUTER_API_KEY`.
-3.  **Run the App**: Execute `streamlit run app.py` to start the application.
-
 ## Key Features
 
 -   **Document Upload:** Supports multiple file types including PDF (`.pdf`), Word documents (`.doc`, `.docx`), and text files (`.txt`).
@@ -38,9 +32,14 @@ The application follows a standard RAG pipeline:
 -   **Document Loaders:** `pypdf`, `python-docx`
 -   **Python Version:** 3.11
 
-## Setup and Installation
+## Getting Started
 
-The `setup.sh` script automates the setup process.
+### Prerequisites
+
+- Python 3.11+
+- Docker (optional)
+
+### Local Development
 
 1.  **Clone the repository:**
     ```bash
@@ -64,20 +63,29 @@ The `setup.sh` script automates the setup process.
         ```
     -   Alternatively, you can enter the key directly in the application's sidebar.
 
-## How to Run
-
-1.  **Activate the virtual environment:**
+4.  **Activate the virtual environment:**
     ```bash
     source venv/bin/activate
     ```
     *(On Windows, use `venv\Scripts\activate`)*
 
-2.  **Run the Streamlit application:**
+5.  **Run the Streamlit application:**
     ```bash
     streamlit run app.py
     ```
+    The application will open in your web browser.
 
-The application will open in your web browser.
+### Using Docker
+
+1.  **Set up your API Key:**
+    - Create a `.env` file as described in the local development section.
+
+2.  **Build and Run with Docker:**
+    ```bash
+    docker build -t queryable-doc .
+    docker run -p 8501:8501 -v $(pwd)/data:/app/data --env-file .env queryable-doc
+    ```
+    The application will be available at `http://localhost:8501`.
 
 ## Project Structure
 
@@ -99,6 +107,26 @@ The application will open in your web browser.
 ├── __pycache__/        # Directory for compiled Python files.
 └── venv/               # Virtual environment directory.
 ```
+
+## Deployment
+
+This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t queryable-doc .
+   ```
+
+2. **Push the Docker image to a container registry:**
+   ```bash
+   docker push your-container-registry/queryable-doc
+   ```
+
+3. **Configure the environment variables in your cloud provider's environment.**
+
+4. **Deploy the container.**
+
+For more detailed instructions, please refer to your cloud provider's documentation.
 
 ## 🤝 Contributing
 

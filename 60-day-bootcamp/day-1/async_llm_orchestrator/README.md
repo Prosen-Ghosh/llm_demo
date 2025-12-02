@@ -10,11 +10,12 @@ This project implements an asynchronous LLM (Large Language Model) orchestrator 
 - [API Documentation](#api-documentation)
   - [Health Check (`GET /health`)](#health-check-get-health)
   - [Batch LLM Request (`POST /batch`)](#batch-llm-request-post-batch)
-- [Setup and Running](#setup-and-running)
+- [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Environment Variables](#environment-variables)
   - [Running with Docker Compose](#running-with-docker-compose)
-  - [Running Locally with FastAPI CLI](#running-locally-with-fastapi-cli)
+  - [Running Locally for Development](#running-locally-for-development)
+- [Deployment](#deployment)
 - [Project Structure](#project-structure)
 
 ## Features
@@ -189,7 +190,7 @@ Contains a list of `LLMResponse` objects and overall batch statistics.
 }
 ```
 
-## Setup and Running
+## Getting Started
 
 ### Prerequisites
 
@@ -252,6 +253,26 @@ For local development, you can use the `fastapi dev` command, which provides a c
     *   `--reload`: Enables auto-reloading of the server when code changes are detected, which is very useful for local development.
 
 5.  **Access API Docs**: Once running, you can access the interactive API documentation (Swagger UI) at `http://localhost:10000/docs` (or the port you specified).
+
+## Deployment
+
+This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t async-llm-orchestrator .
+   ```
+
+2. **Push the Docker image to a container registry:**
+   ```bash
+   docker push your-container-registry/async-llm-orchestrator
+   ```
+
+3. **Configure the environment variables in your cloud provider's environment.**
+
+4. **Deploy the container.**
+
+For more detailed instructions, please refer to your cloud provider's documentation.
 
 ## Project Structure
 

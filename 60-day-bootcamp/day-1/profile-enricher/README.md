@@ -2,13 +2,6 @@
 
 This project is part of a 60-day bootcamp, and this specific service is a **Profile Enricher**.
 
-## 🚀 Getting Started
-
-1.  **Navigate to the project directory**: `cd 60-day-bootcamp/day-1/profile-enricher`
-2.  **Setup**: Create a virtual environment, install dependencies from `requirements.txt`.
-3.  **Environment Variables**: Copy `.env.example` to `.env`.
-4.  **Run**: Execute `uvicorn app.main:app --reload` to start the application.
-
 ## What does this codebase do?
 
 The Profile Enricher is a FastAPI-based microservice that takes a user's profile, validates it, and enriches it with additional information from an external service.
@@ -29,11 +22,14 @@ This Profile Enricher service was built to:
 - **Increase Resilience**: The built-in retry mechanism with exponential backoff helps to handle transient errors from the external enrichment service, making the overall system more reliable.
 - **Centralize Enrichment**: It provides a single, centralized point for all user profile enrichment, which is easier to maintain and update.
 
-## How to test the feature/API?
+## Getting Started
 
-To test the Profile Enricher API, you first need to set up and run the application.
+### Prerequisites
 
-### 1. Setup
+- Python 3.8+
+- Docker (optional)
+
+### Local Development
 
 1.  **Navigate to the project directory**:
     ```bash
@@ -59,7 +55,18 @@ To test the Profile Enricher API, you first need to set up and run the applicati
     ```
     The application will be running at `http://127.0.0.1:8000`.
 
-### 2. Testing the API
+### Using Docker
+
+1.  **Set up environment variables**:
+    Create a `.env` file as described in the local development section.
+
+2.  **Run with Docker Compose**:
+    ```bash
+    docker-compose up --build
+    ```
+    The API will be available at `http://127.0.0.1:8000`.
+
+## API Reference
 
 You can test the `/users` endpoint by sending a POST request with a user profile. Here's an example using `curl`:
 
@@ -131,6 +138,26 @@ If the user profile validation fails, you will receive a `422 Unprocessable Enti
 ├── docker-compose.yml      # Docker Compose file for running the application.
 └── requirements.txt        # Lists all Python dependencies.
 ```
+
+## Deployment
+
+This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t profile-enricher .
+   ```
+
+2. **Push the Docker image to a container registry:**
+   ```bash
+   docker push your-container-registry/profile-enricher
+   ```
+
+3. **Configure the environment variables in your cloud provider's environment.**
+
+4. **Deploy the container.**
+
+For more detailed instructions, please refer to your cloud provider's documentation.
 
 ## 🤝 Contributing
 

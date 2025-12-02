@@ -168,47 +168,72 @@ This project provides a solid foundation for a production-grade LLM API, but the
 *   **Administrative Dashboard:** A web-based dashboard could be developed to provide administrators with a comprehensive overview of API usage, including the ability to view statistics for all users, manage API keys, and configure rate limits.
 *   **Budget Alerts and Management:** The system could be extended to allow users to set budgets for their API usage and receive alerts when they are close to exceeding their budget.
 
-## How to Run the Project
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Docker (optional)
 
 ### Local Development
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd streaming-llm-api
-    ```
+1. **Clone the repository:**
+   ```bash
+   git clone git@github.com:Prosen-Ghosh/llm_demo.git
+   cd streaming-llm-api
+   ```
 
-2.  **Create a virtual environment:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+2. **Create a virtual environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
 
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4.  **Set up environment variables:**
-    Create a `.env` file by copying the example:
-    ```bash
-    cp .env.example .env
-    ```
-    Now, edit the `.env` file and add your API keys and other settings. You must set `API_KEYS` to a comma-separated list of valid keys.
+4. **Set up environment variables:**
+   Create a `.env` file by copying the example:
+   ```bash
+   cp .env.example .env
+   ```
+   Now, edit the `.env` file and add your API keys and other settings. You must set `API_KEYS` to a comma-separated list of valid keys.
 
-5.  **Run the application:**
-    ```bash
-    uvicorn app.main:app --reload
-    ```
-    The API will be available at `http://localhost:8000`.
+5. **Run the application:**
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+   The API will be available at `http://localhost:8000`.
 
 ### Using Docker
 
-1.  **Set up environment variables:**
-    Create a `.env` file as described in the local development section.
+1. **Set up environment variables:**
+   Create a `.env` file as described in the local development section.
 
-2.  **Run with Docker Compose:**
-    ```bash
-    docker-compose up --build
-    ```
-    The API will be available at `http://localhost:8000`.
+2. **Run with Docker Compose:**
+   ```bash
+   docker-compose up --build
+   ```
+   The API will be available at `http://localhost:8000`.
+
+## Deployment
+
+This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t streaming-llm-api .
+   ```
+
+2. **Push the Docker image to a container registry:**
+   ```bash
+   docker push your-container-registry/streaming-llm-api
+   ```
+
+3. **Configure the environment variables in your cloud provider's environment.**
+
+4. **Deploy the container.**
+
+For more detailed instructions, please refer to your cloud provider's documentation.

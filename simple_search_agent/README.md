@@ -4,12 +4,6 @@
 
 This project is a simple web-based AI agent that can answer questions about current events by searching the web. It's built using Python, LangChain, Streamlit, SerpAPI, and OpenRouter.
 
-## 🚀 Getting Started
-
-1.  **Clone & Setup**: Create a virtual environment and install dependencies using `pip install -r requirements.txt`.
-2.  **Set API Keys**: Create a `.env` file and add your `SERPAPI_API_KEY`. You will be prompted for your `OPENROUTER_API_KEY` in the app.
-3.  **Run the App**: Execute `streamlit run app.py` to start the application.
-
 ## What it does
 
 The application provides a web interface where you can ask a question. The agent then:
@@ -19,7 +13,14 @@ The application provides a web interface where you can ask a question. The agent
 4.  The LLM generates an answer based on the provided search results.
 5.  The application displays the answer and the original search snippets to the user.
 
-## How to run it
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Docker (optional)
+
+### Local Development
 
 1.  **Clone the repository:**
     ```bash
@@ -53,6 +54,18 @@ The application provides a web interface where you can ask a question. The agent
     ```
     The application will be available at `http://localhost:8501`.
 
+### Using Docker
+
+1.  **Set up your API keys:**
+    - Create a `.env` file as described in the local development section.
+
+2.  **Run with Docker:**
+    ```bash
+    docker build -t simple-search-agent .
+    docker run -p 8501:8501 -v $(pwd):/app --env-file .env simple-search-agent
+    ```
+    The application will be available at `http://localhost:8501`.
+
 ## Project Structure
 
 ```
@@ -69,6 +82,26 @@ The application provides a web interface where you can ask a question. The agent
 ├── __pycache__/        # Directory for compiled Python files.
 └── venv/               # Virtual environment directory.
 ```
+
+## Deployment
+
+This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t simple-search-agent .
+   ```
+
+2. **Push the Docker image to a container registry:**
+   ```bash
+   docker push your-container-registry/simple-search-agent
+   ```
+
+3. **Configure the environment variables in your cloud provider's environment.**
+
+4. **Deploy the container.**
+
+For more detailed instructions, please refer to your cloud provider's documentation.
 
 ## Demo App Preview
 
