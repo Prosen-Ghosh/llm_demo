@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from app.tools.base import BaseTool
 import random
 
@@ -7,6 +7,19 @@ class WeatherParams(BaseModel):
     location: str = Field(..., description="City name or location", min_length=2)
     unit: str = Field(default="celsius", pattern="^(celsius|fahrenheit)$")
 
+    @validator('unit', pre=True)
+    def validate_unit(cls, v):
+        allowed_units = ["celsius", "fahrenheit"]
+        if v is None:
+            return "celsius"
+        
+        v_lower = str(v).lower().strip()
+        if v_lower in allowed_units:
+            return v_lower
+        
+        # If pattern doesn't match, fallback to default
+        print(f"Warning: Unit '{v}' is not valid. Defaulting to 'celsius'")
+        return "celsius"
 
 class WeatherTool(BaseTool):
     name = "get_weather"
