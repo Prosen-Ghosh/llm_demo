@@ -1,239 +1,83 @@
-# Demo: A Production-Ready Streaming LLM API
+# Function Calling Demo
 
-This project is a demonstration of a production-ready API gateway for interacting with Large Language Models (LLMs). It showcases production-grade features and best practices, acting as a central hub to connect your applications to various LLM providers like Ollama and OpenRouter. It offers essential features for scalability, monitoring, and cost management. Whether you're building a chatbot, a content generation tool, or any other AI-powered application, this project provides a robust architectural foundation.
+This project is a FastAPI-based application that demonstrates an enterprise-grade function calling system using a Large Language Model (LLM). The application is designed to be a pluggable and extensible system, with an example implementation using Ollama. It allows the LLM to use a set of external tools, such as a calculator, weather service, and web search, to provide more accurate and context-aware responses.
 
-## Why is this project required?
+## Purpose
 
-Building a scalable and reliable application on top of LLMs presents several challenges. This project is designed to address them:
-
-*   **Simplified Integration:** Instead of writing separate integrations for each LLM provider, you can use a single, unified API. This dramatically reduces complexity and development time.
-*   **Centralized Control & Monitoring:** Gain a single pane of glass for monitoring usage, tracking costs, and enforcing policies across all LLM providers and applications.
-*   **Cost Management:** With built-in cost tracking and estimation, you can keep a close eye on your expenses and avoid surprises on your bill.
-*   **Enhanced Performance & User Experience:** Support for streaming responses ensures that your users get real-time feedback from the LLM, which is critical for interactive applications.
-*   **Resource Efficiency:** Automatic cancellation of requests when a client disconnects prevents wasted resources on the server and with the LLM provider.
-*   **Future-Proof Your Application:** The modular provider system makes it easy to adopt new models and providers as they become available, without requiring a major overhaul of your application.
+The primary purpose of this demo is to showcase a robust implementation of a function-calling system. LLMs have limitations in their knowledge, which is often static and does not include real-time information. They also cannot perform external actions like calculations or accessing databases. This project addresses these limitations by providing a framework where an LLM can intelligently decide to use external tools to fulfill a user's request.
 
 ## Features
 
-This project comes with a range of features designed for a production environment:
+- **Function Calling:** The core feature that enables the LLM to call predefined tools to access external information or functionality.
+- **Tool Registry:** A centralized and extensible registry for managing and exposing tools to the LLM.
+- **Parallel Tool Execution:** The ability to execute multiple tool calls concurrently, improving performance and efficiency.
+- **Configurable LLM Client:** The `LLMClient` is designed to be adaptable, allowing for integration with various LLM providers. The current implementation uses Ollama.
+- **Included Tools:**
+  - `calculator`: For performing mathematical calculations.
+  - `weather`: To get the weather forecast for a specific location.
+  - `web_search`: To search the web for real-time information.
+- **FastAPI Backend:** Built on a modern, high-performance web framework for building APIs with Python.
+- **Docker Support:** Includes Docker and Docker Compose configurations for easy setup, deployment, and development.
+- **Hot Reloading:** A development-focused Docker setup for an improved developer experience with automatic application reloading on code changes.
 
-*   **Unified API for Multiple Providers:** A single, consistent API endpoint for chat completions, regardless of the backend LLM provider (e.g., Ollama, OpenRouter).
-*   **Streaming with Server-Sent Events (SSE):** For real-time, interactive applications, the `/v1/chat/stream` endpoint provides a seamless streaming experience.
-*   **Automatic Request Cancellation:** If a client disconnects from a streaming request, the connection to the LLM provider is automatically terminated. This saves computational resources and costs.
-*   **Usage and Cost Tracking:** The API monitors the number of requests, prompt tokens, and completion tokens for each API key. It also provides a cost estimate in USD.
-*   **Rate Limiting:** Protect your API from abuse and control costs with a configurable, per-API-key rate limiter.
-*   **Modular Provider System:** The project is designed to be easily extensible. Adding a new LLM provider is as simple as creating a new class that inherits from a common base and implementing the required methods.
-*   **Configuration via Environment Variables:** All settings, including API keys and provider configurations, are managed through a `.env` file for easy setup and deployment.
-
-## Project Structure
-
-The project is organized as follows:
-
-```
-├── app/
-│   ├── api/
-│   │   ├── deps.py
-│   │   └── v1/
-│   │       ├── router.py
-│   │       └── endpoints/
-│   │           ├── chat.py
-│   │           ├── health.py
-│   │           └── usage.py
-│   ├── core/
-│   │   ├── config.py
-│   │   └── dependencies.py
-│   ├── models/
-│   │   ├── chat.py
-│   │   └── usage.py
-│   ├── providers/
-│   │   ├── base.py
-│   │   ├── ollama.py
-│   │   └── openrouter.py
-│   ├── services/
-│   │   ├── cost_tracker.py
-│   │   └── provider_manager.py
-│   └── main.py
-├── .env.example
-├── docker-compose.yml
-├── Dockerfile
-├── README.md
-└── requirements.txt
-```
-
-*   `app/main.py`: The entry point of the FastAPI application.
-*   `app/api/`: Contains the API-related modules, including routes and dependencies.
-*   `app/core/`: Core components like configuration and dependencies.
-*   `app/models/`: Pydantic models for data validation and serialization.
-*   `app/providers/`: Integration with different LLM providers.
-*   `app/services/`: Business logic and services.
-
-## API Documentation
-
-### Authentication
-
-All API endpoints (except for the health check) require an API key. The API key should be included in the `Authorization` header as a Bearer token.
-
-`Authorization: Bearer YOUR_API_KEY`
-
-You can set your API key in the `.env` file (see "Running the Project" section).
-
-### Endpoints
-
-#### Health Check
-
-*   **Endpoint:** `GET /v1/health`
-*   **Description:** Checks the health of the application and lists the available LLM providers.
-*   **Example:**
-    ```bash
-    curl -X GET http://localhost:8000/v1/health
-    ```
-
-#### Chat Completions (Non-streaming)
-
-*   **Endpoint:** `POST /v1/chat/completions`
-*   **Description:** Sends a prompt to the LLM and receives a complete response.
-*   **Request Body:** `application/json`
-    ```json
-    {
-      "provider": "openrouter",
-      "model": "meta-llama/llama-3.2-3b-instruct:free",
-      "messages": [
-        {
-          "role": "user",
-          "content": "Hello, who are you?"
-        }
-      ],
-      "temperature": 0.7,
-      "max_tokens": 100,
-      "stream": false
-    }
-    ```
-*   **Example:**
-    ```bash
-    curl -X POST http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer your-secret-api-key" \
-    -d '{
-      "provider": "openrouter",
-      "model": "meta-llama/llama-3.2-3b-instruct:free",
-      "messages": [
-        {
-          "role": "user",
-          "content": "Tell me a joke."
-        }
-      ]
-    }'
-    ```
-
-#### Chat Completions (Streaming)
-
-*   **Endpoint:** `POST /v1/chat/stream`
-*   **Description:** Sends a prompt to the LLM and receives a stream of events as the response is generated. If the client disconnects, the request is automatically cancelled.
-*   **Request Body:** Same as the non-streaming endpoint, but `stream` should ideally be set to `true`.
-*   **Example:**
-    ```bash
-    curl -X POST http://localhost:8000/v1/chat/stream \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer your-secret-api-key" \
-    -d '{
-      "provider": "openrouter",
-      "model": "meta-llama/llama-3.2-3b-instruct:free",
-      "messages": [
-        {
-          "role": "user",
-          "content": "Tell me a story about a brave knight."
-        }
-      ],
-      "stream": true
-    }'
-    ```
-
-#### Get Usage Statistics
-
-*   **Endpoint:** `GET /v1/usage/stats`
-*   **Description:** Retrieves usage statistics for the authenticated API key.
-*   **Example:**
-    ```bash
-    curl -X GET http://localhost:8000/v1/usage/stats \
-    -H "Authorization: Bearer your-secret-api-key"
-    ```
-
-## Future Improvements
-
-This project provides a solid foundation for a production-grade LLM API, but there are several areas where it could be extended and improved:
-
-*   **Persistent Storage for Usage Data:** The current implementation of the `CostTracker` uses in-memory storage. For a production system, this should be replaced with a persistent database like Redis or a relational database to ensure that usage data is not lost when the application restarts.
-*   **More Accurate Cost-Estimation Model:** The cost estimation is currently based on a rough estimate. This could be improved by integrating with the pricing APIs of the respective LLM providers to get real-time cost information.
-*   **Time-Based Usage Reporting:** The API could be enhanced to provide more granular usage reports, allowing users to view their usage data for specific time periods (e.g., daily, weekly, or monthly).
-*   **Administrative Dashboard:** A web-based dashboard could be developed to provide administrators with a comprehensive overview of API usage, including the ability to view statistics for all users, manage API keys, and configure rate limits.
-*   **Budget Alerts and Management:** The system could be extended to allow users to set budgets for their API usage and receive alerts when they are close to exceeding their budget.
-
-## Getting Started
+## How to Run the Project
 
 ### Prerequisites
 
 - Python 3.8+
-- Docker (optional)
+- Docker and Docker Compose
+- An Ollama instance running. Ensure the base URL is correctly configured in your environment.
 
-### Local Development
+### Running Locally
 
-1. **Clone the repository:**
-   ```bash
-   git clone git@github.com:Prosen-Ghosh/llm_demo.git
-   cd streaming-llm-api
-   ```
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-2. **Create a virtual environment:**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+2.  **Create a virtual environment and activate it:**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate
+    ```
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3.  **Install the dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-4. **Set up environment variables:**
-   Create a `.env` file by copying the example:
-   ```bash
-   cp .env.example .env
-   ```
-   Now, edit the `.env` file and add your API keys and other settings. You must set `API_KEYS` to a comma-separated list of valid keys.
+4.  **Configure your environment:**
+    -   Create a `.env` file by copying the example:
+        ```bash
+        cp .env.example .env
+        ```
+    -   Edit the `.env` file to set your environment variables, especially `OLLAMA_BASE_URL`.
 
-5. **Run the application:**
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-   The API will be available at `http://localhost:8000`.
+5.  **Run the application:**
+    ```bash
+    uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ```
 
-### Using Docker
+### Running with Docker
 
-1. **Set up environment variables:**
-   Create a `.env` file as described in the local development section.
+This method is recommended for a consistent and isolated environment.
 
-2. **Run with Docker Compose:**
-   ```bash
-   docker-compose up --build
-   ```
-   The API will be available at `http://localhost:8000`.
+1.  **Ensure your `.env` file is configured correctly.** The `OLLAMA_BASE_URL` should be accessible from within the Docker container. If you are running Ollama on your host machine, `http://host.docker.internal:11434` is often the correct address.
 
-## Deployment
+2.  **Build and run the container using Docker Compose:**
+    ```bash
+    docker-compose up -d --build
+    ```
+    The application will be available at `http://localhost:8000`.
 
-This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+### Running with Docker (Hot Reload for Development)
 
-1. **Build the Docker image:**
-   ```bash
-   docker build -t streaming-llm-api .
-   ```
+For development, you can use the hot-reloading setup to automatically apply code changes without rebuilding the container.
 
-2. **Push the Docker image to a container registry:**
-   ```bash
-   docker push your-container-registry/streaming-llm-api
-   ```
+1.  **Use the `docker-compose.dev.yml` file:**
+    ```bash
+    docker-compose -f docker-compose.dev.yml up -d --build
+    ```
 
-3. **Configure the environment variables in your cloud provider's environment.**
-
-4. **Deploy the container.**
-
-For more detailed instructions, please refer to your cloud provider's documentation.
+This will mount the application code into the container, and `uvicorn` will automatically reload the application when it detects changes.
