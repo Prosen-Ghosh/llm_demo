@@ -2,25 +2,38 @@
 
 This project is part of a 60-day bootcamp, and this specific service is a **Profile Enricher**.
 
-## What does this codebase do?
+## Table of Contents
+
+- [Features](#features)
+- [Purpose](#purpose)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local Development](#local-development)
+  - [Using Docker](#using-docker)
+- [API Documentation](#api-documentation)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Future Improvements](#future-improvements)
+
+## Features
+
+- **User Profile Validation**: Validates incoming user profile data against a predefined schema using Pydantic, ensuring data integrity and consistency.
+- **Data Enrichment**: Communicates with an external API to fetch additional information related to the user profile.
+- **Resiliency**: Includes a retry mechanism with exponential backoff for external API calls, making the enrichment process more robust.
+- **Concurrency Limiting**: Limits the number of concurrent requests to the external API to prevent overloading the service.
+
+## Purpose
 
 The Profile Enricher is a FastAPI-based microservice that takes a user's profile, validates it, and enriches it with additional information from an external service.
-
-The core functionalities include:
-- **User Profile Validation**: It validates the incoming user profile data against a predefined schema using Pydantic. This ensures data integrity and consistency.
-- **Data Enrichment**: It communicates with an external API to fetch additional information related to the user profile.
-- **Resiliency**: It includes a retry mechanism with exponential backoff for the external API calls, making the enrichment process more robust and resilient to transient failures.
-- **Concurrency Limiting**: It limits the number of concurrent requests to the external API to prevent overloading the service.
-
-## Why did we build this and what purpose does it serve?
 
 In many applications, there's a need to enrich user profiles with data from other sources (e.g., social media profiles, demographic data, etc.). This enrichment process can be complex and involve interacting with external services, which might be unreliable or slow.
 
 This Profile Enricher service was built to:
-- **Decouple the enrichment logic**: By creating a separate microservice, we decouple the enrichment logic from the main application. This makes the main application simpler and more focused on its core responsibilities.
-- **Improve Scalability**: The service can be scaled independently of the main application, allowing for better resource management.
-- **Increase Resilience**: The built-in retry mechanism with exponential backoff helps to handle transient errors from the external enrichment service, making the overall system more reliable.
-- **Centralize Enrichment**: It provides a single, centralized point for all user profile enrichment, which is easier to maintain and update.
+- **Decouple the enrichment logic**: By creating a separate microservice, we decouple the enrichment logic from the main application.
+- **Improve Scalability**: The service can be scaled independently of the main application.
+- **Increase Resilience**: The built-in retry mechanism handles transient errors from the external enrichment service.
+- **Centralize Enrichment**: It provides a single, centralized point for all user profile enrichment.
 
 ## Getting Started
 
@@ -44,7 +57,7 @@ This Profile Enricher service was built to:
     ```
 
 3.  **Set up environment variables**:
-    Copy the `.env.example` to a new file named `.env` and fill in the required values if necessary. The default values are sufficient for testing with the mock API.
+    Copy the `.env.example` to a new file named `.env` and fill in the required values if necessary.
     ```bash
     cp .env.example .env
     ```
@@ -66,7 +79,7 @@ This Profile Enricher service was built to:
     ```
     The API will be available at `http://127.0.0.1:8000`.
 
-## API Reference
+## API Documentation
 
 You can test the `/users` endpoint by sending a POST request with a user profile. Here's an example using `curl`:
 
@@ -106,42 +119,36 @@ If the request is successful, you will receive a JSON response containing the or
         "signupTs": "2023-01-01T12:00:00Z"
     },
     "enrichment": {
-        ... enrichment data from the external service ...
+        ...
     }
 }
 ```
-
-If the user profile validation fails, you will receive a `422 Unprocessable Entity` response with details about the validation errors. If the enrichment service fails, you will receive a `502 Bad Gateway` response.
 
 ## Project Structure
 
 ```
 .
-├── Dockerfile              # Dockerfile for building the application container.
-├── README.md               # This README file.
-├── app/                    # Source code for the application.
-│   ├── __init__.py         #
-│   ├── main.py             # Main entry point for the FastAPI application.
-│   ├── models/             # Pydantic models for data validation.
-│   │   ├── __init__.py
+├── Dockerfile
+├── README.md
+├── app/
+│   ├── main.py
+│   ├── models/
 │   │   ├── address.py
 │   │   └── user_profile.py
-│   ├── routers/            # API routers for different endpoints.
-│   │   ├── __init__.py
+│   ├── routers/
 │   │   ├── enrich.py
 │   │   ├── health.py
 │   │   └── users.py
-│   └── utils/              # Utility functions.
-│       ├── __init__.py
+│   └── utils/
 │       ├── enrichment.py
 │       └── logging.py
-├── docker-compose.yml      # Docker Compose file for running the application.
-└── requirements.txt        # Lists all Python dependencies.
+├── docker-compose.yml
+└── requirements.txt
 ```
 
 ## Deployment
 
-This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers. Here are the general steps to deploy this application:
+This application is containerized using Docker, which makes it easy to deploy to any cloud provider that supports Docker containers.
 
 1. **Build the Docker image:**
    ```bash
@@ -157,8 +164,12 @@ This application is containerized using Docker, which makes it easy to deploy to
 
 4. **Deploy the container.**
 
-For more detailed instructions, please refer to your cloud provider's documentation.
-
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.
+
+## Future Improvements
+
+*   Add more data sources for enrichment.
+*   Implement asynchronous processing for enrichment requests.
+*   Add authentication and authorization to the API.

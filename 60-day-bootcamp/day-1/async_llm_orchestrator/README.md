@@ -5,7 +5,9 @@ This project implements an asynchronous LLM (Large Language Model) orchestrator 
 ## Table of Contents
 
 - [Features](#features)
+- [Purpose](#purpose)
 - [Core Concepts & Architecture](#core-concepts--architecture)
+- [Project Structure](#project-structure)
 - [Supported LLM Providers](#supported-llm-providers)
 - [API Documentation](#api-documentation)
   - [Health Check (`GET /health`)](#health-check-get-health)
@@ -16,7 +18,8 @@ This project implements an asynchronous LLM (Large Language Model) orchestrator 
   - [Running with Docker Compose](#running-with-docker-compose)
   - [Running Locally for Development](#running-locally-for-development)
 - [Deployment](#deployment)
-- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [Future Improvements](#future-improvements)
 
 ## Features
 
@@ -28,6 +31,10 @@ This project implements an asynchronous LLM (Large Language Model) orchestrator 
 *   **Pydantic Models**: Robust request and response validation and serialization.
 *   **Containerized Deployment**: Ready for Docker and Docker Compose deployment.
 *   **Health Checks**: Integrated health check endpoint for monitoring.
+
+## Purpose
+
+The main purpose of this project is to provide a scalable and resilient service that can handle a high volume of LLM requests. It aims to simplify the process of interacting with various LLM providers by offering a single, unified API. This is particularly useful for applications that need to leverage multiple models from different providers without implementing custom logic for each one.
 
 ## Core Concepts & Architecture
 
@@ -41,6 +48,40 @@ The project is built around the `LLMOrchestrator` located in `app/core/orchestra
 Each LLM provider (`app/providers/*.py`) inherits from `LLMProviderBase` and implements the `_make_request` method, which handles the specific API calls and response parsing for that provider.
 
 The API endpoints are defined using FastAPI in `app/routers/`.
+
+## Project Structure
+
+```
+.
+├── .env
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── README.md
+├── requirements.txt
+├── app/
+│   ├── __init__.py
+│   ├── main.py                     # FastAPI application entry point
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py               # Application settings and configuration
+│   │   └── orchestrator.py         # Core LLM orchestration logic
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── models.py               # Pydantic models for requests and responses
+│   ├── providers/
+│   │   ├── __init__.py
+│   │   ├── base.py                 # Abstract base class for LLM providers
+│   │   ├── ollama.py               # Ollama LLM provider implementation
+│   │   └── openrouter.py           # OpenRouter LLM provider implementation
+│   └── routers/
+│       ├── __init__.py
+│       ├── batch.py                # API router for batch LLM requests
+│       ├── dependencies.py         # FastAPI dependency injection utilities
+│       └── health.py               # API router for health checks
+└── logs/
+```
 
 ## Supported LLM Providers
 
@@ -274,36 +315,14 @@ This application is containerized using Docker, which makes it easy to deploy to
 
 For more detailed instructions, please refer to your cloud provider's documentation.
 
-## Project Structure
+## Contributing
 
-```
-.
-├── .env
-├── .env.example
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── README.md
-├── requirements.txt
-├── app/
-│   ├── __init__.py
-│   ├── main.py                     # FastAPI application entry point
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── config.py               # Application settings and configuration
-│   │   └── orchestrator.py         # Core LLM orchestration logic
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── models.py               # Pydantic models for requests and responses
-│   ├── providers/
-│   │   ├── __init__.py
-│   │   ├── base.py                 # Abstract base class for LLM providers
-│   │   ├── ollama.py               # Ollama LLM provider implementation
-│   │   └── openrouter.py           # OpenRouter LLM provider implementation
-│   └── routers/
-│       ├── __init__.py
-│       ├── batch.py                # API router for batch LLM requests
-│       ├── dependencies.py         # FastAPI dependency injection utilities
-│       └── health.py               # API router for health checks
-└── logs/
-```
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or find any bugs.
+
+## Future Improvements
+
+*   Add support for more LLM providers.
+*   Implement a more sophisticated caching mechanism to reduce redundant API calls.
+*   Add more detailed logging and tracing for better observability.
+*   Implement user authentication and authorization.
+

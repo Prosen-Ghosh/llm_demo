@@ -2,6 +2,23 @@
 
 This project is a demonstration of a production-ready API gateway for interacting with Large Language Models (LLMs). It showcases production-grade features and best practices, acting as a central hub to connect your applications to various LLM providers like Ollama and OpenRouter. It offers essential features for scalability, monitoring, and cost management. Whether you're building a chatbot, a content generation tool, or any other AI-powered application, this project provides a robust architectural foundation.
 
+## Table of Contents
+
+- [Why is this project required?](#why-is-this-project-required)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [API Documentation](#api-documentation)
+  - [Authentication](#authentication)
+  - [Endpoints](#endpoints)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local Development](#local-development)
+  - [Using Docker](#using-docker)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Future Improvements](#future-improvements)
+
+
 ## Why is this project required?
 
 Building a scalable and reliable application on top of LLMs presents several challenges. This project is designed to address them:
@@ -158,16 +175,6 @@ You can set your API key in the `.env` file (see "Running the Project" section).
     -H "Authorization: Bearer your-secret-api-key"
     ```
 
-## Future Improvements
-
-This project provides a solid foundation for a production-grade LLM API, but there are several areas where it could be extended and improved:
-
-*   **Persistent Storage for Usage Data:** The current implementation of the `CostTracker` uses in-memory storage. For a production system, this should be replaced with a persistent database like Redis or a relational database to ensure that usage data is not lost when the application restarts.
-*   **More Accurate Cost-Estimation Model:** The cost estimation is currently based on a rough estimate. This could be improved by integrating with the pricing APIs of the respective LLM providers to get real-time cost information.
-*   **Time-Based Usage Reporting:** The API could be enhanced to provide more granular usage reports, allowing users to view their usage data for specific time periods (e.g., daily, weekly, or monthly).
-*   **Administrative Dashboard:** A web-based dashboard could be developed to provide administrators with a comprehensive overview of API usage, including the ability to view statistics for all users, manage API keys, and configure rate limits.
-*   **Budget Alerts and Management:** The system could be extended to allow users to set budgets for their API usage and receive alerts when they are close to exceeding their budget.
-
 ## Getting Started
 
 ### Prerequisites
@@ -237,3 +244,17 @@ This application is containerized using Docker, which makes it easy to deploy to
 4. **Deploy the container.**
 
 For more detailed instructions, please refer to your cloud provider's documentation.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or find any bugs.
+
+## Future Improvements
+
+This project provides a solid foundation for a production-grade LLM API, but there are several areas where it could be extended and improved:
+
+*   **Persistent Storage for Usage Data:** The current implementation of the `CostTracker` uses in-memory storage. For a production system, this should be replaced with a persistent database like Redis or a relational database to ensure that usage data is not lost when the application restarts.
+*   **More Accurate Cost-Estimation Model:** The cost estimation is currently based on a rough estimate. This could be improved by integrating with the pricing APIs of the respective LLM providers to get real-time cost information.
+*   **Time-Based Usage Reporting:** The API could be enhanced to provide more granular usage reports, allowing users to view their usage data for specific time periods (e.g., daily, weekly, or monthly).
+*   **Administrative Dashboard:** A web-based dashboard could be developed to provide administrators with a comprehensive overview of API usage, including the ability to view statistics for all users, manage API keys, and configure rate limits.
+*   **Budget Alerts and Management:** The system could be extended to allow users to set budgets for their API usage and receive alerts when they are close to exceeding their budget.

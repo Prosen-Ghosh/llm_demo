@@ -11,4 +11,8 @@ This directory contains projects developed during a 60-day bootcamp, showcasing 
 
 *   **[Streaming LLM API](./day-2/streaming-llm-api/README.md):** A production-grade RESTful API for interacting with Large Language Models (LLMs) with a focus on streaming responses, modular provider integration, and robust architecture.
 
+## Day 3 Projects
+
+*   **[Function Calling Demo](./day-3/function-calling-demo/README.md):** A FastAPI-based application that demonstrates an enterprise-grade function calling system using a Large Language Model (LLM).
+
 Each project within the day-specific folders has its own `README.md` with detailed setup and usage instructions.
