@@ -1,0 +1,19 @@
+services:
+  api:
+    build: .
+    container_name: function_calling_demo
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - ENVIRONMENT=development
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434  # Connect to host
+    extra_hosts:  # ← Add this for Linux Docker
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
