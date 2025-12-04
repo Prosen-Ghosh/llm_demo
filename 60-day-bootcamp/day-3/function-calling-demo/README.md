@@ -50,21 +50,31 @@ The primary purpose of this demo is to showcase a robust implementation of a fun
 ├── requirements.txt
 ├── app/
 │   ├── __init__.py
-│   ├── main.py               # FastAPI application entry point and routes
+│   ├── main.py               # FastAPI application entry point
+│   ├── api/                  # API endpoint definitions
+│   │   ├── __init__.py
+│   │   ├── chat.py
+│   │   ├── health.py
+│   │   └── tools.py
 │   ├── core/
+│   │   ├── __init__.py
 │   │   └── config.py           # Application settings
 │   ├── models/
+│   │   ├── __init__.py
 │   │   └── schemas.py          # Pydantic schemas for API requests and responses
 │   ├── services/
+│   │   ├── __init__.py
 │   │   ├── llm_client.py       # Client for interacting with the LLM
 │   │   └── tool_executor.py    # Logic for executing tools
 │   ├── tools/                  # Directory for all the tools
+│   │   ├── __init__.py
 │   │   ├── base.py             # Base class for tools
 │   │   ├── calculator.py
 │   │   ├── registry.py         # Tool registry
 │   │   ├── weather.py
 │   │   └── web_search.py
 │   └── utils/
+│       ├── __init__.py
 │       └── logger.py           # Logging configuration
 └── logs/
 ```
