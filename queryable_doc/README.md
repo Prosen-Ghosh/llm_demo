@@ -1,7 +1,5 @@
 # 📚 RAG Document Q&A System
 
-![Demo GIF](./docs/app_demo.gif)
-
 This is a demo application that showcases a Retrieval-Augmented Generation (RAG) pipeline using LangChain, OpenAI, and ChromaDB. It allows you to upload your documents and ask questions about their content. The application is built with Streamlit.
 
 ## Key Features
@@ -103,9 +101,7 @@ The application follows a standard RAG pipeline:
 │   ├── main.py         # Renders the main body of the app (upload and chat columns).
 │   ├── sidebar_config.py # Renders the sidebar for configuration.
 │   └── footer.py       # Renders the application footer.
-├── utils.py            # Utility functions, including session state initialization.
-├── __pycache__/        # Directory for compiled Python files.
-└── venv/               # Virtual environment directory.
+└── utils.py            # Utility functions, including session state initialization.
 ```
 
 ## Deployment

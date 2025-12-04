@@ -1,7 +1,5 @@
 # Simple Search Agent (LangChain + SerpAPI)
 
-![Demo GIF](./docs/app_demo.gif)
-
 This project is a simple web-based AI agent that can answer questions about current events by searching the web. It's built using Python, LangChain, Streamlit, SerpAPI, and OpenRouter.
 
 ## What it does
@@ -70,6 +68,7 @@ The application provides a web interface where you can ask a question. The agent
 
 ```
 .
+├── .gitignore          # Git ignore file.
 ├── Dockerfile          # Dockerfile for building the application container.
 ├── README.md           # This README file.
 ├── agent_tools.py      # Defines the tools available to the LangChain agent (e.g., web search).
@@ -78,9 +77,7 @@ The application provides a web interface where you can ask a question. The agent
 ├── requirements.txt    # Lists all Python dependencies.
 ├── setup.sh            # A shell script to automate the setup process.
 ├── simple_agent.py     # Contains the core logic for the LangChain agent.
-├── utils.py            # Utility functions for the application.
-├── __pycache__/        # Directory for compiled Python files.
-└── venv/               # Virtual environment directory.
+└── utils.py            # Utility functions for the application.
 ```
 
 ## Deployment
