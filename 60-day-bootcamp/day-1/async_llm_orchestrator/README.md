@@ -80,13 +80,16 @@ The API endpoints are defined using FastAPI in `app/routers/`.
 │       ├── batch.py                # API router for batch LLM requests
 │       ├── dependencies.py         # FastAPI dependency injection utilities
 │       └── health.py               # API router for health checks
+│   └── tests/
+│       ├── __init__.py
+│       └── test_example.py         # Example test file
 └── logs/
 ```
 
 ## Supported LLM Providers
 
 *   **OpenRouter**: A unified API for various LLMs. Requires `OPENROUTER_API_KEY`.
-*   **Ollama**: For running LLMs locally. Requires `OLLAMA_API_KEY`.
+*   **Ollama**: For running LLMs locally.
 
 ## API Documentation
 

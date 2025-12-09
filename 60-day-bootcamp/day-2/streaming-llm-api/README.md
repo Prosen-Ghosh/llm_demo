@@ -47,34 +47,45 @@ This project comes with a range of features designed for a production environmen
 The project is organized as follows:
 
 ```
-├── app/
-│   ├── api/
-│   │   ├── deps.py
-│   │   └── v1/
-│   │       ├── router.py
-│   │       └── endpoints/
-│   │           ├── chat.py
-│   │           ├── health.py
-│   │           └── usage.py
-│   ├── core/
-│   │   ├── config.py
-│   │   └── dependencies.py
-│   ├── models/
-│   │   ├── chat.py
-│   │   └── usage.py
-│   ├── providers/
-│   │   ├── base.py
-│   │   ├── ollama.py
-│   │   └── openrouter.py
-│   ├── services/
-│   │   ├── cost_tracker.py
-│   │   └── provider_manager.py
-│   └── main.py
+.
 ├── .env.example
+├── .gitignore
+├── docker-compose.dev.yml
 ├── docker-compose.yml
 ├── Dockerfile
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── app/
+    ├── __init__.py
+    ├── main.py
+    ├── api/
+    │   ├── __init__.py
+    │   ├── deps.py
+    │   └── v1/
+    │       ├── __init__.py
+    │       ├── router.py
+    │       └── endpoints/
+    │           ├── __init__.py
+    │           ├── chat.py
+    │           ├── health.py
+    │           └── usage.py
+    ├── core/
+    │   ├── __init__.py
+    │   ├── config.py
+    │   └── dependencies.py
+    ├── models/
+    │   ├── __init__.py
+    │   ├── chat.py
+    │   └── usage.py
+    ├── providers/
+    │   ├── __init__.py
+    │   ├── base.py
+    │   ├── ollama.py
+    │   └── openrouter.py
+    └── services/
+        ├── __init__.py
+        ├── cost_tracker.py
+        └── provider_manager.py
 ```
 
 *   `app/main.py`: The entry point of the FastAPI application.

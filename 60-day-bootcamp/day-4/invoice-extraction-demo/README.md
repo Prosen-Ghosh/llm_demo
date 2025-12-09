@@ -20,6 +20,38 @@ This application is a FastAPI-based REST API that:
 -   **Data Validation**: All extracted data is rigorously validated against a Pydantic schema (`InvoiceData`) to ensure type safety, format correctness, and logical consistency (e.g., `total_amount` equals `subtotal` + `tax_amount`).
 -   **Rich API Response**: Returns not just the extracted data, but also metadata including the strategy used, confidence scores, number of retries, and any validation errors.
 
+## Project Structure
+
+```
+.
+├── .env.example
+├── .gitignore
+├── docker-compose.dev.yml
+├── Dockerfile
+├── README.md
+├── requirements.txt
+└── app/
+    ├── __init__.py
+    ├── main.py
+    ├── api/
+    │   ├── __init__.py
+    │   └── routes.py
+    ├── core/
+    │   ├── __init__.py
+    │   ├── config.py
+    │   └── logging.py
+    ├── models/
+    │   ├── __init__.py
+    │   └── schemas.py
+    ├── sample_invoices/
+    │   └── sample_invoice.txt
+    └── services/
+        ├── __init__.py
+        ├── ollama_extractor.py
+        ├── openrouter_extractor.py
+        └── repair_engine.py
+```
+
 ## API Documentation
 
 The API is served by a FastAPI application.

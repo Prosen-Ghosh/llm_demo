@@ -128,22 +128,28 @@ If the request is successful, you will receive a JSON response containing the or
 
 ```
 .
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
 ├── Dockerfile
 ├── README.md
-├── app/
-│   ├── main.py
-│   ├── models/
-│   │   ├── address.py
-│   │   └── user_profile.py
-│   ├── routers/
-│   │   ├── enrich.py
-│   │   ├── health.py
-│   │   └── users.py
-│   └── utils/
-│       ├── enrichment.py
-│       └── logging.py
-├── docker-compose.yml
-└── requirements.txt
+├── requirements.txt
+└── app/
+    ├── __init__.py
+    ├── main.py
+    ├── models/
+    │   ├── __init__.py
+    │   ├── address.py
+    │   └── user_profile.py
+    ├── routers/
+    │   ├── __init__.py
+    │   ├── enrich.py
+    │   ├── health.py
+    │   └── users.py
+    └── utils/
+        ├── __init__.py
+        ├── enrichment.py
+        └── logging.py
 ```
 
 ## Deployment
