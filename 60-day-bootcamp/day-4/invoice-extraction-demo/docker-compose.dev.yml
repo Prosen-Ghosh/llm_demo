@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+    container_name: invoice_extraction_demo
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - ENVIRONMENT=development
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/app                # <-- hot reload volume
+      - /app/__pycache__/     # optional: avoid polluting host
+    command:
+    - uvicorn
+    - app.main:app
+    - --host
+    - 0.0.0.0
+    - --port
+    - "8000"
+    - --reload
+
+    restart: unless-stopped

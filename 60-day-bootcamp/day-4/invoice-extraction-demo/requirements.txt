@@ -1,0 +1,13 @@
+fastapi[standard]
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-dotenv
+
+ollama
+openai
+httpx
+
+python-multipart
+structlog
+tenacity
