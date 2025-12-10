@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s # How often to pull data
+
+scrape_configs:
+  # Job 1: Prometheus monitoring itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      # Use container name 'node-exporter'
+      - targets: ['node-exporter:9100'] 
+
+  - job_name: 'cadvisor'
+    static_configs:
+      # Use container name 'cadvisor'
+      - targets: ['cadvisor:8080']
