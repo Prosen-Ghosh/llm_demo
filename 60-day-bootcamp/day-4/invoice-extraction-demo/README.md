@@ -14,7 +14,7 @@ This application is a FastAPI-based REST API that:
 
 -   **Accepts Unstructured Text**: Takes raw invoice text as input.
 -   **Dual Extraction Strategy**:
-    1.  **Ollama (Primary)**: Uses a local LLM (e.g., `gpt-oss:120b-cloud`) with JSON schema enforcement for cost-effective and private data processing.
+    1.  **Ollama (Primary)**: Uses a local LLM (e.g., `llama3.1`) with JSON schema enforcement for cost-effective and private data processing.
     2.  **OpenRouter (Fallback)**: If the primary strategy fails, it can fall back to a powerful model on OpenRouter (e.g., `meta-llama/llama-3.2-3b-instruct:free`) using function calling for higher accuracy.
 -   **Self-Correcting Repair Engine**: If an extraction attempt fails Pydantic validation, the system automatically retries, feeding the validation errors back to the LLM to correct its output.
 -   **Data Validation**: All extracted data is rigorously validated against a Pydantic schema (`InvoiceData`) to ensure type safety, format correctness, and logical consistency (e.g., `total_amount` equals `subtotal` + `tax_amount`).
@@ -181,7 +181,7 @@ The application is configured via environment variables:
 | ---------------------------- | --------------------------------------------------------------------------- | --------------------------------------- |
 | `ENVIRONMENT`                | Application environment (`development` or `production`).                    | `development`                           |
 | `LOG_LEVEL`                  | Logging level (`INFO`, `DEBUG`, `WARNING`, `ERROR`).                        | `INFO`                                  |
-| `OLLAMA_MODEL`               | The Ollama model to use for extraction.                                     | `gpt-oss:120b-cloud`                         |
+| `OLLAMA_MODEL`               | The Ollama model to use for extraction.                                     | `llama3.1`                         |
 | `OLLAMA_BASE_URL`            | The base URL of the Ollama API.                                             | `http://host.docker.internal:11434`     |
 | `OPENROUTER_API_KEY`         | Your OpenRouter API key.                                                    | `your_openrouter_key_here`              |
 | `OPENROUTER_MODEL`           | The OpenRouter model to use as a fallback.                                  | `meta-llama/llama-3.2-3b-instruct:free` |

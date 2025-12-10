@@ -19,8 +19,8 @@ This directory contains projects developed during a 60-day bootcamp, showcasing 
 
 *   **[Invoice Extraction Demo](./day-4/invoice-extraction-demo/README.md):** An enterprise-grade solution for extracting structured data from unstructured invoice text using Large Language Models (LLMs).
 
-## Day 5 Projects
+## Day 5-10 Projects
 
-*   **[AI Observability](./day-5/ai-observability/README.md):** A basic setup for AI observability using Prometheus and Grafana to monitor and visualize metrics.
+*   **[AI Observability](./day-5-10/ai-observability/README.md):** A basic setup for AI observability using Prometheus and Grafana to monitor and visualize metrics.
 
 Each project within the day-specific folders has its own `README.md` with detailed setup and usage instructions.

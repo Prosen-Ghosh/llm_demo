@@ -197,9 +197,8 @@ You can set your API key in the `.env` file (see "Running the Project" section).
 
 1. **Clone the repository:**
    ```bash
-   git clone git@github.com:Prosen-Ghosh/llm_demo.git
-   cd streaming-llm-api
-   ```
+   git clone https://github.com/Prosen-Ghosh/llm_demo.git
+   cd llm_demo/day-2/streaming-llm-api   ```
 
 2. **Create a virtual environment:**
    ```bash
