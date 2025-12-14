@@ -1,26 +1,42 @@
 # 60-Day Bootcamp
 
-This directory contains projects developed during a 60-day bootcamp, showcasing various AI/ML concepts and their practical applications.
+This repository documents a 60-day journey of building various AI/ML-powered applications and services. Each project, organized by day, tackles a specific problem and demonstrates the practical application of different concepts.
 
-## Day 1 Projects
+The primary goal of this bootcamp is to rapidly prototype and learn by building. Each project is self-contained and includes its own documentation, dependencies, and deployment configurations.
 
-*   **[Async LLM Orchestrator](./day-1/async_llm_orchestrator/README.md):** A service designed to orchestrate asynchronous calls to various Large Language Models (LLMs). It handles model routing, response aggregation, and provides a unified interface for interacting with different LLM providers.
-*   **[Profile Enricher](./day-1/profile-enricher/README.md):** A FastAPI-based microservice that takes a user's profile, validates it, and enriches it with additional information from an external service.
+## Projects
 
-## Day 2 Projects
+### Day 1: Foundational Services
 
-*   **[Streaming LLM API](./day-2/streaming-llm-api/README.md):** A production-grade RESTful API for interacting with Large Language Models (LLMs) with a focus on streaming responses, modular provider integration, and robust architecture.
+*   **[Async LLM Orchestrator](./day-1/async_llm_orchestrator/README.md):** A service designed to orchestrate asynchronous calls to various Large Language Models (LLMs).
+    *   **Why we built this:** To manage the complexity of interacting with multiple LLM providers, handle concurrent requests efficiently, and provide a unified interface for downstream services.
 
-## Day 3 Projects
+*   **[Profile Enricher](./day-1/profile-enricher/README.md):** A FastAPI-based microservice that takes a user's profile, validates it, and enriches it with additional information.
+    *   **Why we built this:** To demonstrate data enrichment patterns, where initial data is augmented from external sources, a common task in building comprehensive user profiles.
 
-*   **[Function Calling Demo](./day-3/function-calling-demo/README.md):** A FastAPI-based application that demonstrates an enterprise-grade function calling system using a Large Language Model (LLM).
+### Day 2: Streaming and Scalability
 
-## Day 4 Projects
+*   **[Streaming LLM API](./day-2/streaming-llm-api/README.md):** A production-grade RESTful API for interacting with LLMs, with a focus on streaming responses.
+    *   **Why we built this:** To provide a real-time, responsive user experience in chat-like applications by streaming tokens from the LLM as they are generated, rather than waiting for the full response.
 
-*   **[Invoice Extraction Demo](./day-4/invoice-extraction-demo/README.md):** An enterprise-grade solution for extracting structured data from unstructured invoice text using Large Language Models (LLMs).
+### Day 3: Advanced LLM Capabilities
 
-## Day 5-10 Projects
+*   **[Function Calling Demo](./day-3/function-calling-demo/README.md):** A FastAPI application demonstrating an enterprise-grade function calling system with an LLM.
+    *   **Why we built this:** To showcase how LLMs can be used to call external tools and APIs, enabling them to interact with the real world and perform actions beyond text generation.
 
-*   **[AI Observability](./day-5-10/ai-observability/README.md):** A basic setup for AI observability using Prometheus and Grafana to monitor and visualize metrics.
+### Day 4: Practical AI Applications
+
+*   **[Invoice Extraction Demo](./day-4/invoice-extraction-demo/README.md):** An enterprise-grade solution for extracting structured data from unstructured invoice text using LLMs.
+    *   **Why we built this:** To solve the common business problem of digitizing and structuring data from documents like invoices, reducing manual data entry and errors.
+
+### Day 5-14: MLOps and Observability
+
+*   **[AI Observability](./day-5-14/ai-observability/README.md):** A basic setup for AI observability using Prometheus and Grafana.
+    *   **Why we built this:** To establish a foundation for monitoring AI applications, tracking performance metrics, and visualizing model behavior, which are crucial for maintaining production-grade AI systems.
+
+### Day 15: Prompt Engineering
+
+*   **[Prompt Engineering Demo](./day-15/prompt_engineering_demo/README.md):** A FastAPI application for experimenting with and demonstrating various prompt engineering strategies.
+    *   **Why we built this:** To explore and showcase how different prompt engineering techniques (like Chain of Thought, ReAct, and Self-Consistency) can improve the performance and reasoning abilities of LLMs.
 
 Each project within the day-specific folders has its own `README.md` with detailed setup and usage instructions.

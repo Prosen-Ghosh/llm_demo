@@ -65,7 +65,7 @@ services:
   api:
     build:
       context: .
-    container_name: ai_observability_demo
+    container_name: ai-service
     ports:
       - "8000:8000"
     env_file:
@@ -86,6 +86,8 @@ services:
     - --port
     - "8000"
     - --reload
+    networks:
+      - monitoring
 
     restart: unless-stopped
 

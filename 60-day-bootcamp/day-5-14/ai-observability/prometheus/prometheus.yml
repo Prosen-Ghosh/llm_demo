@@ -16,3 +16,8 @@ scrape_configs:
     static_configs:
       # Use container name 'cadvisor'
       - targets: ['cadvisor:8080']
+  
+  - job_name: 'ai_service'
+    scrape_interval: 5s # Scrape faster for testing
+    static_configs:
+      - targets: ['ai-service:8000']

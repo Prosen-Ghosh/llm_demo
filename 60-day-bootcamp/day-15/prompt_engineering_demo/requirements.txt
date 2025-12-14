@@ -1,0 +1,12 @@
+fastapi[standard]
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-dotenv
+
+ollama
+openai
+httpx
+python-json-logger
+sqlalchemy
+aiosqlite
