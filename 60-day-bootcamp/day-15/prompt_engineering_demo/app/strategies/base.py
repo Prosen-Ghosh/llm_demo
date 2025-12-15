@@ -4,8 +4,6 @@ from app.models.schemas import ReasoningStep
 
 
 class PromptStrategy(ABC):
-    """Abstract base class for all prompting strategies"""
-    
     def __init__(self, llm_client: Any):
         self.llm_client = llm_client
         self.reasoning_steps: List[ReasoningStep] = []
@@ -17,7 +15,6 @@ class PromptStrategy(ABC):
         system_prompt: str,
         temperature: float = 0.7
     ) -> Dict[str, Any]:
-        """Execute the strategy and return response with metadata"""
         pass
     
     @abstractmethod
@@ -27,7 +24,6 @@ class PromptStrategy(ABC):
         system_prompt: str,
         temperature: float = 0.7
     ) -> AsyncGenerator[str, None]:
-        """Execute with streaming response"""
         pass
     
     def add_reasoning_step(

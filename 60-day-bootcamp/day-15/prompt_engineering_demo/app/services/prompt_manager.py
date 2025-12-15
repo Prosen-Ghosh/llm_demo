@@ -2,15 +2,11 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select
 from typing import List, Optional
-from datetime import datetime
-
 from app.models.prompts import Base, PromptVersionDB
 from app.models.schemas import PromptVersion, PromptStrategy
 
 
 class PromptVersionManager:
-    """Manages prompt versioning with SQLite backend"""
-    
     def __init__(self, database_url: str):
         self.engine = create_async_engine(database_url, echo=False)
         self.async_session = sessionmaker(
@@ -18,7 +14,6 @@ class PromptVersionManager:
         )
     
     async def initialize(self):
-        """Create tables and seed default prompts"""
         async with self.engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
         
@@ -26,7 +21,6 @@ class PromptVersionManager:
         await self._seed_defaults()
     
     async def _seed_defaults(self):
-        """Seed default prompt versions"""
         defaults = [
             PromptVersion(
                 version="v1.0.0",
@@ -48,7 +42,6 @@ class PromptVersionManager:
                 await self.create_version(prompt)
     
     async def create_version(self, prompt: PromptVersion) -> PromptVersion:
-        """Create a new prompt version"""
         async with self.async_session() as session:
             db_prompt = PromptVersionDB(
                 version=prompt.version,
@@ -69,7 +62,6 @@ class PromptVersionManager:
         version: str, 
         strategy: str
     ) -> Optional[PromptVersion]:
-        """Retrieve a specific prompt version"""
         async with self.async_session() as session:
             result = await session.execute(
                 select(PromptVersionDB).where(
@@ -79,7 +71,6 @@ class PromptVersionManager:
             )
             
             db_prompt = result.scalar_one_or_none()
-            print(f"result=> {version} :: strategy => {strategy}")
             if db_prompt:
                 return PromptVersion(
                     version=db_prompt.version,
@@ -95,7 +86,6 @@ class PromptVersionManager:
             return None
     
     async def list_versions(self, strategy: Optional[str] = None) -> List[PromptVersion]:
-        """List all prompt versions, optionally filtered by strategy"""
         async with self.async_session() as session:
             query = select(PromptVersionDB)
             if strategy:
@@ -125,7 +115,6 @@ class PromptVersionManager:
         strategy: str, 
         metrics: dict
     ):
-        """Update performance metrics for a prompt version"""
         async with self.async_session() as session:
             result = await session.execute(
                 select(PromptVersionDB).where(

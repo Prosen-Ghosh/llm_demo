@@ -3,21 +3,16 @@ from app.strategies.base import PromptStrategy
 
 
 class ChainOfThoughtStrategy(PromptStrategy):
-    """
-    Chain-of-Thought prompting forces step-by-step reasoning.
-    Best for: Math, logic, multi-step problems.
-    """
-    
     COT_TEMPLATE = """You are a helpful AI assistant. When answering questions, think step-by-step.
 
-Format your response as:
-**Reasoning:**
-[Your step-by-step thinking process]
+    Format your response as:
+    **Reasoning:**
+    [Your step-by-step thinking process]
 
-**Answer:**
-[Your final answer]
+    **Answer:**
+    [Your final answer]
 
-Now, answer the following query:"""
+    Now, answer the following query:"""
     
     async def execute(
         self, 

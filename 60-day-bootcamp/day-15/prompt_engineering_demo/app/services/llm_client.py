@@ -1,6 +1,5 @@
 import httpx
 from typing import AsyncGenerator, Dict, Any
-from pydantic_settings import BaseSettings
 import logging
 
 from app.config import settings
@@ -9,8 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 class OllamaClient:
-    """Primary LLM client using Ollama for local inference"""
-    
     def __init__(self):
 
         print(f"settings:: {settings}")
@@ -24,7 +21,6 @@ class OllamaClient:
         temperature: float = 0.7,
         max_tokens: int = 2000
     ) -> Dict[str, Any]:
-        """Generate completion using Ollama"""
         try:
             response = await self.client.post(
                 f"{self.base_url}/api/generate",
@@ -63,7 +59,6 @@ class OllamaClient:
         temperature: float = 0.7,
         max_tokens: int = 2000
     ) -> AsyncGenerator[str, None]:
-        """Stream generation using Ollama"""
         try:
             async with self.client.stream(
                 "POST",
