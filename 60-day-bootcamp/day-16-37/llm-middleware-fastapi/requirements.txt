@@ -6,5 +6,5 @@ python-dotenv
 
 langchain
 langchain-ollama
-langchain-core
 langchain-community
+langgraph
