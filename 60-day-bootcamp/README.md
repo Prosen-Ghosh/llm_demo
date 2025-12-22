@@ -39,4 +39,9 @@ The primary goal of this bootcamp is to rapidly prototype and learn by building.
 *   **[Prompt Engineering Demo](./day-15/prompt_engineering_demo/README.md):** A FastAPI application for experimenting with and demonstrating various prompt engineering strategies.
     *   **Why we built this:** To explore and showcase how different prompt engineering techniques (like Chain of Thought, ReAct, and Self-Consistency) can improve the performance and reasoning abilities of LLMs.
 
+### Day 16-37: LLM Middleware
+
+*   **[LLM Middleware with FastAPI](./day-16-37/llm-middleware-fastapi/README.md):** A project demonstrating how to build a FastAPI application with a custom middleware for processing requests and a simple LangGraph agent.
+    *   **Why we built this:** To showcase a simple example of how to add custom middleware to a FastAPI application to process incoming requests and add context to them.
+
 Each project within the day-specific folders has its own `README.md` with detailed setup and usage instructions.
