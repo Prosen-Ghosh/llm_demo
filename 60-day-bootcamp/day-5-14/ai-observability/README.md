@@ -21,6 +21,7 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 *   **Prometheus**: A monitoring and alerting toolkit. It scrapes and stores time-series data. The configuration is in `prometheus/prometheus.yml`.
 *   **Grafana**: A visualization and analytics software. It allows you to query, visualize, alert on, and explore your metrics. It can be connected to Prometheus as a data source.
 *   **Docker Compose**: The `docker-compose.yml` file is used to orchestrate the deployment of Prometheus and Grafana containers.
+*   **Ollama Exporter**: A custom exporter that scrapes metrics from an Ollama instance and exposes them in a format that Prometheus can understand. This is useful for monitoring the performance and resource usage of your local AI models.
 
 ## Project Structure
 
@@ -32,6 +33,10 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 │   └── ... (Grafana data and configuration will be stored here)
 └── prometheus/
     └── prometheus.yml
+└── ollama-exporter/
+    ├── Dockerfile
+    ├── exporter.py
+    └── requirements.txt
 ```
 
 ## Getting Started
@@ -43,11 +48,13 @@ To get started, you will need to have Docker and Docker Compose installed.
     docker-compose up -d
     ```
 
+    This will start Prometheus, Grafana, and the Ollama Exporter.
+
 2.  **Access Grafana:**
     Grafana will be available at [http://localhost:3000](http://localhost:3000). The default credentials are `admin`/`admin`.
 
 3.  **Access Prometheus:**
-    Prometheus will be available at [http://localhost:9090](http://localhost:9090).
+    Prometheus will be available at [http://localhost:9090](http://localhost:9090). You should see the `ollama_exporter` target in the "Targets" section.
 
 ## Configuration
 

@@ -2,3 +2,7 @@ fastapi[standard]
 uvicorn[standard]
 prometheus-client
 requests
+
+prometheus-client
+requests
+psutil

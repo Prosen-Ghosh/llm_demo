@@ -90,6 +90,20 @@ services:
       - monitoring
 
     restart: unless-stopped
+  
+  ollama-exporter:
+    build: ./ollama-exporter
+    container_name: ollama-exporter
+    restart: always
+    ports:
+      - "9877:9877"
+    environment:
+      - OLLAMA_URL=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # pid: host  <-- Uncomment this if using Linux!
+    networks:
+      - monitoring
 
 networks:
   monitoring:
