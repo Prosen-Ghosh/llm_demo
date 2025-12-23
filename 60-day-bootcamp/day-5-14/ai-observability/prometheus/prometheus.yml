@@ -1,5 +1,9 @@
 global:
   scrape_interval: 15s # How often to pull data
+  evaluation_interval: 15s # How often to evaluate rules
+
+rule_files:
+  - "rules.yml"  # <--- Add this line
 
 scrape_configs:
   # Job 1: Prometheus monitoring itself
@@ -15,7 +19,7 @@ scrape_configs:
   - job_name: 'cadvisor'
     static_configs:
       # Use container name 'cadvisor'
-      - targets: ['cadvisor:8080']
+      - targets: ['cadvisor:8081']
   
   - job_name: 'ai_service'
     scrape_interval: 5s # Scrape faster for testing
@@ -25,3 +29,8 @@ scrape_configs:
   - job_name: 'ollama_exporter'
     static_configs:
       - targets: ['ollama-exporter:9877']
+
+  - job_name: 'weaviate'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['weaviate:2112']

@@ -1,0 +1,18 @@
+groups:
+  - name: ai_performance_rules
+    interval: 10s # Run these rules every 10 seconds
+    rules:
+      # 1. Pre-calculate the per-second rate of tokens (Smooths out spikes)
+      - record: job:llm_tokens:rate1m
+        expr: sum by (model_name) (rate(llm_tokens_generated_total[1m]))
+
+      # 2. Pre-calculate P99 Latency (Heavy math)
+      - record: job:api_latency:p99
+        expr: histogram_quantile(0.99, sum(rate(app_request_latency_seconds_bucket[1m])) by (le, endpoint))
+
+      # 3. Pre-calculate Error Ratio (Useful for SLAs)
+      - record: job:api_errors:ratio_rate5m
+        expr: |
+          sum(rate(app_request_count_total{status=~"5.."}[5m]))
+          /
+          sum(rate(app_request_count_total[5m]))

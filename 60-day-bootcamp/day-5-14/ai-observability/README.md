@@ -22,6 +22,8 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 *   **Grafana**: A visualization and analytics software. It allows you to query, visualize, alert on, and explore your metrics. It can be connected to Prometheus as a data source.
 *   **Docker Compose**: The `docker-compose.yml` file is used to orchestrate the deployment of Prometheus and Grafana containers.
 *   **Ollama Exporter**: A custom exporter that scrapes metrics from an Ollama instance and exposes them in a format that Prometheus can understand. This is useful for monitoring the performance and resource usage of your local AI models.
+*   **Weaviate**: A vector database used to store and retrieve vector embeddings for the RAG pipeline.
+*   **weaviate-seed**: A service that seeds the Weaviate database with initial data.
 
 ## Project Structure
 
@@ -31,12 +33,20 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 ├── README.md
 ├── grafana/
 │   └── ... (Grafana data and configuration will be stored here)
-└── prometheus/
-    └── prometheus.yml
-└── ollama-exporter/
-    ├── Dockerfile
-    ├── exporter.py
-    └── requirements.txt
+├── prometheus/
+│   ├── prometheus.yml
+│   └── rules.yml
+├── ollama-exporter/
+│   ├── Dockerfile
+│   ├── exporter.py
+│   └── requirements.txt
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── seed_weaviate.py
+│   └── utils.py
+├── Dockerfile.seed
+└── load_test.sh
 ```
 
 ## Getting Started
@@ -48,18 +58,30 @@ To get started, you will need to have Docker and Docker Compose installed.
     docker-compose up -d
     ```
 
-    This will start Prometheus, Grafana, and the Ollama Exporter.
+    This will start Prometheus, Grafana, the Ollama Exporter, Weaviate, and the weaviate-seed service.
 
 2.  **Access Grafana:**
     Grafana will be available at [http://localhost:3000](http://localhost:3000). The default credentials are `admin`/`admin`.
 
 3.  **Access Prometheus:**
-    Prometheus will be available at [http://localhost:9090](http://localhost:9090). You should see the `ollama_exporter` target in the "Targets" section.
+    Prometheus will be available at [http://localhost:9090](http://localhost:9090). You should see the `ollama_exporter` and `weaviate` targets in the "Targets" section.
+
+4.  **Access Weaviate:**
+    Weaviate will be available at [http://localhost:8080](http://localhost:8080).
+
+## RAG Pipeline
+
+This project now includes a RAG (Retrieval-Augmented Generation) pipeline.
+
+*   **`/rag_generate` endpoint:** A new endpoint in the `app/main.py` file that takes a prompt and uses a mock RAG pipeline to retrieve context from Weaviate and generate a response.
 
 ## Configuration
 
 *   **Prometheus (`prometheus/prometheus.yml`):**
-    This file configures the scrape targets for Prometheus. By default, it is configured to scrape itself. You will need to add your AI application endpoints here to collect metrics.
+    This file configures the scrape targets for Prometheus. By default, it is configured to scrape itself, the Ollama Exporter, and Weaviate.
+
+*   **Prometheus Rules (`prometheus/rules.yml`):**
+    This file contains alerting and recording rules for Prometheus.
 
 *   **Grafana (`grafana/`):**
     Grafana's configuration and data are persisted in this directory. You can add dashboard configurations here.
@@ -77,3 +99,4 @@ Contributions are welcome! If you have suggestions for improving this setup, ple
 *   Add pre-built Grafana dashboards for common AI metrics.
 *   Include Alertmanager for proactive alerting on key metrics.
 *   Provide examples of how to instrument an AI application to expose Prometheus metrics.
+*   Replace the mock RAG pipeline with a real implementation.

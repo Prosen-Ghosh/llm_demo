@@ -4,6 +4,7 @@ import requests
 from fastapi import FastAPI, HTTPException, Response
 from pydantic import BaseModel
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST, Counter, Histogram, Gauge
+from app.utils import mock_rag_pipeline, RAG_STEP_LATENCY
 
 app = FastAPI(title="AI Observability Gateway")
 
@@ -40,48 +41,38 @@ def metrics():
 def generate_text(req: GenerateRequest):
     endpoint = "/generate"
     start_time = time.time()
-    
-    # Payload for Ollama
+
     payload = {
         "model": req.model,
         "prompt": req.prompt,
-        "stream": False  # We disable streaming to get the full metrics JSON at once
+        "stream": False 
     }
 
     try:
-        # 1. Call Ollama
         response = requests.post(f"{OLLAMA_URL}/api/generate", json=payload)
         response.raise_for_status()
         
-        # 2. Parse Ollama's Metrics
         data = response.json()
-        
-        # Extract specific AI metrics
-        # Ollama returns durations in NANOSECONDS. Divide by 1e9 to get Seconds.
         eval_count = data.get("eval_count", 0)
         eval_duration_ns = data.get("eval_duration", 0)
         load_duration_ns = data.get("load_duration", 0)
         prompt_eval_count = data.get("prompt_eval_count", 0)
 
-        # 3. Update Prometheus
         LLM_TOKENS_GENERATED.labels(model_name=req.model).inc(eval_count)
         PROMPT_TOKENS.labels(model_name=req.model).observe(prompt_eval_count)
         
-        # Handle Load Time (Convert ns to s)
         if load_duration_ns > 0:
             LLM_LOAD_TIME.labels(model_name=req.model).set(load_duration_ns / 1e9)
             
-        # Handle TPS Calculation
         if eval_duration_ns > 0:
-            # tokens / (nanoseconds / 1 billion)
             tps = eval_count / (eval_duration_ns / 1e9)
             LLM_TOKEN_RATE.labels(model_name=req.model).set(tps)
 
-        # Record Success
-        REQUEST_COUNT.labels(method='POST', endpoint=endpoint, status='200').inc()
-        
         if req.prompt == 'fire':
             raise Exception("Something terrible happened!")
+        
+        REQUEST_COUNT.labels(method='POST', endpoint=endpoint, status='200').inc()
+        
         return {
             "response": data.get("response"),
             "meta": {
@@ -98,6 +89,34 @@ def generate_text(req: GenerateRequest):
     finally:
         duration = time.time() - start_time
         REQUEST_LATENCY.labels(endpoint=endpoint).observe(duration)
+
+@app.post("/rag_generate")
+def rag_generate(req: GenerateRequest):
+    start = time.time()
+    endpoint = "/rag_generate"
+    
+    try:
+        context, context_tokens = mock_rag_pipeline(req.prompt)
+        
+        if context:
+            full_prompt = f"Context: {context}\nUser: {req.prompt}"
+        else:
+            full_prompt = req.prompt
+            
+        start_gen = time.time()
+        payload = {"model": req.model, "prompt": full_prompt, "stream": False}
+        response = requests.post(f"{OLLAMA_URL}/api/generate", json=payload)
+        data = response.json()
+        
+        duration_gen = time.time() - start_gen
+        RAG_STEP_LATENCY.labels(step='generation').observe(duration_gen)
+        return {"response": data.get("response"), "rag_meta": {"docs_found": bool(context)}}
+
+    except Exception as e:
+        REQUEST_COUNT.labels(method='POST', endpoint=endpoint, status='500').inc()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        REQUEST_LATENCY.labels(endpoint=endpoint).observe(time.time() - start)
 
 if __name__ == "__main__":
     import uvicorn
