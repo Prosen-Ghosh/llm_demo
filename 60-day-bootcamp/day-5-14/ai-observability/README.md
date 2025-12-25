@@ -22,8 +22,10 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 *   **Grafana**: A visualization and analytics software. It allows you to query, visualize, alert on, and explore your metrics. It can be connected to Prometheus as a data source.
 *   **Docker Compose**: The `docker-compose.yml` file is used to orchestrate the deployment of Prometheus and Grafana containers.
 *   **Ollama Exporter**: A custom exporter that scrapes metrics from an Ollama instance and exposes them in a format that Prometheus can understand. This is useful for monitoring the performance and resource usage of your local AI models.
-*   **Weaviate**: A vector database used to store and retrieve vector embeddings for the RAG pipeline.
+*   **Weaviate**: A vector database used to store and retrieve vector embeddings. In this project, it's a standalone component for demonstrating database observability.
 *   **weaviate-seed**: A service that seeds the Weaviate database with initial data.
+*   **Loki**: A log aggregation system designed to store and query logs from all your applications and infrastructure.
+*   **Promtail**: An agent that ships the contents of local logs to a private Loki instance.
 
 ## Project Structure
 
@@ -53,6 +55,12 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 
 To get started, you will need to have Docker and Docker Compose installed.
 
+### Prerequisites
+
+*   **Ollama**: This project assumes you have Ollama installed and running on your host machine. Please see the [Ollama documentation](https://ollama.ai/) for installation instructions.
+
+### Steps
+
 1.  **Start the services:**
     ```bash
     docker-compose up -d
@@ -68,12 +76,15 @@ To get started, you will need to have Docker and Docker Compose installed.
 
 4.  **Access Weaviate:**
     Weaviate will be available at [http://localhost:8080](http://localhost:8080).
+    
+5.  **Access Loki:**
+    Loki will be available at [http://localhost:3100](http://localhost:3100).
 
-## RAG Pipeline
+## Simulated RAG Pipeline
 
-This project now includes a RAG (Retrieval-Augmented Generation) pipeline.
+This project includes a **simulated** RAG (Retrieval-Augmented Generation) pipeline for demonstration purposes.
 
-*   **`/rag_generate` endpoint:** A new endpoint in the `app/main.py` file that takes a prompt and uses a mock RAG pipeline to retrieve context from Weaviate and generate a response.
+*   **`/rag_generate` endpoint:** A new endpoint in the `app/main.py` file that takes a prompt and uses a mock RAG pipeline. This simulation generates realistic latency and metrics for a RAG pipeline, but **it does not actually perform retrieval from the Weaviate database**. The Weaviate instance in this project is a standalone component to demonstrate database monitoring.
 
 ## Configuration
 
@@ -85,6 +96,9 @@ This project now includes a RAG (Retrieval-Augmented Generation) pipeline.
 
 *   **Grafana (`grafana/`):**
     Grafana's configuration and data are persisted in this directory. You can add dashboard configurations here.
+
+*   **Promtail (`app/loki/promtail-config.yml`):**
+    This file configures Promtail to read logs from the application and send them to Loki.
 
 ## Deployment
 

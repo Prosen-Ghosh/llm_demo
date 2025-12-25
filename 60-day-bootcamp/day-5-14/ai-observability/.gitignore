@@ -10,7 +10,7 @@ ENV/
 build/
 dist/
 *.egg-info/
-
+linkedin.md
 # Environment
 .env
 .env.local

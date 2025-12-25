@@ -16,3 +16,7 @@ groups:
           sum(rate(app_request_count_total{status=~"5.."}[5m]))
           /
           sum(rate(app_request_count_total[5m]))
+
+      # 4. Pre-calculate Ollama Memory Usage (Useful for resource monitoring)
+      - record: job:ollama_memory:usage_percent
+        expr: ollama_memory_usage_bytes / node_memory_MemTotal_bytes * 100

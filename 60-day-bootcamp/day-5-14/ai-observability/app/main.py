@@ -1,12 +1,29 @@
 import os
 import time
 import requests
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, HTTPException, Response, Request
 from pydantic import BaseModel
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST, Counter, Histogram, Gauge
 from app.utils import mock_rag_pipeline, RAG_STEP_LATENCY
+import uuid
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("ai_gateway")
+
+def log_with_id(message: str, request: Request = None):
+    req_id = getattr(request.state, "request_id", "system")
+    logger.info(f"[ReqID: {req_id}] {message}")
 
 app = FastAPI(title="AI Observability Gateway")
+
+@app.middleware("http")
+async def add_correlation_id(request: Request, call_next):
+    request_id = request.headers.get("X-Request-ID", str(uuid.uuid4()))
+    request.state.request_id = request_id
+    response = await call_next(request)
+    response.headers["X-Request-ID"] = request_id
+    return response
 
 # --- CONFIG ---
 # We use an environment variable so we can change this in Docker Compose later
@@ -38,7 +55,8 @@ def metrics():
     return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.post("/generate")
-def generate_text(req: GenerateRequest):
+def generate_text(req: GenerateRequest, request: Request):
+    log_with_id(f"Received prompt: {req.prompt[:10]}...", request)
     endpoint = "/generate"
     start_time = time.time()
 
