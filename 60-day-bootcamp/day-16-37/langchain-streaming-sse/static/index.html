@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Streaming Demo</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 LangChain Streaming Demo</h1>
+        <p class="subtitle">Real-time token streaming with Server-Sent Events</p>
+
+        <div class="input-group">
+            <label for="query">Your Question:</label>
+            <textarea id="query"
+                placeholder="Explain machine learning in simple terms.">Explain machine learning in simple terms.</textarea>
+        </div>
+
+        <div class="controls">
+            <div class="control">
+                <label for="temperature">Temperature: <span id="temp-value">0.7</span></label>
+                <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7">
+            </div>
+            <div class="control">
+                <label for="max-tokens">Max Tokens: <span id="tokens-value">2048</span></label>
+                <input type="range" id="max-tokens" min="256" max="4096" step="256" value="2048">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="streamBtn" class="btn-stream">
+                <span class="loading" style="display: none;"></span>
+                <span id="btnText">Stream Response</span>
+            </button>
+            <button id="clearBtn" class="btn-clear">Clear</button>
+        </div>
+
+        <div id="status" class="status">
+            <div class="loading"></div>
+            <div id="statusText" class="status-text">Generating...</div>
+        </div>
+
+        <div class="response-container">
+            <div id="response" class="response-text">Response will appear here...</div>
+        </div>
+
+        <div id="metrics" class="metrics">
+            <div class="metric-item">
+                <span class="metric-label">Time to First Token:</span>
+                <span id="ttft" class="metric-value">-</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Total Tokens:</span>
+                <span id="total-tokens" class="metric-value">-</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Total Duration:</span>
+                <span id="duration" class="metric-value">-</span>
+            </div>
+            <div class="metric-item">
+                <span class="metric-label">Tokens/Second:</span>
+                <span id="tokens-per-sec" class="metric-value">-</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/action.js"></script>
+</body>
+
+</html>
