@@ -5,9 +5,13 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     DEBUG_MODE: bool = False
     LOG_LEVEL: str = "INFO"
+
+    WHISPER_MODEL_SIZE: str = "tiny"
+    DEVICE: str = "cpu"
+    COMPUTE_TYPE: str = "int8"
+    CPU_THREADS: int = 0
     
-    # We will use this in Phase 2 for model storage
-    MODEL_PATH: str = "/root/.cache/huggingface"
+    MODEL_CACHE_DIR: str = "/root/.cache/huggingface"
 
     model_config = SettingsConfigDict(
         env_file=".env",

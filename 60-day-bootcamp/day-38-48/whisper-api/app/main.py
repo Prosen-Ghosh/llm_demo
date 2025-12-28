@@ -1,9 +1,14 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
 import logging
 import time
+import os
+import wave
+import struct
 from app.config import settings
+from app.whisper import whisper_service
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
@@ -11,9 +16,30 @@ logging.basicConfig(
 )
 logger = logging.getLogger("whisper-api")
 
+def create_test_audio(filename="test_audio.wav"):
+    if os.path.exists(filename):
+        return
+    with wave.open(filename, 'w') as f:
+        f.setparams((1, 2, 44100, 44100, 'NONE', 'not compressed'))
+        for _ in range(44100):
+            value = struct.pack('<h', 0)
+            f.writeframes(value)
+    logger.info(f"Created dummy test audio: {filename}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("Initializing Whisper Service...")
+    whisper_service.load_model()
+    
+    create_test_audio("test_audio.wav")
+    
+    yield
+    logger.info("Shutting down...")
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.VERSION,
+    lifespan=lifespan,
     description="High-performance CPU-based Speech-to-Text API",
 )
 
@@ -22,6 +48,9 @@ class HealthResponse(BaseModel):
     version: str
     uptime_seconds: float
     cpu_cores_available: int
+    model_loaded: bool
+    model_size: str
+    cpu_threads: int
 
 start_time = time.time()
 
@@ -51,9 +80,28 @@ async def health_check():
         status="healthy",
         version=settings.VERSION,
         uptime_seconds=round(time.time() - start_time, 2),
-        cpu_cores_available=multiprocessing.cpu_count()
+        cpu_cores_available=multiprocessing.cpu_count(),
+        model_loaded=whisper_service.model is not None,
+        model_size=settings.WHISPER_MODEL_SIZE,
+        cpu_threads=multiprocessing.cpu_count()
     )
 
 @app.get("/")
 async def root():
     return {"message": f"Welcome to {settings.APP_NAME} v{settings.VERSION}"}
+
+@app.post("/test-transcribe")
+async def test_transcribe():
+    try:
+        start = time.time()
+        result = whisper_service.transcribe_file("test_audio.wav")
+        process_time = time.time() - start
+        
+        return {
+            "status": "success",
+            "processing_time": round(process_time, 3),
+            "result": result
+        }
+    except Exception as e:
+        logger.error(f"Transcription error: {e}")
+        return JSONResponse(status_code=500, content={"error": str(e)})

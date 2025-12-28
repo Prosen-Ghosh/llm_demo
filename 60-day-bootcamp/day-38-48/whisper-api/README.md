@@ -5,6 +5,7 @@ This project provides a high-performance, CPU-based Speech-to-Text API using the
 ## Table of Contents
 
 - [Features](#features)
+- [Configuration](#configuration)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -18,7 +19,20 @@ This project provides a high-performance, CPU-based Speech-to-Text API using the
 - **Fast and Efficient:** Built on `faster-whisper`, a reimplementation of OpenAI's Whisper model that is up to 4 times faster.
 - **CPU-Optimized:** Runs efficiently on CPU, making it accessible without specialized hardware.
 - **Easy to Deploy:** Containerized with Docker for simple setup and deployment.
-- **Health Check:** Includes a `/health` endpoint for monitoring service status.
+- **Health Check:** Includes a `/health` endpoint for monitoring service status and model information.
+
+## Configuration
+
+The following environment variables can be set to configure the application:
+
+| Variable             | Description                                     | Default |
+| -------------------- | ----------------------------------------------- | ------- |
+| `WHISPER_MODEL_SIZE` | The size of the Whisper model to use.           | `tiny`  |
+| `DEVICE`             | The device to run the model on (`cpu` or `cuda`). | `cpu`   |
+| `COMPUTE_TYPE`       | The compute type for the model.                 | `int8`  |
+| `CPU_THREADS`        | The number of CPU threads to use.               | `0`     |
+| `MODEL_CACHE_DIR`    | The directory to cache the model in.            | `/root/.cache/huggingface` |
+
 
 ## Getting Started
 
@@ -50,7 +64,7 @@ This project provides a high-performance, CPU-based Speech-to-Text API using the
   - **Response:**
     ```json
     {
-      "message": "Welcome to Whisper API v0.1.0"
+      "message": "Welcome to Whisper API v1.0.0"
     }
     ```
 
@@ -60,9 +74,35 @@ This project provides a high-performance, CPU-based Speech-to-Text API using the
     ```json
     {
       "status": "healthy",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "uptime_seconds": 123.45,
-      "cpu_cores_available": 8
+      "cpu_cores_available": 8,
+      "model_loaded": true,
+      "model_size": "tiny",
+      "cpu_threads": 8
+    }
+    ```
+
+- **`POST /test-transcribe`**
+  - **Description:** Performs a test transcription of a dummy audio file.
+  - **Response:**
+    ```json
+    {
+        "status": "success",
+        "processing_time": 0.123,
+        "result": {
+            "language": "en",
+            "language_probability": 0.99,
+            "duration": 1.0,
+            "text": "Hello world.",
+            "segments": [
+                {
+                    "start": 0.0,
+                    "end": 1.0,
+                    "text": "Hello world."
+                }
+            ]
+        }
     }
     ```
 
@@ -84,7 +124,8 @@ docker-compose exec whisper-api pytest
 ├── app
 │   ├── config.py
 │   ├── main.py
-│   └── test_main.py
+│   ├── test_main.py
+│   └── whisper.py
 ├── docker-compose.yml
 ├── Dockerfile
 ├── requirements.txt
