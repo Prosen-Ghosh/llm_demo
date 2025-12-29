@@ -44,7 +44,7 @@ class WhisperService:
         segments, info = self.model.transcribe(
             file_path, 
             beam_size=5,
-            language="en", # Defaulting to English for Phase 2
+            language="bn",
             condition_on_previous_text=False
         )
 

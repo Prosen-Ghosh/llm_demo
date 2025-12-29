@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
@@ -9,6 +9,7 @@ import wave
 import struct
 from app.config import settings
 from app.whisper import whisper_service
+from app.utils import validate_file_extension, save_upload_file_tmp, delete_file
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
@@ -30,8 +31,7 @@ def create_test_audio(filename="test_audio.wav"):
 async def lifespan(app: FastAPI):
     logger.info("Initializing Whisper Service...")
     whisper_service.load_model()
-    
-    create_test_audio("test_audio.wav")
+    # create_test_audio("test_audio.wav")
     
     yield
     logger.info("Shutting down...")
@@ -89,6 +89,33 @@ async def health_check():
 @app.get("/")
 async def root():
     return {"message": f"Welcome to {settings.APP_NAME} v{settings.VERSION}"}
+
+@app.post("/transcribe")
+def transcribe_audio(
+    background_tasks: BackgroundTasks,
+    file: UploadFile = File(...),
+):
+    validate_file_extension(file.filename)
+    temp_file_path = save_upload_file_tmp(file)
+    try:
+        logger.info(f"Processing file: {file.filename} ({temp_file_path})")
+        result = whisper_service.transcribe_file(temp_file_path)
+        
+        return {
+            "filename": file.filename,
+            "language": result["language"],
+            "duration": result["duration"],
+            "text": result["text"],
+            "segments": result["segments"] 
+        }
+
+    except Exception as e:
+        logger.error(f"Transcription failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+        
+    finally:
+        background_tasks.add_task(delete_file, temp_file_path)
+
 
 @app.post("/test-transcribe")
 async def test_transcribe():

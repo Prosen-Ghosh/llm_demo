@@ -6,10 +6,10 @@ class Settings(BaseSettings):
     DEBUG_MODE: bool = False
     LOG_LEVEL: str = "INFO"
 
-    WHISPER_MODEL_SIZE: str = "tiny"
+    WHISPER_MODEL_SIZE: str = "large-v3"
     DEVICE: str = "cpu"
-    COMPUTE_TYPE: str = "int8"
-    CPU_THREADS: int = 0
+    COMPUTE_TYPE: str = "int8_float32"
+    CPU_THREADS: int = 1
     
     MODEL_CACHE_DIR: str = "/root/.cache/huggingface"
 

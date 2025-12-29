@@ -45,3 +45,13 @@ The primary goal of this bootcamp is to rapidly prototype and learn by building.
     *   **Why we built this:** To showcase a simple example of how to add custom middleware to a FastAPI application to process incoming requests and add context to them.
 
 Each project within the day-specific folders has its own `README.md` with detailed setup and usage instructions.
+
+```
+Size	Parameters	English-only	Multilingual
+tiny	39 M	✓	✓
+base	74 M	✓	✓
+small	244 M	✓	✓
+medium	769 M	✓	✓
+large	1550 M	x	✓
+large-v2	1550 M	x	✓
+```
