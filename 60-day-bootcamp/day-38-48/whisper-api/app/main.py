@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, UploadFile, File, HTTPException, BackgroundTasks
+from fastapi import FastAPI, Request, UploadFile, File, HTTPException, BackgroundTasks, Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
@@ -9,7 +9,8 @@ import wave
 import struct
 from app.config import settings
 from app.whisper import whisper_service
-from app.utils import validate_file_extension, save_upload_file_tmp, delete_file
+from app.utils import validate_file_extension, save_upload_file_tmp, delete_file, check_model_suitability
+from app.preprocessing import normalize_audio
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
@@ -82,7 +83,7 @@ async def health_check():
         uptime_seconds=round(time.time() - start_time, 2),
         cpu_cores_available=multiprocessing.cpu_count(),
         model_loaded=whisper_service.model is not None,
-        model_size=settings.WHISPER_MODEL_SIZE,
+        model_size=settings.DEFAULT_MODEL_SIZE,
         cpu_threads=multiprocessing.cpu_count()
     )
 
@@ -94,20 +95,33 @@ async def root():
 def transcribe_audio(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
+    language: str = Query("en", min_length=2, max_length=2, description="Language code (e.g., en, es, bn)")
 ):
     validate_file_extension(file.filename)
     temp_file_path = save_upload_file_tmp(file)
+    processed_file_path = None
     try:
-        logger.info(f"Processing file: {file.filename} ({temp_file_path})")
-        result = whisper_service.transcribe_file(temp_file_path)
+        processed_file_path = normalize_audio(temp_file_path)
+        current_model = whisper_service.current_model_size
+        suitability_warning = check_model_suitability(language, current_model)
+
+        logger.info(f"Processing file: {file.filename} ({processed_file_path})")
+        result = whisper_service.transcribe_file(processed_file_path, language=language)
         
-        return {
+        response_payload = {
             "filename": file.filename,
+            "model": result["model_used"],
             "language": result["language"],
             "duration": result["duration"],
+            "language_probability": result["language_probability"],
             "text": result["text"],
-            "segments": result["segments"] 
+            "segments": result["segments"]
         }
+
+        if suitability_warning:
+            response_payload["system_warning"] = suitability_warning
+
+        return response_payload
 
     except Exception as e:
         logger.error(f"Transcription failed: {str(e)}")
@@ -115,20 +129,17 @@ def transcribe_audio(
         
     finally:
         background_tasks.add_task(delete_file, temp_file_path)
+        if processed_file_path:
+            background_tasks.add_task(delete_file, processed_file_path)
 
 
-@app.post("/test-transcribe")
-async def test_transcribe():
+@app.put("/system/model")
+def switch_model(model_size: str):
+    if model_size not in settings.ALLOWED_MODELS:
+        raise HTTPException(status_code=400, detail=f"Model not allowed. Options: {settings.ALLOWED_MODELS}")
+    
     try:
-        start = time.time()
-        result = whisper_service.transcribe_file("test_audio.wav")
-        process_time = time.time() - start
-        
-        return {
-            "status": "success",
-            "processing_time": round(process_time, 3),
-            "result": result
-        }
+        whisper_service.load_model(model_size)
+        return {"status": "success", "current_model": model_size}
     except Exception as e:
-        logger.error(f"Transcription error: {e}")
-        return JSONResponse(status_code=500, content={"error": str(e)})
+        raise HTTPException(status_code=500, detail=str(e))

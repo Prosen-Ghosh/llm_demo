@@ -7,3 +7,4 @@ faster-whisper
 pytest
 httpx
 python-multipart
+ffmpeg-python

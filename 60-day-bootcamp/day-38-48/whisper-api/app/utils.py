@@ -5,7 +5,11 @@ from fastapi import UploadFile, HTTPException
 from pathlib import Path
 
 # valid extensions
-SUPPORTED_EXTENSIONS = {".wav", ".mp3"}
+SUPPORTED_EXTENSIONS = {".wav", ".mp3", ".ogg"}
+LANGUAGE_MODEL_REQUIREMENTS = {
+    "bn": ["medium", "large-v2", "large-v3"],
+    "en": ["tiny", "base", "small", "medium", "large-v2", "large-v3"]
+}
 
 def validate_file_extension(filename: str):
     ext = os.path.splitext(filename)[1].lower()
@@ -38,3 +42,13 @@ def delete_file(file_path: str):
             print(f"Deleted temp file: {file_path}")
     except Exception as e:
         print(f"Error deleting temp file {file_path}: {e}")
+
+def check_model_suitability(language: str, current_model: str) -> dict:
+    recommended = LANGUAGE_MODEL_REQUIREMENTS.get(language)
+    
+    if recommended and current_model not in recommended:
+        return {
+            "warning": True,
+            "message": f"Model '{current_model}' may yield poor results for '{language}'. Recommended: {recommended}"
+        }
+    return None
