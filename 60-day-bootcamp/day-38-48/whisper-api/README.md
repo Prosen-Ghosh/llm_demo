@@ -179,6 +179,55 @@ The following environment variables can be set to configure the application:
     }
     ```
 
+## What's New
+
+*   **Batch Transcription Endpoint:** A new endpoint (`/v2/batch-transcribe`) for transcribing multiple files at once.
+*   **Job Status Endpoint:** A new endpoint (`/v2/jobs/{job_id}`) to check the status of transcription jobs.
+
+## API Endpoints (V2)
+
+- **`POST /v2/batch-transcribe`**
+  - **Description:** Transcribes a batch of audio files asynchronously.
+  - **Request:** `multipart/form-data` with a `files` field containing the audio files.
+  - **Query Parameters:**
+    *   `language` (optional, default: `en`): The language of the audio files.
+  - **Example:**
+    ```bash
+    curl -X POST "http://localhost:8000/v2/batch-transcribe?language=en" -F "files=@/path/to/audio1.wav" -F "files=@/path/to/audio2.mp3"
+    ```
+  - **Response:**
+    ```json
+    [
+        "job_id_1",
+        "job_id_2"
+    ]
+    ```
+
+- **`GET /v2/jobs/{job_id}`**
+  - **Description:** Retrieves the status of a transcription job.
+  - **Example:**
+    ```bash
+    curl -X GET "http://localhost:8000/v2/jobs/job_id_1"
+    ```
+  - **Response:**
+    ```json
+    {
+        "job_id": "job_id_1",
+        "status": "completed",
+        "result": {
+            "text": "The transcribed text of the audio.",
+            "segments": [
+                {
+                    "start": 0.0,
+                    "end": 5.0,
+                    "text": "The transcribed text"
+                }
+            ],
+            "language": "en"
+        }
+    }
+    ```
+
 ## Running Tests
 
 To run the tests, execute the following command:

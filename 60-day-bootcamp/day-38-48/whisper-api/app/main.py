@@ -11,6 +11,9 @@ from app.config import settings
 from app.whisper import whisper_service
 from app.utils import validate_file_extension, save_upload_file_tmp, delete_file, check_model_suitability
 from app.preprocessing import normalize_audio
+from app.jobs import job_manager, Job
+from app.worker import process_transcription_job
+from typing import List
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
@@ -143,3 +146,33 @@ def switch_model(model_size: str):
         return {"status": "success", "current_model": model_size}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/v2/batch-transcribe", response_model=List[str])
+def batch_transcribe(
+    background_tasks: BackgroundTasks,
+    files: List[UploadFile] = File(...),
+    language: str = Query("en", min_length=2, max_length=2)
+):
+    job_ids = []
+    
+    for file in files:
+        validate_file_extension(file.filename)
+        file_path = save_upload_file_tmp(file)
+        job_id = job_manager.create_job(file.filename)
+        job_ids.append(job_id)
+
+        background_tasks.add_task(
+            process_transcription_job, 
+            job_id, 
+            file_path, 
+            language
+        )
+        
+    return job_ids
+
+@app.get("/v2/jobs/{job_id}", response_model=Job)
+def get_job_status(job_id: str):
+    job = job_manager.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return job
