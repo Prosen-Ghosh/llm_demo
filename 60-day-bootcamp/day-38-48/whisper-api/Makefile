@@ -10,6 +10,8 @@ logs:
 	docker-compose logs -f
 test:
 	docker-compose exec whisper-api pytest tests/
+test-file:
+	docker-compose exec whisper-api pytest $(FILE)
 shell:
 	docker-compose exec whisper-api /bin/bash
 clean:

@@ -18,6 +18,10 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PATH="/root/.local/bin:$PATH"
+    
+ENV OMP_NUM_THREADS=1 
+ENV MKL_NUM_THREADS=1
+ENV CT_NUM_THREADS=1
 
 RUN apt-get update && apt-get install -y \
     curl \

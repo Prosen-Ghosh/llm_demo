@@ -8,3 +8,5 @@ pytest
 httpx
 python-multipart
 ffmpeg-python
+psutil
+pytest-asyncio

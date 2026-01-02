@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, UploadFile, File, HTTPException, BackgroundTasks, Query
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 import logging
@@ -14,12 +14,24 @@ from app.preprocessing import normalize_audio
 from app.jobs import job_manager, Job
 from app.worker import process_transcription_job
 from typing import List
+from enum import Enum
+import asyncio
+from app.monitoring import get_system_metrics, run_garbage_collector
+import json
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger("whisper-api")
+
+async def periodic_maintenance():
+    while True:
+        await asyncio.sleep(60)
+        run_garbage_collector(max_job_age_seconds=3600)
+        
+        metrics = get_system_metrics()
+        logger.info(f"System Health: RAM={metrics['memory_used_mb']}MB | Jobs={metrics['total_jobs_in_memory']}")
 
 def create_test_audio(filename="test_audio.wav"):
     if os.path.exists(filename):
@@ -36,7 +48,7 @@ async def lifespan(app: FastAPI):
     logger.info("Initializing Whisper Service...")
     whisper_service.load_model()
     # create_test_audio("test_audio.wav")
-    
+    asyncio.create_task(periodic_maintenance())
     yield
     logger.info("Shutting down...")
 
@@ -55,6 +67,11 @@ class HealthResponse(BaseModel):
     model_loaded: bool
     model_size: str
     cpu_threads: int
+
+class ProcessingMode(str, Enum):
+    ACCURATE = "accurate"  # Beam size 5 (Default)
+    BALANCED = "balanced"  # Beam size 2
+    TURBO = "turbo"        # Greedy decoding (Beam size 1)
 
 start_time = time.time()
 
@@ -98,7 +115,7 @@ async def root():
 def transcribe_audio(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
-    language: str = Query("en", min_length=2, max_length=2, description="Language code (e.g., en, es, bn)")
+    language: str = Query("auto", description="Language code or 'auto'"),
 ):
     validate_file_extension(file.filename)
     temp_file_path = save_upload_file_tmp(file)
@@ -151,8 +168,21 @@ def switch_model(model_size: str):
 def batch_transcribe(
     background_tasks: BackgroundTasks,
     files: List[UploadFile] = File(...),
-    language: str = Query("en", min_length=2, max_length=2)
+    language: str = Query("auto", description="Language code or 'auto'"),
+    mode: ProcessingMode = Query(ProcessingMode.ACCURATE, description="Optimization mode"),
+    keywords: str = Query(None, description="Comma-separated custom terms (e.g., 'Jashore, Docker, API')")
 ):
+    initial_prompt = None
+    if keywords:
+        initial_prompt = f"Glossary: {keywords}."
+
+    decode_options = {
+        ProcessingMode.ACCURATE: {"beam_size": 5, "best_of": 5},
+        ProcessingMode.BALANCED: {"beam_size": 2, "best_of": 2},
+        ProcessingMode.TURBO:    {"beam_size": 1, "best_of": 1} # Greedy
+    }
+    
+    params = decode_options[mode]
     job_ids = []
     
     for file in files:
@@ -165,7 +195,10 @@ def batch_transcribe(
             process_transcription_job, 
             job_id, 
             file_path, 
-            language
+            language,
+            params["beam_size"],
+            params["best_of"],
+            initial_prompt
         )
         
     return job_ids
@@ -176,3 +209,29 @@ def get_job_status(job_id: str):
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
+
+@app.get("/system/stats")
+def system_stats():
+    return get_system_metrics()
+
+@app.post("/stream")
+async def stream_transcription(
+    file: UploadFile = File(...),
+    language: str = Query("en", min_length=2, max_length=2),
+):
+    validate_file_extension(file.filename)
+    temp_file_path = save_upload_file_tmp(file)
+
+    def iterfile():
+        try:
+            processed_path = normalize_audio(temp_file_path)
+            yield from whisper_service.stream_transcribe(processed_path, language=language)
+            delete_file(processed_path)
+            
+        except Exception as e:
+            logger.error(f"Streaming error: {e}")
+            yield f"data: {json.dumps({'error': str(e)})}\n\n"
+        finally:
+            delete_file(temp_file_path)
+
+    return StreamingResponse(iterfile(), media_type="text/event-stream")
