@@ -1,3 +1,5 @@
+[<- Back to Main README](../../README.md)
+
 # Function Calling Demo
 
 This project is a FastAPI-based application that demonstrates an enterprise-grade function calling system using a Large Language Model (LLM). The application is designed to be a pluggable and extensible system, with an example implementation using Ollama. It allows the LLM to use a set of external tools, such as a calculator, weather service, and web search, to provide more accurate and context-aware responses.

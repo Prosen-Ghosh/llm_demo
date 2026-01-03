@@ -1,6 +1,11 @@
+[<- Back to Main README](../../../README.md)
+
 # LLM Middleware with FastAPI
 
 This project demonstrates how to build a FastAPI application with a custom middleware for processing requests and a simple LangGraph agent.
+
+## Purpose
+The main purpose of this project is to showcase how to integrate a custom middleware with a FastAPI application to process incoming requests and add context to them. It also demonstrates how to build a simple agent using LangGraph.
 
 ## How it Works
 
@@ -18,9 +23,9 @@ The `request_context_middleware` in `app/middleware.py` intercepts incoming requ
 - Retrieves the `q` query parameter, strips leading/trailing whitespace, and stores it in `request.state.sanitized_q`.
 - Adds the request ID to the response headers as `X-Request-ID`.
 
-### Agent
+### Agent and Graph
 
-The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with a single node. The agent takes a payload and returns a processed output.
+The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with a single node. The agent takes a payload and returns a processed output. The graph is defined in `app/graph.py` and consists of a single node that calls a tool.
 
 ## Project Structure
 
@@ -52,7 +57,7 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
 
 1. Clone the repository:
    ```bash
-   git clone git@github.com:Prosen-Ghosh/llm_demo.git
+   git clone https://github.com/Prosen-Ghosh/llm_demo.git
    cd 60-day-bootcamp/day-16-37/llm-middleware-fastapi
    ```
 
@@ -111,3 +116,11 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
   ```bash
   curl -X GET "http://localhost:8000/health"
   ```
+
+## Future Improvements
+*   Add more complex agents and graphs.
+*   Implement a more sophisticated middleware for authentication and authorization.
+*   Add more tools to the agent.
+
+## Contributing
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or find any bugs.

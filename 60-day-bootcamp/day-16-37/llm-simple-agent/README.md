@@ -1,8 +1,13 @@
+[<- Back to Main README](../../../README.md)
+
 # LLM Simple Agent
 
 This project is a simple demonstration of a tool-calling agent built with LangChain and FastAPI. The agent is capable of understanding user queries and routing them to the appropriate tool, either a calculator or a web search tool.
 
 ![llm-simple-agent](llm-simple-agent.png)
+
+## Purpose
+The main purpose of this project is to provide a simple and easy-to-understand example of a tool-calling agent. It demonstrates how to build an agent that can use external tools to answer questions and perform actions.
 
 ## Tech Stack
 
@@ -23,8 +28,8 @@ This project is a simple demonstration of a tool-calling agent built with LangCh
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/llm-simple-agent.git
-    cd llm-simple-agent
+    git clone https://github.com/Prosen-Ghosh/llm_demo.git
+    cd 60-day-bootcamp/day-16-37/llm-simple-agent
     ```
 
 2.  **Pull the Ollama model:**
@@ -72,6 +77,11 @@ curl -X POST "http://localhost:8000/ask" -H "Content-Type: application/json" -d 
 ├── README.md
 └── requirements.txt
 ```
+
+## Future Improvements
+*   Add more tools to the agent.
+*   Implement a more sophisticated agent with memory.
+*   Add a user interface for interacting with the agent.
 
 ## Contributing
 

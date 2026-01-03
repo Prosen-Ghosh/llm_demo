@@ -1,3 +1,5 @@
+[<- Back to Main README](../../README.md)
+
 # AI Observability
 
 This directory contains a basic setup for AI observability using Prometheus and Grafana, designed to monitor AI applications.
@@ -8,6 +10,8 @@ This directory contains a basic setup for AI observability using Prometheus and 
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
+- [Simulated RAG Pipeline](#simulated-rag-pipeline)
+- [The `app` Directory](#the-app-directory)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [Future Improvements](#future-improvements)
@@ -82,9 +86,19 @@ To get started, you will need to have Docker and Docker Compose installed.
 
 ## Simulated RAG Pipeline
 
-This project includes a **simulated** RAG (Retrieval-Augmented Generation) pipeline for demonstration purposes.
+This project includes a **simulated** RAG (Retrieval-Augmented Generation) pipeline for demonstration purposes. The primary goal of this simulation is to generate realistic metrics for the observability stack (Prometheus and Grafana) without the complexity of a full RAG implementation.
 
-*   **`/rag_generate` endpoint:** A new endpoint in the `app/main.py` file that takes a prompt and uses a mock RAG pipeline. This simulation generates realistic latency and metrics for a RAG pipeline, but **it does not actually perform retrieval from the Weaviate database**. The Weaviate instance in this project is a standalone component to demonstrate database monitoring.
+*   **`/rag_generate` endpoint:** An endpoint in `app/main.py` that takes a prompt and uses a `mock_rag_pipeline` to simulate the steps of a RAG pipeline (embedding and retrieval).
+*   **Metric Generation:** The mock pipeline generates realistic latency and metrics for each step of the RAG process, which can be visualized in Grafana.
+*   **No Real Retrieval:** It's important to note that this simulation **does not** actually perform retrieval from the Weaviate database. The Weaviate instance in this project is a standalone component to demonstrate database monitoring.
+
+## The `app` Directory
+
+The `app` directory contains the source code for the FastAPI application that acts as a gateway to the Ollama service and generates metrics for the observability stack.
+
+*   `main.py`: The entry point of the FastAPI application. It defines the API endpoints, including `/generate` and `/rag_generate`, and exposes Prometheus metrics at the `/metrics` endpoint.
+*   `seed_weaviate.py`: A script that creates a schema in Weaviate and inserts dummy data. This is run as a separate service to seed the Weaviate database.
+*   `utils.py`: Contains the `mock_rag_pipeline` function, which simulates the steps of a RAG pipeline and records Prometheus metrics.
 
 ## Configuration
 

@@ -1,3 +1,5 @@
+[<- Back to Main README](../../README.md)
+
 # Invoice Extraction Demo
 
 This demo showcases an enterprise-grade solution for extracting structured data from unstructured invoice text using Large Language Models (LLMs). It leverages both local models via Ollama and commercial models via OpenRouter, with a built-in repair engine to handle extraction failures and ensure data quality.

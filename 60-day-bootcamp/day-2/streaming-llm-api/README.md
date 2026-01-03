@@ -1,3 +1,5 @@
+[<- Back to Main README](../../README.md)
+
 # Streaming LLM API
 
 This project is a demonstration of a production-ready API gateway for interacting with Large Language Models (LLMs). It showcases production-grade features and best practices, acting as a central hub to connect your applications to various LLM providers like Ollama and OpenRouter. It offers essential features for scalability, monitoring, and cost management. Whether you're building a chatbot, a content generation tool, or any other AI-powered application, this project provides a robust architectural foundation.

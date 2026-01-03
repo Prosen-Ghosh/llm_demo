@@ -1,3 +1,5 @@
+[<- Back to Main README](../../README.md)
+
 # LangChain Streaming with SSE
 
 Real-time LLM token streaming using Server-Sent Events (SSE) with FastAPI and LangChain.
@@ -6,7 +8,7 @@ Real-time LLM token streaming using Server-Sent Events (SSE) with FastAPI and La
 
 1. Clone and navigate to directory:
    ```bash
-   git clone 
+   git clone <repository-url>
    cd langchain-streaming-sse
    ```
 
@@ -92,4 +94,12 @@ When a user sends a query, the FastAPI backend passes it to LangChain, which gen
 - `OLLAMA_MODEL` - Model name (default: llama2)
 - `MAX_TOKENS` - Maximum tokens per response
 - `DEFAULT_TEMPERATURE` - Default temperature (0.0-1.0)
+
+## Future Improvements
+*   Add support for more LLM providers.
+*   Implement a more sophisticated caching mechanism.
+*   Add more detailed logging and tracing.
+
+## Contributing
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or find any bugs.
 ```
