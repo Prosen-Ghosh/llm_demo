@@ -19,7 +19,7 @@ from app.strategies.self_consistency import SelfConsistencyStrategy
 from app.utils.logger import StructuredLogger
 
 llm_client = OllamaClient()
-prompt_manager = PromptVersionManager(settings.database_url if hasattr(settings, 'database_url') else "sqlite+aiosqlite:///./data/prompts.db")
+prompt_manager = PromptVersionManager(settings.database_url)
 query_analyzer = QueryAnalyzer()
 structured_logger = StructuredLogger()
 @asynccontextmanager
