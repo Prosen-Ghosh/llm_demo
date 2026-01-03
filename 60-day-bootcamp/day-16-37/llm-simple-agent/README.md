@@ -1,4 +1,4 @@
-# Simple Tool-Calling Agent
+# LLM Simple Agent
 
 This project is a simple demonstration of a tool-calling agent built with LangChain and FastAPI. The agent is capable of understanding user queries and routing them to the appropriate tool, either a calculator or a web search tool.
 

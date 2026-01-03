@@ -1,4 +1,4 @@
-# Simple Search Agent (LangChain + SerpAPI)
+# Simple Search Agent
 
 This project is a simple web-based AI agent that can answer questions about current events by searching the web. It's built using Python, LangChain, Streamlit, SerpAPI, and OpenRouter.
 

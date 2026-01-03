@@ -1,4 +1,4 @@
-# 60-Day Bootcamp: Profile Enricher
+# Profile Enricher
 
 This project is part of a 60-day bootcamp, and this specific service is a **Profile Enricher**.
 
