@@ -4,6 +4,8 @@ from collections import OrderedDict
 from typing import Optional, Dict, Any
 from threading import Lock
 
+from app.config import settings
+
 logger = logging.getLogger("whisper-api")
 
 def compute_file_hash(file_path: str) -> str:
@@ -37,4 +39,4 @@ class ResultsCache:
                 removed_hash, _ = self.cache.popitem(last=False) # pop from start (FIFO/LRU)
                 logger.info(f"Cache full. Evicted: {removed_hash[:8]}...")
 
-results_cache = ResultsCache(capacity=100)
+results_cache = ResultsCache(capacity=settings.CACHE_SIZE)

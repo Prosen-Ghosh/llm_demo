@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     COMPUTE_TYPE: str = "int8_float32"
     CPU_THREADS: int = 2
     NUMBER_OF_WORKERS: int = 4
+    CACHE_SIZE: int = 100
     
     MODEL_CACHE_DIR: str = "/root/.cache/huggingface"
 
