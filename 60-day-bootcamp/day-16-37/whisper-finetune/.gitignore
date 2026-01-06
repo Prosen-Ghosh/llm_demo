@@ -47,5 +47,5 @@ tensorboard/
 .nvidia/
 
 huggingface_cache
-
+whisper-test
 tensorboard_logs
