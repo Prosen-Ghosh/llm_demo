@@ -1,6 +1,17 @@
 # Simple Search Agent
 
-This project is a simple web-based AI agent that can answer questions about current events by searching the web. It's built using Python, LangChain, Streamlit, SerpAPI, and OpenRouter.
+## Table of Contents
+- [What it does](#what-it-does)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local Development](#local-development)
+  - [Using Docker](#using-docker)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Demo App Preview](#demo-app-preview)
+- [Purpose and Learnings](#purpose-and-learnings)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## What it does
 
@@ -40,7 +51,7 @@ The application provides a web interface where you can ask a question. The agent
 3.  **Set up your API keys:**
     - Create a `.env` file by copying the example file:
     ```bash
-    cp example.env .env
+    cp .env.example .env
     ```
     - Edit the `.env` file and add your API keys:
         - `SERPAPI_API_KEY`: Get this from [SerpApi](https://serpapi.com/manage-api-key).
@@ -73,7 +84,7 @@ The application provides a web interface where you can ask a question. The agent
 ├── README.md           # This README file.
 ├── agent_tools.py      # Defines the tools available to the LangChain agent (e.g., web search).
 ├── app.py              # Main entry point for the Streamlit application.
-├── example.env         # Example environment file for API keys.
+├── .env.example        # Example environment file for API keys.
 ├── requirements.txt    # Lists all Python dependencies.
 ├── setup.sh            # A shell script to automate the setup process.
 ├── simple_agent.py     # Contains the core logic for the LangChain agent.
@@ -109,7 +120,8 @@ You can try the demo app live here: https://simple-search-agent.streamlit.app/
 This project serves as a practical example of how to build a simple but powerful AI agent. Key learnings include:
 
 -   **Building an AI Agent:** Understand the basic components of an AI agent, including the agent itself, tools, and the orchestrating framework (LangChain).
--   **Using External Tools:** Learn how to give an AI agent access to external tools, in this case, a web search API (SerpAPI). This allows the agent to access up-to-date information that is not in its training data.
+-   **Using External Tools:** Learn how to give an AI agent access to external tools, in this case, a web search API (SerpAPI).
+ This allows the agent to access up-to-date information that is not in its training data.
 -   **LangChain for Orchestration:** See how LangChain can be used to easily connect and orchestrate different components like LLMs, prompts, and tools.
 -   **Streamlit for UI:** Learn how to quickly build an interactive and user-friendly web interface for an AI application using Streamlit.
 -   **Accessing LLMs via OpenRouter:** Understand how to use OpenRouter to access a variety of LLMs from different providers with a single API key.
@@ -118,3 +130,7 @@ This project serves as a practical example of how to build a simple but powerful
 ## 🤝 Contributing
 
 Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.

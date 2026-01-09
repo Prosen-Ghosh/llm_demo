@@ -1,4 +1,4 @@
-[<- Back to Main README](../../README.md)
+[<- Back to Main README](README.md)
 
 # LangChain Streaming with SSE
 
@@ -88,12 +88,44 @@ When a user sends a query, the FastAPI backend passes it to LangChain, which gen
 -   ✅ **Containerized**: Packaged with Docker for consistent and hassle-free deployment.
 -   ✅ **Health and API Docs**: Includes `/health` for monitoring and `/docs` for interactive API documentation.
 
+## Project Structure
+```
+.
+├── app/
+│   ├── __init__.py
+│   ├── callbacks.py
+│   ├── main.py
+│   ├── models.py
+│   └── streaming.py
+├── static/
+│   └── index.html
+├── tests/
+│   └── ...
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── README.md
+└── requirements.txt
+```
+
+*   `app/`: Contains the core application logic.
+    *   `main.py`: The FastAPI application entry point, defining API endpoints.
+    *   `streaming.py`: Handles the SSE streaming logic.
+    *   `callbacks.py`: LangChain callbacks for streaming.
+    *   `models.py`: Pydantic models for request and response validation.
+*   `static/`: Contains the frontend HTML, CSS, and JavaScript files.
+*   `tests/`: Contains tests for the application.
+
 ## 🔧 Environment Variables
 
 - `OLLAMA_API_URL` - Ollama API endpoint
 - `OLLAMA_MODEL` - Model name (default: llama2)
 - `MAX_TOKENS` - Maximum tokens per response
 - `DEFAULT_TEMPERATURE` - Default temperature (0.0-1.0)
+
+**Note:**
+* The `.env.example` file serves as a template for the environment variables required by the application. Copy this file to `.env` and customize it with your specific settings.
 
 ## Future Improvements
 *   Add support for more LLM providers.
@@ -102,4 +134,3 @@ When a user sends a query, the FastAPI backend passes it to LangChain, which gen
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or find any bugs.
-```

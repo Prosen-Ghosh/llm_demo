@@ -1,4 +1,4 @@
-[<- Back to Main README](../../../README.md)
+[<- Back to Main README](/README.md)
 
 # LLM Simple Agent
 
@@ -11,10 +11,10 @@ The main purpose of this project is to provide a simple and easy-to-understand e
 
 ## Tech Stack
 
-*   **[LangChain](https://python.langchain.com/v0.1/docs/get_started/introduction/)**: For building the agent and managing its control flow.
-*   **[Ollama](https://ollama.ai/)**: For running the local LLM (e.g., Llama 3).
-*   **[FastAPI](https://fastapi.tiangolo.com/)**: For serving the agent as a REST API.
-*   **[Docker](https://www.docker.com/)**: For containerizing the application.
+*   **[LangChain](https://python.langchain.com/v0.1/docs/get_started/introduction/)**: A framework for developing applications powered by language models, used here for building the agent and managing its control flow.
+*   **[Ollama](https://ollama.ai/)**: A tool for running large language models locally, enabling the use of models like Llama 3 without requiring external API access.
+*   **[FastAPI](https://fastapi.tiangolo.com/)**: A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints, used for serving the agent as a REST API.
+*   **[Docker](https://www.docker.com/)**: A platform for developing, shipping, and running applications in containers, used here for containerizing the application for easy deployment and scalability.
 
 ## Getting Started
 
@@ -44,6 +44,8 @@ The main purpose of this project is to provide a simple and easy-to-understand e
     docker-compose up --build
     ```
 
+**Note:** The `.env.example` file provides a template for environment variables. Copy it to `.env` and configure as needed.
+
 ## Usage
 
 Once the application is running, you can interact with the agent by sending POST requests to the `/ask` endpoint.
@@ -68,14 +70,17 @@ curl -X POST "http://localhost:8000/ask" -H "Content-Type: application/json" -d 
 
 ```
 .
-├── app
-│   ├── agents.py
-│   ├── __init__.py
-│   └── main.py
-├── docker-compose.yml
-├── Dockerfile
-├── README.md
-└── requirements.txt
+├── app/
+│   ├── __init__.py         # Initializes the app package.
+│   ├── agents.py           # Defines the LangChain agent with its tools and logic.
+│   └── main.py             # FastAPI application entry point, setting up endpoints.
+├── .env.example            # Example environment variables for configuration.
+├── .gitignore              # Specifies intentionally untracked files to ignore.
+├── docker-compose.yml      # Docker Compose configuration for multi-container Docker applications.
+├── Dockerfile              # Defines how to build the Docker image for the application.
+├── llm-simple-agent.png    # Diagram or image illustrating the LLM simple agent.
+├── README.md               # Project README file.
+└── requirements.txt        # Lists Python package dependencies.
 ```
 
 ## Future Improvements

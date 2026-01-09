@@ -2,6 +2,24 @@
 
 This project provides a comprehensive guide to fine-tuning Large Language Models (LLMs) using various techniques and datasets. It covers data preparation, model training (including parameter-efficient methods), and evaluation.
 
+## Table of Contents
+
+- [LLM Finetuning Project](#llm-finetuning-project)
+  - [Features](#features)
+  - [Prerequisites](#prerequisites)
+  - [How to Use](#how-to-use)
+    - [1. Setup](#1-setup)
+    - [2. Verify Hardware](#2-verify-hardware)
+    - [3. Data Preparation](#3-data-preparation)
+      - [Shakespeare Dataset](#shakespeare-dataset)
+      - [Alpaca Dataset](#alpaca-dataset)
+    - [4. Fine-Tuning](#4-fine-tuning)
+      - [Fine-Tuning on Shakespeare with LoRA](#fine-tuning-on-shakespeare-with-lora)
+      - [Fine-Tuning on Alpaca with SFT](#fine-tuning-on-alpaca-with-sft)
+    - [5. Evaluation and Inference](#5-evaluation-and-inference)
+      - [Evaluate Shakespeare Model](#evaluate-shakespeare-model)
+      - [Prompt Engineering Example](#prompt-engineering-example)
+
 ## Features
 
 *   **Hardware Verification**: Check your hardware (CPU, CUDA, MPS) to ensure compatibility.
@@ -14,6 +32,11 @@ This project provides a comprehensive guide to fine-tuning Large Language Models
 *   **Evaluation and Inference**:
     *   Evaluate the fine-tuned models.
     *   Examples of prompt engineering to compare base and fine-tuned models.
+
+## Prerequisites
+
+- Python 3.8 or higher
+- `pip` for package installation
 
 ## How to Use
 

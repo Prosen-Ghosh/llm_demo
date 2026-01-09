@@ -2,6 +2,11 @@
 
 This repository is a collection of various AI/ML projects and demonstrations that I've created to showcase my skills and learnings in the field. Each sub-folder within this repository represents a distinct project with its own unique focus and set of technologies.
 
+## Table of Contents
+- [Projects](#projects)
+- [Purpose](#purpose)
+- [License](#license)
+
 ## Projects
 
 Below is a list of the projects currently available in this repository:
@@ -21,3 +26,7 @@ The primary goal of this repository is to serve as a living portfolio of my work
 I believe in learning by doing, and these projects are a direct result of that philosophy. They range from simple scripts to more complex applications, and each one has taught me valuable lessons about different aspects of AI/ML.
 
 Thank you for visiting my repository!
+
+## License
+
+This project is licensed under the MIT License.

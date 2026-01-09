@@ -1,4 +1,4 @@
-[<- Back to Main README](../../README.md)
+[<- Back to Main README](/README.md)
 
 # Prompt Engineering Demo
 
@@ -30,48 +30,94 @@ The project is structured as a standard FastAPI application:
 ```
 .
 ├── app/
+│   ├── __init__.py
+│   ├── config.py
 │   ├── main.py
+│   ├── models/
+│   │   ├── __init__.py
 │   ├── services/
+│   │   ├── __init__.py
 │   │   ├── analyzer.py
 │   │   ├── llm_client.py
 │   │   └── prompt_manager.py
-│   └── strategies/
-│       ├── base.py
-│       ├── chain_of_thought.py
-│       ├── react.py
-│       └── self_consistency.py
+│   ├── strategies/
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── chain_of_thought.py
+│   │   ├── react.py
+│   │   └── self_consistency.py
+│   └── utils/
+│       ├── __init__.py
 ├── data/
 │   └── prompts.db
-└── ...
+├── logs/
+│   └── app.log
+├── .env.example
+├── .gitignore
+├── docker-compose.dev.yml
+├── Dockerfile
+├── README.md
+└── requirements.txt
 ```
 
 *   `app/main.py`: The entry point of the FastAPI application, defining the API endpoints.
 *   `app/services/`: Contains the business logic, including the `LLMClient` for interacting with the LLM, the `PromptManager` for handling prompt versioning, and the `QueryAnalyzer` for suggesting prompt strategies.
 *   `app/strategies/`: Implements the different prompt engineering strategies.
 *   `data/prompts.db`: A SQLite database for storing prompt versions.
+*   `logs/app.log`: Log file for the application.
 
 ## API Documentation
 
 ### GET /
 Lists all prompts from the database.
+```bash
+curl -X GET "http://127.0.0.1:8000/"
+```
 
 ### GET /health
 Health check endpoint.
+```bash
+curl -X GET "http://127.0.0.1:8000/health"
+```
 
 ### POST /v1/query
 The main query endpoint with auto-strategy selection.
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/query" -H "Content-Type: application/json" -d '{
+    "query": "Your query here"
+}'
+```
 
 ### POST /v1/query/stream
 Streaming query endpoint.
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/query/stream" -H "Content-Type: application/json" -d '{
+    "query": "Your query here"
+}'
+```
 
 ### POST /v1/prompts/version
 Create a new prompt version.
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/prompts/version" -H "Content-Type: application/json" -d '{
+    "prompt": "Your new prompt here"
+}'
+```
 
 ### GET /v1/prompts/versions
 List all prompt versions.
+```bash
+curl -X GET "http://127.0.0.1:8000/v1/prompts/versions"
+```
 
 ### POST /v1/prompts/compare
 A/B test two prompt versions.
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/prompts/compare" -H "Content-Type: application/json" -d '{
+    "version1": 1,
+    "version2": 2
+}'
+```
 
 ## Getting Started
 
@@ -106,6 +152,11 @@ The application will be available at `http://localhost:8000`.
     docker-compose -f docker-compose.dev.yml up --build
     ```
     The API will be available at `http://localhost:8000`.
+
+**Note:**
+* The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and fill in the required values.
+* The `data/prompts.db` file is a SQLite database used to store prompt versions. It is created automatically when the application starts.
+* The `logs` directory contains log files for the application.
 
 ## Future Improvements
 *   Add more prompt engineering strategies.

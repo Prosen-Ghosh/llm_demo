@@ -41,7 +41,7 @@ The application follows a standard RAG pipeline:
 
 1.  **Clone the repository:**
     ```bash
-    git clone git@github.com:Prosen-Ghosh/llm_demo.git
+    git clone https://github.com/Prosen-Ghosh/llm_demo.git
     cd queryable_doc
     ```
 
@@ -89,19 +89,19 @@ The application follows a standard RAG pipeline:
 
 ```
 .
-├── Dockerfile          # Dockerfile for building the application container.
-├── README.md           # This README file.
+├── Dockerfile          # Defines how to build the Docker image for the Streamlit application.
+├── README.md           # This README file, providing an overview and instructions.
 ├── app.py              # Main entry point for the Streamlit application.
-├── chat.py             # Handles the core RAG chain logic and chat history display.
-├── document_handler.py # Manages loading and processing of uploaded documents.
-├── embeddings.py       # Handles document chunking and vector embedding creation/storage.
-├── requirements.txt    # Lists all Python dependencies.
-├── setup.sh            # Automates the project setup.
-├── ui/                 # Module for Streamlit UI components.
-│   ├── main.py         # Renders the main body of the app (upload and chat columns).
-│   ├── sidebar_config.py # Renders the sidebar for configuration.
-│   └── footer.py       # Renders the application footer.
-└── utils.py            # Utility functions, including session state initialization.
+├── chat.py             # Contains the core RAG chain logic, handles conversation history, and displays chat messages.
+├── document_handler.py # Manages loading various document types and processing them for the RAG pipeline.
+├── embeddings.py       # Responsible for document chunking, creating vector embeddings, and interacting with ChromaDB.
+├── requirements.txt    # Lists all Python dependencies required by the project.
+├── setup.sh            # A shell script to automate the setup of the Python virtual environment and dependencies.
+├── ui/                 # Contains Streamlit UI components to separate concerns.
+│   ├── main.py         # Renders the main body of the Streamlit application, including document upload and chat columns.
+│   ├── sidebar_config.py # Renders the sidebar of the Streamlit application, allowing users to configure parameters.
+│   └── footer.py       # Renders the footer section of the Streamlit application.
+└── utils.py            # Provides general utility functions, such as session state initialization for Streamlit.
 ```
 
 ## Deployment
@@ -127,3 +127,7 @@ For more detailed instructions, please refer to your cloud provider's documentat
 ## 🤝 Contributing
 
 Contributions are welcome! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.

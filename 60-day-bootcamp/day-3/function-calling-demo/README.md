@@ -1,4 +1,4 @@
-[<- Back to Main README](../../README.md)
+[<- Back to Main README](/README.md)
 
 # Function Calling Demo
 
@@ -16,7 +16,8 @@ This project is a FastAPI-based application that demonstrates an enterprise-grad
 - [How to Run the Project](#how-to-run-the-project)
   - [Prerequisites](#prerequisites)
   - [Running Locally](#running-locally)
-  - [Running with Docker](#running-with-docker)
+  - [Running with Docker](#running-docker)
+  - [Running with Docker (Hot Reload for Development)](#running-with-docker-hot-reload-for-development)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [Future Improvements](#future-improvements)
@@ -43,42 +44,42 @@ The primary purpose of this demo is to showcase a robust implementation of a fun
 
 ```
 .
-├── .env.example
-├── .gitignore
-├── docker-compose.dev.yml
-├── docker-compose.yml
-├── Dockerfile
-├── README.md
-├── requirements.txt
-├── app/
-│   ├── __init__.py
-│   ├── main.py               # FastAPI application entry point
-│   ├── api/                  # API endpoint definitions
+├── .env.example              # Example environment file for API keys and configurations.
+├── .gitignore                # Specifies intentionally untracked files to ignore.
+├── docker-compose.dev.yml    # Docker Compose configuration for development with hot-reloading.
+├── docker-compose.yml        # Docker Compose configuration for production deployment.
+├── Dockerfile                # Defines how to build the Docker image for the application.
+├── README.md                 # This README file.
+├── requirements.txt          # Lists all Python dependencies.
+├── app/                      # Source code for the application.
+│   ├── __init__.py           # Initializes the app package.
+│   ├── main.py               # Main entry point for the FastAPI application.
+│   ├── api/                  # API endpoint definitions.
 │   │   ├── __init__.py
-│   │   ├── chat.py
-│   │   ├── health.py
-│   │   └── tools.py
+│   │   ├── chat.py           # Chat endpoint for LLM interaction.
+│   │   ├── health.py         # Health check endpoint.
+│   │   └── tools.py          # Endpoint to list available tools.
 │   ├── core/
 │   │   ├── __init__.py
-│   │   └── config.py           # Application settings
+│   │   └── config.py           # Application settings and configuration.
 │   ├── models/
 │   │   ├── __init__.py
-│   │   └── schemas.py          # Pydantic schemas for API requests and responses
+│   │   └── schemas.py          # Pydantic schemas for API requests and responses.
 │   ├── services/
 │   │   ├── __init__.py
-│   │   ├── llm_client.py       # Client for interacting with the LLM
-│   │   └── tool_executor.py    # Logic for executing tools
-│   ├── tools/                  # Directory for all the tools
+│   │   ├── llm_client.py       # Client for interacting with the LLM (e.g., Ollama).
+│   │   └── tool_executor.py    # Logic for executing tools.
+│   ├── tools/                  # Directory for all the external tools.
 │   │   ├── __init__.py
-│   │   ├── base.py             # Base class for tools
-│   │   ├── calculator.py
-│   │   ├── registry.py         # Tool registry
-│   │   ├── weather.py
-│   │   └── web_search.py
+│   │   ├── base.py             # Base class for defining new tools.
+│   │   ├── calculator.py       # Calculator tool implementation.
+│   │   ├── registry.py         # Centralized registry for managing tools.
+│   │   ├── weather.py          # Weather service tool implementation.
+│   │   └── web_search.py       # Web search tool implementation.
 │   └── utils/
 │       ├── __init__.py
-│       └── logger.py           # Logging configuration
-└── logs/
+│       └── logger.py           # Logging configuration.
+└── logs/                     # Directory for application logs.
 ```
 
 ## API Documentation
@@ -157,8 +158,8 @@ The main endpoint for interacting with the LLM.
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository-url>
-    cd <repository-directory>
+    git clone https://github.com/Prosen-Ghosh/llm_demo.git
+    cd 60-day-bootcamp/day-3/function-calling-demo
     ```
 
 2.  **Create a virtual environment and activate it:**
@@ -178,6 +179,7 @@ The main endpoint for interacting with the LLM.
         cp .env.example .env
         ```
     -   Edit the `.env` file to set your environment variables, especially `OLLAMA_BASE_URL`.
+    **Note:** The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and customize it with your specific settings.
 
 5.  **Run the application:**
     ```bash

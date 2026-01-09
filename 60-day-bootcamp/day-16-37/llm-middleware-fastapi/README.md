@@ -1,4 +1,4 @@
-[<- Back to Main README](../../../README.md)
+[<- Back to Main README](/README.md)
 
 # LLM Middleware with FastAPI
 
@@ -68,7 +68,11 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
    pip install -r requirements.txt
    ```
 
-3. Run the application:
+3. Set up environment variables:
+   Copy the `.env.example` file to `.env` and fill in the required API keys and configurations.
+   **Note:** The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and customize it with your specific settings.
+
+4. Run the application:
    ```bash
    uvicorn app.main:app --reload
    ```

@@ -1,4 +1,4 @@
-[<- Back to Main README](../../README.md)
+[<- Back to Main README](/README.md)
 
 # Invoice Extraction Demo
 
@@ -26,32 +26,32 @@ This application is a FastAPI-based REST API that:
 
 ```
 .
-├── .env.example
-├── .gitignore
-├── docker-compose.dev.yml
-├── Dockerfile
-├── README.md
-├── requirements.txt
-└── app/
-    ├── __init__.py
-    ├── main.py
-    ├── api/
+├── .env.example              # Example environment variables for configuring LLM keys and other settings.
+├── .gitignore                # Specifies intentionally untracked files to ignore.
+├── docker-compose.dev.yml    # Docker Compose configuration for development with hot-reloading.
+├── Dockerfile                # Defines how to build the Docker image for the application.
+├── README.md                 # This README file.
+├── requirements.txt          # Lists all Python dependencies.
+└── app/                      # Source code for the FastAPI application.
+    ├── __init__.py           # Initializes the app package.
+    ├── main.py               # Main FastAPI application entry point, defining API routes.
+    ├── api/                  # Contains API endpoint definitions.
     │   ├── __init__.py
-    │   └── routes.py
-    ├── core/
+    │   └── routes.py         # Defines the API routes, such as '/extract' and '/health'.
+    ├── core/                 # Core components like configuration and logging.
     │   ├── __init__.py
-    │   ├── config.py
-    │   └── logging.py
-    ├── models/
+    │   ├── config.py         # Application settings and environment variable loading.
+    │   └── logging.py        # Custom logging configuration.
+    ├── models/               # Pydantic models for data validation and serialization.
     │   ├── __init__.py
-    │   └── schemas.py
-    ├── sample_invoices/
+    │   └── schemas.py        # Defines the InvoiceData schema and other data models.
+    ├── sample_invoices/      # Contains sample invoice text files for testing and demonstration.
     │   └── sample_invoice.txt
-    └── services/
+    └── services/             # Business logic and LLM interaction services.
         ├── __init__.py
-        ├── ollama_extractor.py
-        ├── openrouter_extractor.py
-        └── repair_engine.py
+        ├── ollama_extractor.py     # Service for extracting data using Ollama models.
+        ├── openrouter_extractor.py # Service for extracting data using OpenRouter models.
+        └── repair_engine.py        # Handles validation failures and retries extraction with LLM feedback.
 ```
 
 ## API Documentation
@@ -168,6 +168,7 @@ This project is containerized using Docker.
     ```
     -   `OPENROUTER_API_KEY`: Your API key from [OpenRouter.ai](https://openrouter.ai/).
     -   `OLLAMA_BASE_URL`: The base URL for your Ollama instance. If running Ollama locally on the host machine, the default `http://host.docker.internal:11434` should work on most systems.
+    **Note:** The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and customize it with your specific settings.
 
 3.  **Build and run the Docker container**:
     ```bash

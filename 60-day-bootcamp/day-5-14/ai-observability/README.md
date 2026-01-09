@@ -1,4 +1,4 @@
-[<- Back to Main README](../../README.md)
+[<- Back to Main README](/README.md)
 
 # AI Observability
 
@@ -35,24 +35,30 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 
 ```
 .
-├── docker-compose.yml
-├── README.md
-├── grafana/
-│   └── ... (Grafana data and configuration will be stored here)
-├── prometheus/
-│   ├── prometheus.yml
-│   └── rules.yml
-├── ollama-exporter/
+├── docker-compose.yml        # Orchestrates the deployment of Prometheus, Grafana, Loki, Promtail, Ollama Exporter, Weaviate, and weaviate-seed.
+├── README.md                 # This README file.
+├── grafana/                  # Directory for Grafana's data and configuration.
+│   └── (data and config)
+├── prometheus/               # Directory for Prometheus configuration.
+│   ├── prometheus.yml        # Prometheus main configuration file, defining scrape targets.
+│   └── rules.yml             # Prometheus alerting and recording rules.
+├── ollama-exporter/          # Custom exporter for Ollama metrics.
 │   ├── Dockerfile
 │   ├── exporter.py
 │   └── requirements.txt
-├── app/
+├── app/                      # Source code for the FastAPI application that acts as a gateway and metric generator.
 │   ├── __init__.py
-│   ├── main.py
-│   ├── seed_weaviate.py
-│   └── utils.py
-├── Dockerfile.seed
-└── load_test.sh
+│   ├── main.py               # FastAPI entry point, defining API endpoints and Prometheus metrics.
+│   ├── seed_weaviate.py      # Script to create schema and insert dummy data into Weaviate.
+│   ├── utils.py              # Contains the mock RAG pipeline function and metric recording logic.
+│   └── loki/                 # Contains Promtail configuration for sending logs to Loki.
+│       └── promtail-config.yml
+├── Dockerfile.seed           # Dockerfile for the weaviate-seed service.
+├── load_test.sh              # Shell script for simulating load on the API.
+├── .env.example              # Example environment variables for configuration.
+├── .gitignore                # Specifies intentionally untracked files to ignore.
+├── architecture_design.md    # Documentation detailing the architectural design.
+└── requirements.txt          # Lists all Python dependencies.
 ```
 
 ## Getting Started

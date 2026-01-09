@@ -1,5 +1,22 @@
 # LangChain Tool Demo
 
+## Table of Contents
+- [Overview](#overview)
+- [Problem Solved](#problem-solved)
+- [How it Works](#how-it-works)
+- [Features](#features)
+- [Available Tools](#available-tools)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running with Docker](#running-with-docker)
+- [API Endpoints](#api-endpoints)
+  - [Chat](#chat)
+  - [Chat Stream](#chat-stream)
+  - [Health Check](#health-check)
+- [License](#license)
+
 ## Overview
 
 This project is a demonstration of an AI-powered shopping assistant API built with FastAPI and LangChain. The API provides a conversational interface to a large language model (LLM) that can use a set of tools to answer shopping-related queries.
@@ -35,24 +52,24 @@ The following tools are available to the agent:
 ## Project Structure
 ```
 .
-├── .env.example              # Example environment file for API keys.
-├── .gitignore                # Git ignore file.
+├── .env.example              # Example environment file for API keys and configuration.
+├── .gitignore                # Specifies intentionally untracked files to ignore.
 ├── Dockerfile                # Dockerfile for building the application container.
 ├── README.md                 # This README file.
 ├── app/                      # Source code for the application.
-│   ├── api/                  # API endpoints.
-│   │   ├── dependencies.py   # API dependencies.
-│   │   └── endpoints.py      # API endpoints.
-│   ├── core/                 # Core application logic.
-│   │   ├── agents.py         # LangChain agent.
-│   │   ├── config.py         # Application configuration.
-│   │   └── tools.py          # Tools for the LangChain agent.
+│   ├── api/                  # Defines API endpoints and their dependencies.
+│   │   ├── dependencies.py   # Dependency injection for API endpoints.
+│   │   └── endpoints.py      # Actual API endpoints for chat, streaming, and health checks.
+│   ├── core/                 # Contains core application logic and configurations.
+│   │   ├── agents.py         # Defines the LangChain agent and its behavior.
+│   │   ├── config.py         # Application configuration settings.
+│   │   └── tools.py          # Definitions of tools the LangChain agent can use.
 │   ├── main.py               # Main entry point for the FastAPI application.
-│   ├── schemas/              # Pydantic schemas.
-│   │   └── chat.py           # Pydantic schemas for chat.
+│   ├── schemas/              # Pydantic schemas for request and response validation.
+│   │   └── chat.py           # Pydantic models specifically for chat-related data.
 │   └── utils/                # Utility functions.
-│       └── streaming.py      # Streaming utilities.
-├── docker-compose.dev.yml    # Docker compose file for development.
+│       └── streaming.py      # Utilities related to Server-Sent Events (SSE) streaming.
+├── docker-compose.dev.yml    # Docker Compose configuration for development with hot-reloading.
 └── requirements.txt          # Lists all Python dependencies.
 ```
 
@@ -84,6 +101,7 @@ The following tools are available to the agent:
    cp .env.example .env
    ```
    Update the `.env` file with your Ollama configuration.
+   **Note:** The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and customize it with your specific settings.
 
 4. Run the application:
    ```bash
@@ -153,3 +171,7 @@ The following tools are available to the agent:
   ```bash
   curl -X GET "http://localhost:8000/api/v1/health"
   ```
+
+## License
+
+This project is licensed under the MIT License.

@@ -1,4 +1,4 @@
-[<- Back to Main README](../../README.md)
+[<- Back to Main README](/README.md)
 
 # Whisper API
 
@@ -92,7 +92,7 @@ The following environment variables can be set to configure the application:
       "model_size": "large-v3",
       "cpu_threads": 2
     }
-    ```
+  ```
 
 - **`PUT /system/model`**
   - **Description:** Switch the Whisper model at runtime.
@@ -108,7 +108,7 @@ The following environment variables can be set to configure the application:
         "status": "success",
         "current_model": "base"
     }
-    ```
+  ```
 
 - **`POST /transcribe`**
   - **Description:** Transcribes an uploaded audio file.
@@ -172,7 +172,7 @@ The following environment variables can be set to configure the application:
   - **Example:**
     ```bash
     curl -X GET "http://localhost:8000/v2/jobs/job_id_1"
-    ```
+  ```
   - **Response:**
     ```json
     {
@@ -204,17 +204,23 @@ docker-compose exec whisper-api pytest
 
 ```
 .
-├── app
-│   ├── config.py
-│   ├── main.py
-│   ├── preprocessing.py
-│   ├── test_main.py
-│   ├── utils.py
-│   └── whisper.py
-├── docker-compose.yml
-├── Dockerfile
-├── requirements.txt
-└── README.md
+├── app/                      # Source code for the FastAPI application.
+│   ├── config.py             # Configuration settings for the application.
+│   ├── main.py               # Main FastAPI application entry point.
+│   ├── preprocessing.py      # Audio preprocessing utilities.
+│   ├── test_main.py          # Unit tests for the main application logic.
+│   ├── utils.py              # Utility functions.
+│   └── whisper.py            # Integration with the faster-whisper library.
+├── tests/                    # Additional tests for the project.
+├── .dockerignore             # Specifies files and directories to exclude from the Docker build context.
+├── .gitignore                # Specifies intentionally untracked files to ignore.
+├── CHANGELOG.md              # Project changelog.
+├── docker-compose.yml        # Docker Compose configuration.
+├── Dockerfile                # Dockerfile for building the application container.
+├── Makefile                  # Makefile for common development tasks.
+├── README.md                 # This README file.
+├── requirements.txt          # Lists Python package dependencies.
+└── whisper-api-arc.png       # Architectural diagram of the Whisper API.
 ```
 
 ## Future Improvements
