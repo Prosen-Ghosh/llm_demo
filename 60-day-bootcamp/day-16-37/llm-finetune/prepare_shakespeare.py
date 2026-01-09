@@ -1,80 +1,84 @@
-from datasets import load_dataset
+from datasets import load_dataset, Dataset, DatasetDict, load_from_disk
 from transformers import AutoTokenizer
 import os
 
 print("📥 Loading tiny_shakespeare dataset...")
 dataset = load_dataset('text', data_files={'train': 'https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt'})
 
+print(f"\n📊 Original dataset size: {len(dataset['train'])} lines")
+print(f"First few characters of text: {dataset['train'][0]['text'][:200]}...")
+
 print("\n🔤 Loading gpt2-medium tokenizer...")
 tokenizer = AutoTokenizer.from_pretrained("gpt2-medium")
 tokenizer.pad_token = tokenizer.eos_token
 
-def tokenize_function(examples):
-    tokenized = tokenizer(
-        examples["text"],
-        padding=False,
-    )
-    
-    return tokenized
-
 print("\n⚡ Tokenizing dataset...")
-tokenized_dataset = dataset.map(
-    tokenize_function,
-    batched=True,
-    remove_columns=["text"],
-    desc="Tokenizing texts",
-    num_proc=6, 
-)
+def tokenize_function(examples):
+    return tokenizer(examples["text"], truncation=False, padding=False)
 
-print("\n✂️ Chunking into blocks of size 128...")
+# Tokenize the entire dataset
+tokenized = tokenize_function({"text": [dataset['train'][i]['text'] for i in range(len(dataset['train']))]})
 
-def chunk_examples(examples, chunk_size=128):
-    # Concatenate all input_ids from the batch
-    concatenated_input_ids = []
-    concatenated_attention_mask = []
-    
-    for i in range(len(examples['input_ids'])):
-        concatenated_input_ids.extend(examples['input_ids'][i])
-        # For attention mask, use all 1s if not provided
-        if 'attention_mask' in examples:
-            concatenated_attention_mask.extend(examples['attention_mask'][i])
-        else:
-            concatenated_attention_mask.extend([1] * len(examples['input_ids'][i]))
-    
-    # Split into chunks
-    total_length = len(concatenated_input_ids)
-    total_length = (total_length // chunk_size) * chunk_size
-    
-    input_ids_chunks = []
-    attention_mask_chunks = []
-    
-    for i in range(0, total_length, chunk_size):
-        input_ids_chunks.append(concatenated_input_ids[i:i+chunk_size])
-        attention_mask_chunks.append(concatenated_attention_mask[i:i+chunk_size])
-    
-    return {
-        'input_ids': input_ids_chunks,
-        'attention_mask': attention_mask_chunks
-    }
+print(f"\n📊 Tokenized: {len(tokenized['input_ids'])} sequences")
 
-# Process the dataset in smaller batches for chunking
-chunked_dataset = tokenized_dataset.map(
-    chunk_examples,
-    batched=True,
-    batch_size=1000,  # Process in smaller batches
-    desc="Chunking into blocks",
-    num_proc=6, 
-)
+print("\n✂️ Concatenating and chunking into blocks of size 128...")
+block_size = 128
 
-print(f"\n📊 After chunking:")
-for split in chunked_dataset:
-    print(f"  {split}: {len(chunked_dataset[split])} blocks")
-    if len(chunked_dataset[split]) > 0:
-        print(f"    First block shape: {len(chunked_dataset[split]['input_ids'][0])} tokens")
+# Concatenate all token sequences
+all_input_ids = []
+all_attention_mask = []
+
+for i in range(len(tokenized['input_ids'])):
+    all_input_ids.extend(tokenized['input_ids'][i])
+    all_attention_mask.extend(tokenized['attention_mask'][i] if 'attention_mask' in tokenized else [1] * len(tokenized['input_ids'][i]))
+
+print(f"Total tokens: {len(all_input_ids)}")
+
+# Create chunks
+input_ids_chunks = []
+attention_mask_chunks = []
+
+for i in range(0, len(all_input_ids) - block_size + 1, block_size):
+    input_ids_chunks.append(all_input_ids[i:i+block_size])
+    attention_mask_chunks.append(all_attention_mask[i:i+block_size])
+
+print(f"Created {len(input_ids_chunks)} chunks of size {block_size}")
+
+# Create a new dataset
+chunked_dataset = Dataset.from_dict({
+    'input_ids': input_ids_chunks,
+    'attention_mask': attention_mask_chunks,
+    'labels': input_ids_chunks  # For language modeling, labels are same as input_ids
+})
+
+# Wrap in DatasetDict
+dataset_dict = DatasetDict({'train': chunked_dataset})
+
+print(f"\n📊 Final dataset: {len(dataset_dict['train'])} chunks")
+if len(dataset_dict['train']) > 0:
+    print(f"  First chunk length: {len(dataset_dict['train'][0]['input_ids'])}")
+    print(f"  Decoded sample: {tokenizer.decode(dataset_dict['train'][0]['input_ids'][:50])}...")
 
 print("\n💾 Saving to disk...")
 output_path = "./shakespeare_prepared"
-chunked_dataset.save_to_disk(output_path)
-print(f"Prepared dataset saved to {output_path}")
-print("\n✅ Verification:")
-print(f"Saved to: {os.path.abspath(output_path)}")
+
+# Remove old directory if it exists
+import shutil
+if os.path.exists(output_path):
+    shutil.rmtree(output_path)
+
+dataset_dict.save_to_disk(output_path)
+
+print(f"✅ Prepared dataset saved to {output_path}")
+print(f"\nVerification:")
+print(f"  Saved path exists: {os.path.exists(output_path)}")
+print(f"  Size of dataset: {len(dataset_dict['train'])} chunks")
+
+# Quick test load
+print("\n🧪 Testing load...")
+test_load = load_from_disk(output_path)
+print(f"  Loaded splits: {list(test_load.keys())}")
+print(f"  Train split columns: {test_load['train'].column_names}")
+print(f"  Number of examples: {len(test_load['train'])}")
+if len(test_load['train']) > 0:
+    print(f"  First example keys: {list(test_load['train'][0].keys())}")

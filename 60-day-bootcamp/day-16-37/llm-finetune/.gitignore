@@ -51,4 +51,10 @@ whisper-test
 tensorboard_logs
 llm-finetune-env
 shakespeare_prepared
-llm-finetune-env/
+gpt2-shakespeare-finetuned
+shakespeare-adapter
+gpt2-lora-shakespeare
+
+alpaca-sft-gpt2-medium
+alpaca-sft-final
+alpaca_prepared
