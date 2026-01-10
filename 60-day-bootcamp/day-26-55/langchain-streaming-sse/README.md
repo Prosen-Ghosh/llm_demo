@@ -1,8 +1,8 @@
 [<- Back to Main README](../../../README.md)
 
-# LangChain Streaming with SSE
+# LangChain Streaming SSE
 
-Real-time LLM token streaming using Server-Sent Events (SSE) with FastAPI and LangChain.
+The LangChain Streaming SSE project enables real-time LLM token streaming using Server-Sent Events (SSE) with FastAPI and LangChain.
 
 ## 🚀 Quick Start
 

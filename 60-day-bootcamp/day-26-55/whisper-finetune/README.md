@@ -1,8 +1,8 @@
 [<- Back to Main README](../../../README.md)
 
-# Whisper Fine-Tuning for Bengali Speech-to-Text
+# Whisper Finetune
 
-This project fine-tunes the OpenAI Whisper model for Bengali speech-to-text transcription using the Mozilla Common Voice dataset. It is built to run on local machines (including Apple Silicon with MPS) and is also containerized with Docker for portability.
+The Whisper Finetune project fine-tunes the OpenAI Whisper model for Bengali speech-to-text transcription using the Mozilla Common Voice dataset. It is built to run on local machines (including Apple Silicon with MPS) and is also containerized with Docker for portability.
 
 ## Table of Contents
 

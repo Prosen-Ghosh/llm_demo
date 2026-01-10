@@ -1,8 +1,8 @@
 [<- Back to Main README](../../../README.md)
 
-# LLM Middleware with FastAPI
+# LLM Middleware FastAPI
 
-This project demonstrates how to build a FastAPI application with a custom middleware for processing requests and a simple LangGraph agent.
+The LLM Middleware FastAPI project demonstrates how to build a FastAPI application with a custom middleware for processing requests and a simple LangGraph agent.
 
 ## Purpose
 The main purpose of this project is to showcase how to integrate a custom middleware with a FastAPI application to process incoming requests and add context to them. It also demonstrates how to build a simple agent using LangGraph.

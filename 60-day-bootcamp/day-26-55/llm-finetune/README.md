@@ -1,12 +1,12 @@
 [<- Back to Main README](../../../README.md)
 
-# LLM Finetuning Project
+# LLM Finetune
 
-This project provides a comprehensive guide to fine-tuning Large Language Models (LLMs) using various techniques and datasets. It covers data preparation, model training (including parameter-efficient methods), and evaluation.
+The LLM Finetune project provides a comprehensive guide to fine-tuning Large Language Models (LLMs) using various techniques and datasets. It covers data preparation, model training (including parameter-efficient methods), and evaluation.
 
 ## Table of Contents
 
-- [LLM Finetuning Project](#llm-finetuning-project)
+- [LLM Finetune](#llm-finetune)
   - [Project Structure](#project-structure)
   - [Features](#features)
   - [Prerequisites](#prerequisites)

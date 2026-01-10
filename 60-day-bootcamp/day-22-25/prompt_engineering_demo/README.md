@@ -2,7 +2,7 @@
 
 # Prompt Engineering Demo
 
-This project is a FastAPI application that demonstrates and allows for experimentation with various prompt engineering strategies.
+The Prompt Engineering Demo project is a FastAPI application that demonstrates and allows for experimentation with various prompt engineering strategies.
 
 ## Table of Contents
 - [Purpose](#purpose)
