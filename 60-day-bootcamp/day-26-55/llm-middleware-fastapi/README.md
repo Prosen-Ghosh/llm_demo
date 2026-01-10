@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../../README.md)
 
 # LLM Middleware with FastAPI
 
@@ -37,7 +37,7 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
 ├── Dockerfile                # Dockerfile for building the application container.
 ├── README.md                 # This README file.
 ├── app/                      # Source code for the application.
-│   ├── __init__.py           #
+│   ├── __init__.py           # Initializes the app package.
 │   ├── agent.py              # LangGraph agent.
 │   ├── graph.py              # LangGraph graph.
 │   ├── main.py               # Main entry point for the FastAPI application.
@@ -55,24 +55,19 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Prosen-Ghosh/llm_demo.git
-   cd 60-day-bootcamp/day-16-37/llm-middleware-fastapi
-   ```
 
-2. Create a virtual environment and install the dependencies:
+1. Create a virtual environment and install the dependencies:
    ```bash
    python -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
    ```
 
-3. Set up environment variables:
+2. Set up environment variables:
    Copy the `.env.example` file to `.env` and fill in the required API keys and configurations.
    **Note:** The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and customize it with your specific settings.
 
-4. Run the application:
+3. Run the application:
    ```bash
    uvicorn app.main:app --reload
    ```

@@ -1,3 +1,5 @@
+[<- Back to Main README](../../../README.md)
+
 # LLM Finetuning Project
 
 This project provides a comprehensive guide to fine-tuning Large Language Models (LLMs) using various techniques and datasets. It covers data preparation, model training (including parameter-efficient methods), and evaluation.
@@ -5,6 +7,7 @@ This project provides a comprehensive guide to fine-tuning Large Language Models
 ## Table of Contents
 
 - [LLM Finetuning Project](#llm-finetuning-project)
+  - [Project Structure](#project-structure)
   - [Features](#features)
   - [Prerequisites](#prerequisites)
   - [How to Use](#how-to-use)
@@ -19,6 +22,30 @@ This project provides a comprehensive guide to fine-tuning Large Language Models
     - [5. Evaluation and Inference](#5-evaluation-and-inference)
       - [Evaluate Shakespeare Model](#evaluate-shakespeare-model)
       - [Prompt Engineering Example](#prompt-engineering-example)
+
+## Project Structure
+```
+.
+├── alpaca-sft-final/       # Directory for the final Alpaca SFT model.
+├── alpaca_prepared/        # Directory for the prepared Alpaca dataset.
+├── data/                   # General directory for datasets.
+├── gpt2-lora-shakespeare/  # Directory for the GPT2 LoRA Shakespeare model.
+├── gpt2-shakespeare-finetuned/ # Directory for the GPT2 Shakespeare finetuned model.
+├── shakespeare_prepared/   # Directory for the prepared Shakespeare dataset.
+├── exercise/               # Directory for exercises or supplementary materials.
+├── .gitignore              # Specifies intentionally untracked files to ignore.
+├── chat_instruction_uning.py # Script for chat instruction tuning.
+├── evaluate_shakespeare.py # Script to evaluate the Shakespeare model.
+├── load_shakespeare.py     # Script to load the Shakespeare dataset.
+├── prepare_alpaca.py       # Script to prepare the Alpaca dataset.
+├── prepare_shakespeare.py  # Script to prepare the Shakespeare dataset.
+├── prompt_engineering.py   # Script demonstrating prompt engineering.
+├── README.md               # This README file.
+├── requirements.txt        # Lists all Python dependencies.
+├── sft-train.py            # Script for Supervised Fine-Tuning (SFT).
+├── train-gpt2.py           # Script to fine-tune GPT2.
+└── verify_hardware.py      # Script to verify hardware compatibility.
+```
 
 ## Features
 

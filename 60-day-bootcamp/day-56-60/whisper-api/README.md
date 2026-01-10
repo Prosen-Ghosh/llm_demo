@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../../README.md)
 
 # Whisper API
 
@@ -23,10 +23,15 @@ This project provides a high-performance, CPU-based Speech-to-Text API using the
 - **Fast and Efficient:** Built on `faster-whisper`, a reimplementation of OpenAI's Whisper model that is up to 4 times faster.
 - **CPU-Optimized:** Runs efficiently on CPU, making it accessible without specialized hardware.
 - **Easy to Deploy:** Containerized with Docker for simple setup and deployment.
-- **Transcription Endpoint:** A `/transcribe` endpoint to upload audio files and get transcriptions.
+- **Versatile Transcription:** Supports a `/transcribe` endpoint for single audio files and a `/v2/batch-transcribe` for multiple files, with optional language specification.
+- **Job Management:** Track batch transcription status using `/v2/jobs/{job_id}`.
+- **Real-time Streaming:** A `/stream` endpoint for real-time transcription streaming.
 - **Health Check:** Includes a `/health` endpoint for monitoring service status and model information.
-- **Model Switching:** Ability to switch between different Whisper models at runtime.
-- **Audio Normalization:** Automatically normalizes audio for better transcription accuracy.
+- **Model Management:** Ability to switch between different Whisper models at runtime via `PUT /system/model`.
+- **Audio Preprocessing:** Automatically normalizes audio and detects language for better transcription accuracy.
+- **Configurable Processing Modes:** Choose between `ACCURATE`, `BALANCED`, and `TURBO` modes to control transcription speed and accuracy.
+- **Custom Keywords:** Provide `initial_prompt` for custom keywords to guide the transcription process.
+- **Detailed Metrics:** Transcription results include `inference_time` and `real_time_factor`.
 
 ## Configuration
 
@@ -49,16 +54,15 @@ The following environment variables can be set to configure the application:
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- `make` (optional, for simplified commands)
 
 ### Installation
 
-1.  **Clone the repository:**
+1.  **Build and run the container:**
     ```bash
-    git clone https://github.com/Prosen-Ghosh/llm_demo.git
-    cd 60-day-bootcamp/day-38-48/whisper-api
+    make up
     ```
-
-2.  **Build and run the container:**
+    or
     ```bash
     docker-compose up -d --build
     ```
@@ -113,11 +117,13 @@ The following environment variables can be set to configure the application:
 - **`POST /transcribe`**
   - **Description:** Transcribes an uploaded audio file.
   - **Query Parameters:**
-    *   `language` (optional, default: `en`): The language of the audio file.
+    *   `language` (optional, default: `auto`): The language of the audio file. Set to "auto" for automatic detection.
+    *   `mode` (optional, default: `BALANCED`): Processing mode. Options: `ACCURATE`, `BALANCED`, `TURBO`.
+    *   `initial_prompt` (optional): Custom keywords or phrases to guide the transcription.
   - **Request:** `multipart/form-data` with a `file` field containing the audio file.
   - **Example:**
     ```bash
-    curl -X POST "http://localhost:8000/transcribe?language=bn" -F "file=@/path/to/your/audio.wav"
+    curl -X POST "http://localhost:8000/transcribe?language=bn&mode=ACCURATE&initial_prompt=Hello" -F "file=@/path/to/your/audio.wav"
     ```
   - **Response:**
     ```json
@@ -139,9 +145,22 @@ The following environment variables can be set to configure the application:
                 "end": 10.0,
                 "text": "এখানে থাকবে।"
             }
-        ]
+        ],
+        "inference_time": 1.23,
+        "real_time_factor": 0.12
     }
     ```
+
+- **`POST /stream`**
+  - **Description:** Streams transcription results in real-time.
+  - **Query Parameters:** Same as `/transcribe` endpoint.
+  - **Request:** `multipart/form-data` with a `file` field containing the audio file.
+  - **Example:**
+    ```bash
+    curl -N -X POST "http://localhost:8000/stream?language=en" -F "file=@/path/to/your/audio.wav"
+    ```
+  - **Response:**
+    (Server-Sent Events stream of transcription segments)
 
 ## What's New
 
@@ -154,7 +173,9 @@ The following environment variables can be set to configure the application:
   - **Description:** Transcribes a batch of audio files asynchronously.
   - **Request:** `multipart/form-data` with a `files` field containing the audio files.
   - **Query Parameters:**
-    *   `language` (optional, default: `en`): The language of the audio files.
+    *   `language` (optional, default: `auto`): The language of the audio files. Set to "auto" for automatic detection.
+    *   `mode` (optional, default: `BALANCED`): Processing mode. Options: `ACCURATE`, `BALANCED`, `TURBO`.
+    *   `initial_prompt` (optional): Custom keywords or phrases to guide the transcription.
   - **Example:**
     ```bash
     curl -X POST "http://localhost:8000/v2/batch-transcribe?language=en" -F "files=@/path/to/audio1.wav" -F "files=@/path/to/audio2.mp3"
@@ -187,7 +208,9 @@ The following environment variables can be set to configure the application:
                     "text": "The transcribed text"
                 }
             ],
-            "language": "en"
+            "language": "en",
+            "inference_time": 1.23,
+            "real_time_factor": 0.12
         }
     }
     ```
@@ -197,6 +220,10 @@ The following environment variables can be set to configure the application:
 To run the tests, execute the following command:
 
 ```bash
+make test
+```
+or
+```bash
 docker-compose exec whisper-api pytest
 ```
 
@@ -205,12 +232,17 @@ docker-compose exec whisper-api pytest
 ```
 .
 ├── app/                      # Source code for the FastAPI application.
+│   ├── __init__.py           # Initializes the app package.
+│   ├── caching.py            # Caching utilities.
 │   ├── config.py             # Configuration settings for the application.
+│   ├── jobs.py               # Asynchronous job management.
 │   ├── main.py               # Main FastAPI application entry point.
+│   ├── monitoring.py         # Application monitoring and health checks.
 │   ├── preprocessing.py      # Audio preprocessing utilities.
 │   ├── test_main.py          # Unit tests for the main application logic.
 │   ├── utils.py              # Utility functions.
-│   └── whisper.py            # Integration with the faster-whisper library.
+│   ├── whisper.py            # Integration with the faster-whisper library.
+│   └── worker.py             # Background worker for processing tasks.
 ├── tests/                    # Additional tests for the project.
 ├── .dockerignore             # Specifies files and directories to exclude from the Docker build context.
 ├── .gitignore                # Specifies intentionally untracked files to ignore.

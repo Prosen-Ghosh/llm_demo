@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../README.md)
 
 # Streaming LLM API
 
@@ -201,31 +201,25 @@ You can set your API key in the `.env` file (see "Running the Project" section).
 
 ### Local Development
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Prosen-Ghosh/llm_demo.git
-   cd 60-day-bootcamp/day-2/streaming-llm-api
-   ```
-
-2. **Create a virtual environment:**
+1. **Create a virtual environment:**
    ```bash
    python3 -m venv venv
    source venv/bin/activate
    ```
 
-3. **Install dependencies:**
+2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Set up environment variables:**
+3. **Set up environment variables:**
    Create a `.env` file by copying the example:
    ```bash
    cp .env.example .env
    ```
    Now, edit the `.env` file and add your API keys and other settings. You must set `API_KEYS` to a comma-separated list of valid keys.
 
-5. **Run the application:**
+4. **Run the application:**
    ```bash
    uvicorn app.main:app --reload
    ```

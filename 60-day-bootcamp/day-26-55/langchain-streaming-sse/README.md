@@ -1,4 +1,4 @@
-[<- Back to Main README](README.md)
+[<- Back to Main README](../../../README.md)
 
 # LangChain Streaming with SSE
 
@@ -6,23 +6,18 @@ Real-time LLM token streaming using Server-Sent Events (SSE) with FastAPI and La
 
 ## 🚀 Quick Start
 
-1. Clone and navigate to directory:
-   ```bash
-   git clone <repository-url>
-   cd langchain-streaming-sse
-   ```
 
-2. Copy environment file:
+1. Copy environment file:
    ```bash
    cp .env.example .env
    ```
 
-3. Start services:
+2. Start services:
    ```bash
    docker compose up --build
    ```
 
-4. Access the application:
+3. Access the application:
    - **Web UI**: http://localhost:8000
    - **API Docs**: http://localhost:8000/docs
    - **Health Check**: http://localhost:8000/health
@@ -92,21 +87,24 @@ When a user sends a query, the FastAPI backend passes it to LangChain, which gen
 ```
 .
 ├── app/
-│   ├── __init__.py
-│   ├── callbacks.py
-│   ├── main.py
-│   ├── models.py
-│   └── streaming.py
+│   ├── __init__.py           # Initializes the app package.
+│   ├── callbacks.py          # LangChain callbacks for streaming.
+│   ├── main.py               # The FastAPI application entry point, defining API endpoints.
+│   ├── models.py             # Pydantic models for request and response validation.
+│   └── streaming.py          # Handles the SSE streaming logic.
 ├── static/
-│   └── index.html
+│   ├── action.js             # Frontend JavaScript for interactive elements.
+│   ├── index.html            # Frontend HTML for the interactive streaming UI.
+│   └── styles.css            # Frontend CSS for styling the UI.
 ├── tests/
-│   └── ...
-├── .env.example
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── README.md
-└── requirements.txt
+│   └── test_streaming.py     # Unit tests for streaming functionality.
+├── .env.example              # Example environment variables.
+├── .gitignore                # Specifies intentionally untracked files to ignore.
+├── docker-compose.yml        # Docker Compose configuration for the project.
+├── Dockerfile                # Dockerfile for building the application container.
+├── linkedin.md               # LinkedIn article related to the project.
+├── README.md                 # This README file.
+└── requirements.txt          # Lists Python package dependencies.
 ```
 
 *   `app/`: Contains the core application logic.

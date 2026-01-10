@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../README.md)
 
 # Profile Enricher
 
@@ -82,6 +82,21 @@ This Profile Enricher service was built to:
     The API will be available at `http://127.0.0.1:8000`.
 
 ## API Documentation
+
+### Health Check (`GET /health`)
+
+A simple endpoint to check the service's operational status.
+
+**Endpoint:** `GET /health`
+
+**Response:**
+```json
+{
+  "status": "ok"
+}
+```
+
+### Enrich Profile (`POST /users`)
 
 You can test the `/users` endpoint by sending a POST request with a user profile. Here's an example using `curl`:
 

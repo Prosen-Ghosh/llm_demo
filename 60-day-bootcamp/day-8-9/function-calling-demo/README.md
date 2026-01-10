@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../README.md)
 
 # Function Calling Demo
 
@@ -156,24 +156,18 @@ The main endpoint for interacting with the LLM.
 
 ### Running Locally
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/Prosen-Ghosh/llm_demo.git
-    cd 60-day-bootcamp/day-3/function-calling-demo
-    ```
-
-2.  **Create a virtual environment and activate it:**
+1.  **Create a virtual environment and activate it:**
     ```bash
     python -m venv venv
     source venv/bin/activate
     ```
 
-3.  **Install the dependencies:**
+2.  **Install the dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Configure your environment:**
+3.  **Configure your environment:**
     -   Create a `.env` file by copying the example:
         ```bash
         cp .env.example .env
@@ -181,7 +175,7 @@ The main endpoint for interacting with the LLM.
     -   Edit the `.env` file to set your environment variables, especially `OLLAMA_BASE_URL`.
     **Note:** The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and customize it with your specific settings.
 
-5.  **Run the application:**
+4.  **Run the application:**
     ```bash
     uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ```

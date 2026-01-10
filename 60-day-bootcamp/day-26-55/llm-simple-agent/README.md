@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../../README.md)
 
 # LLM Simple Agent
 
@@ -25,20 +25,13 @@ The main purpose of this project is to provide a simple and easy-to-understand e
 
 ### Installation
 
-1.  **Clone the repository:**
-
-    ```bash
-    git clone https://github.com/Prosen-Ghosh/llm_demo.git
-    cd 60-day-bootcamp/day-16-37/llm-simple-agent
-    ```
-
-2.  **Pull the Ollama model:**
+1.  **Pull the Ollama model:**
 
     ```bash
     ollama run gpt-oss:120b-cloud
     ```
 
-3.  **Build and run the application:**
+2.  **Build and run the application:**
 
     ```bash
     docker-compose up --build
@@ -78,6 +71,7 @@ curl -X POST "http://localhost:8000/ask" -H "Content-Type: application/json" -d 
 ├── .gitignore              # Specifies intentionally untracked files to ignore.
 ├── docker-compose.yml      # Docker Compose configuration for multi-container Docker applications.
 ├── Dockerfile              # Defines how to build the Docker image for the application.
+├── linkedin.md             # LinkedIn article related to the project.
 ├── llm-simple-agent.png    # Diagram or image illustrating the LLM simple agent.
 ├── README.md               # Project README file.
 └── requirements.txt        # Lists Python package dependencies.

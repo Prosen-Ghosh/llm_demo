@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../../README.md)
 
 # Whisper Fine-Tuning for Bengali Speech-to-Text
 
@@ -35,13 +35,7 @@ The core of this project is the `train.py` script, which performs the following 
 
 ## Setup and Installation
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd whisper-finetune
-    ```
-
-2.  **Install dependencies:**
+1.  **Install dependencies:**
     It is recommended to use a virtual environment.
     ```bash
     python3 -m venv venv
@@ -59,7 +53,7 @@ python3 train.py
 
 The script will automatically detect and use an available MPS device (for Apple Silicon) or fall back to the CPU.
 
-The final trained model will be saved in the `./whisper-medium-bn-final` directory.
+The final trained model will be saved in the `final_model` directory.
 
 ## Docker Usage
 
@@ -82,8 +76,9 @@ This will start the training process inside a Docker container.
 Training progress and metrics are logged to TensorBoard.
 
 1.  **Start TensorBoard:**
+    The training script saves TensorBoard logs to the `output/` directory. To view them, run:
     ```bash
-    tensorboard --logdir=output/runs
+    tensorboard --logdir=output
     ```
 
 2.  Open your browser and navigate to `http://localhost:6006` to view the training dashboards.
@@ -92,10 +87,11 @@ Training progress and metrics are logged to TensorBoard.
 
 ```
 .
-├── .dockerignore           # Specifies files and directories to exclude from the Docker build context.
+├── . dockerignore          # Specifies files and directories to exclude from the Docker build context.
 ├── .gitignore              # Specifies intentionally untracked files to ignore.
 ├── docker-compose.yml      # Docker Compose configuration for multi-container Docker applications.
 ├── Dockerfile              # Defines how to build the Docker image for the application.
+├── linkedin.md             # LinkedIn article related to the project.
 ├── README.md               # This README file.
 ├── requirements.txt        # Lists all Python dependencies.
 ├── train.py                # Main script for fine-tuning the Whisper model.

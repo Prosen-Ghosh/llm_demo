@@ -1,4 +1,4 @@
-[<- Back to Main README](/README.md)
+[<- Back to Main README](../../README.md)
 
 # Asynchronous LLM Orchestrator
 
@@ -302,7 +302,7 @@ For local development, you can use the `fastapi dev` command, which provides a c
     *   `--port 8000`: Sets the port the server listens on to 8000.
     *   `--reload`: Enables auto-reloading of the server when code changes are detected, which is very useful for local development.
 
-5.  **Access API Docs**: Once running, you can access the interactive API documentation (Swagger UI) at `http://localhost:10000/docs` (or the port you specified).
+5.  **Access API Docs**: Once running, you can access the interactive API documentation (Swagger UI) at `http://localhost:8000/docs` (or the port you specified).
 
 ## Deployment
 
