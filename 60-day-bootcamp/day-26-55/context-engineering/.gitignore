@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Logs
+logs/
+*.log
+linkedin.md
+data
+final_model
+output
+temp
+whisper-medium-bn
+whisper-small-bn
+whisper-tiny-bn
+.cache/
+hf_cache/
+transformers/
+wandb/
+tensorboard/
+.ipynb_checkpoints/
+.DS_Store
+.metal/
+.nvidia/

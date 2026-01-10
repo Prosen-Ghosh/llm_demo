@@ -1,0 +1,12 @@
+# Core
+pydantic
+python-dotenv
+requests
+
+# Database Clients
+weaviate-client
+psycopg2-binary
+redis
+
+# Testing
+pytest
