@@ -1,4 +1,33 @@
 services:
+  app:
+    build:
+      context: .
+    container_name: context_engineering
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - ENVIRONMENT=development
+      - WEAVIATE_URL=http://weaviate:8080
+      - POSTGRES_DSN=postgresql://course_user:course_password@postgres:5432/course_metadata
+      - REDIS_URL=redis://redis:6379/0
+      - OLLAMA_URL=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/src                # <-- hot reload volume
+      - /src/__pycache__/     # optional: avoid polluting host
+    command:
+    - uvicorn
+    - src.main:app
+    - --host
+    - 0.0.0.0
+    - --port
+    - "8000"
+    - --reload
+
+    restart: unless-stopped
   weaviate:
     command:
     - --host

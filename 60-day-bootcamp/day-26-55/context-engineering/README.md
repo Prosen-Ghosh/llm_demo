@@ -1,32 +1,43 @@
-# Context Engineering Project
+# Context Engineering RAG API
 
-This project is a Python application designed for context engineering, potentially involving database checks and environment variable management. It is set up to run locally using Docker for dependency management and uses `pytest` for testing.
+This project is a FastAPI application that provides a Retrieval-Augmented Generation (RAG) API. It allows users to ingest documents and perform semantic searches on them. The API is built with Python 3.12 and utilizes a stack of modern technologies including Docker, Weaviate, PostgreSQL, and Redis.
 
 ## Project Structure
 
 - `.`
     - `.env.example`: Example file for environment variables.
     - `.gitignore`: Specifies intentionally untracked files to ignore.
-    - `docker-compose.yml`: Defines multi-container Docker application.
+    - `docker-compose.yml`: Defines the multi-container Docker application, including the API, Weaviate, PostgreSQL, and Redis services.
+    - `Dockerfile`: Defines the Docker image for the FastAPI application.
     - `README.md`: This project documentation.
     - `requirements.txt`: Python dependencies.
+    - `scripts/`: Contains utility scripts, such as for demonstrating similarity search.
     - `src/`:
-        - `__init__.py`: Makes `src` a Python package.
-        - `utils/`: Utility functions.
-            - `db_checks.py`: Contains functions related to database checks.
-    - `tests/`:
-        - `test_env.py`: Tests related to environment variables.
+        - `main.py`: The entry point for the FastAPI application.
+        - `api/`: Contains the API routers.
+        - `models/`: Contains the Pydantic data models (schemas).
+        - `utils/`: Contains utility functions, such as for creating embeddings.
+    - `tests/`: Contains the tests for the API and other components.
 - `venv/`: Python virtual environment (ignored by Git).
 - `.pytest_cache/`: pytest cache directory (ignored by Git).
 - `__pycache__/`: Python cache directories (ignored by Git).
+
+
+## Services
+
+This project uses the following services, orchestrated by `docker-compose.yml`:
+
+-   **app**: The FastAPI application.
+-   **weaviate**: A vector database used for storing and searching document embeddings.
+-   **postgres**: A PostgreSQL database for storing metadata.
+-   **redis**: A Redis instance for caching.
 
 ## Setup
 
 ### Prerequisites
 
-- Docker: [Install Docker](https://docs.docker.com/get-docker/)
-- Python 3.8+
-- `make` (optional, for convenience scripts)
+-   Docker: [Install Docker](https://docs.docker.com/get-docker/)
+-   Python 3.12+ (for local development without Docker)
 
 ### Local Development Environment
 
@@ -47,29 +58,40 @@ This project is a Python application designed for context engineering, potential
     ```bash
     docker-compose up --build -d
     ```
-    This will start any services defined in `docker-compose.yml` in detached mode.
+    This will start all the services defined in `docker-compose.yml` in detached mode.
 
-4.  **Install Python dependencies:**
-    It is recommended to use a virtual environment.
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    ```
+## Running the Application
+
+The FastAPI application will be running at `http://localhost:8000`. You can access the API documentation at `http://localhost:8000/docs`.
+
+## API Usage
+
+The API provides the following endpoints:
+
+-   `GET /api/v1/health`: Health check endpoint.
+-   `POST /api/v1/ingest`: Ingests documents into the system.
+-   `POST /api/v1/search`: Performs a semantic search on the ingested documents.
+
+For detailed information about the request and response models, please refer to the API documentation at `http://localhost:8000/docs`.
 
 ## Running Tests
 
 Tests are written using `pytest`.
 
-To run all tests:
+To run all tests, you can run the following command inside the `app` container:
+
 ```bash
-source venv/bin/activate # if not already active
-pytest
+docker-compose exec app pytest
 ```
 
-## Usage
+Alternatively, you can run the tests locally after installing the dependencies:
 
-(Further instructions on how to use the application would go here, once developed.)
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pytest
+```
 
 ## Contributing
 
