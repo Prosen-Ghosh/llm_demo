@@ -2,6 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from src.models.schema import IngestRequest, IngestResponse, SearchRequest, SearchResult
 import uuid
+from src.utils.chunking import ChunkingService
 
 router = APIRouter()
 
@@ -11,8 +12,16 @@ async def health_check():
 
 @router.post("/ingest", response_model=IngestResponse)
 async def ingest_documents(request: IngestRequest):
-    doc_ids = [doc.id for doc in request.documents]
-    print(f"Received {len(request.documents)} documents for ingestion.")
+    chunker = ChunkingService(chunk_size=500, chunk_overlap=50)
+
+    total_chunk = 0
+    doc_ids = []
+    for doc in request.documents:
+        chunks = chunker.chunk_document(doc)
+
+        total_chunk += len(chunks)
+        doc_ids.append(doc.id)
+        print(f"Doc {doc.title}: Created {len(chunks)} chunks.")
     
     return IngestResponse(
         processed_count=len(request.documents),

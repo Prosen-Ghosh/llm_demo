@@ -9,7 +9,7 @@ class Document(BaseModel):
     title: str = Field(..., min_length=1)
     content: str = Field(..., min_length=1)
     source: str = Field(default="manual", description="Source of the document (e.g., 'pdf', 'web')")
-    created_at: datetime = Field(default_factory=datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class Chunk(BaseModel):

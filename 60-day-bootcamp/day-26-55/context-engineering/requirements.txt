@@ -19,3 +19,5 @@ httpx
 sentence-transformers
 scikit-learn
 numpy
+langchain-text-splitters
+tiktoken

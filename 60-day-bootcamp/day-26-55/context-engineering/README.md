@@ -1,6 +1,6 @@
 # Context Engineering RAG API
 
-This project is a FastAPI application that provides a Retrieval-Augmented Generation (RAG) API. It allows users to ingest documents and perform semantic searches on them. The API is built with Python 3.12 and utilizes a stack of modern technologies including Docker, Weaviate, PostgreSQL, and Redis.
+This project is a FastAPI application that provides a Retrieval-Augmented Generation (RAG) API. It allows users to ingest documents, chunk them into smaller pieces, and perform semantic searches on them. The API is built with Python 3.12 and utilizes a stack of modern technologies including Docker, Weaviate, PostgreSQL, and Redis.
 
 ## Project Structure
 
@@ -11,12 +11,12 @@ This project is a FastAPI application that provides a Retrieval-Augmented Genera
     - `Dockerfile`: Defines the Docker image for the FastAPI application.
     - `README.md`: This project documentation.
     - `requirements.txt`: Python dependencies.
-    - `scripts/`: Contains utility scripts, such as for demonstrating similarity search.
+    - `scripts/`: Contains utility scripts, such as for demonstrating chunking and similarity search.
     - `src/`:
         - `main.py`: The entry point for the FastAPI application.
         - `api/`: Contains the API routers.
         - `models/`: Contains the Pydantic data models (schemas).
-        - `utils/`: Contains utility functions, such as for creating embeddings.
+        - `utils/`: Contains utility functions, such as for chunking and creating embeddings.
     - `tests/`: Contains the tests for the API and other components.
 - `venv/`: Python virtual environment (ignored by Git).
 - `.pytest_cache/`: pytest cache directory (ignored by Git).
@@ -31,6 +31,15 @@ This project uses the following services, orchestrated by `docker-compose.yml`:
 -   **weaviate**: A vector database used for storing and searching document embeddings.
 -   **postgres**: A PostgreSQL database for storing metadata.
 -   **redis**: A Redis instance for caching.
+
+## Chunking
+
+This project supports two chunking strategies:
+
+-   **Recursive Chunking**: Splits text recursively based on a set of separators. This is the default strategy.
+-   **Hierarchical Chunking**: Creates parent and child chunks. Parent chunks are larger and contain the full context, while child chunks are smaller and are used for retrieval.
+
+The chunking service is implemented in `src/utils/chunking.py`. You can see a demonstration of the chunking strategies by running `python scripts/demo_chunking.py`.
 
 ## Setup
 
@@ -69,7 +78,7 @@ The FastAPI application will be running at `http://localhost:8000`. You can acce
 The API provides the following endpoints:
 
 -   `GET /api/v1/health`: Health check endpoint.
--   `POST /api/v1/ingest`: Ingests documents into the system.
+-   `POST /api/v1/ingest`: Ingests and chunks documents into the system.
 -   `POST /api/v1/search`: Performs a semantic search on the ingested documents.
 
 For detailed information about the request and response models, please refer to the API documentation at `http://localhost:8000/docs`.
