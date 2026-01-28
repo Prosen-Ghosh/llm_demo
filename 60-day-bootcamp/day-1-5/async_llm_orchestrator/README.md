@@ -55,37 +55,36 @@ The API endpoints are defined using FastAPI in `app/routers/`.
 
 ```
 .
-├── .env
 ├── .env.example
 ├── .gitignore
-├── docker-compose.yml
 ├── Dockerfile
 ├── README.md
-├── requirements.txt
 ├── app/
 │   ├── __init__.py
-│   ├── main.py                     # FastAPI application entry point
 │   ├── core/
 │   │   ├── __init__.py
-│   │   ├── config.py               # Application settings and configuration
-│   │   └── orchestrator.py         # Core LLM orchestration logic
+│   │   ├── config.py
+│   │   └── orchestrator.py
+│   ├── main.py
 │   ├── models/
 │   │   ├── __init__.py
-│   │   └── models.py               # Pydantic models for requests and responses
+│   │   └── models.py
 │   ├── providers/
 │   │   ├── __init__.py
-│   │   ├── base.py                 # Abstract base class for LLM providers
-│   │   ├── ollama.py               # Ollama LLM provider implementation
-│   │   └── openrouter.py           # OpenRouter LLM provider implementation
-│   └── routers/
-│       ├── __init__.py
-│       ├── batch.py                # API router for batch LLM requests
-│       ├── dependencies.py         # FastAPI dependency injection utilities
-│       └── health.py               # API router for health checks
+│   │   ├── base.py
+│   │   ├── ollama.py
+│   │   └── openrouter.py
+│   ├── routers/
+│   │   ├── __init__.py
+│   │   ├── batch.py
+│   │   ├── dependencies.py
+│   │   ├── health.py
+│   │   └── models.py
 │   └── tests/
 │       ├── __init__.py
-│       └── test_example.py         # Example test file
-└── logs/
+│       └── test_example.py
+├── docker-compose.yml
+└── requirements.txt
 ```
 **Note:** 
 * The `.env.example` file provides a template for the environment variables required to run the application. Copy this file to `.env` and fill in the required values.

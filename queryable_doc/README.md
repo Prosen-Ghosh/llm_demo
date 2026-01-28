@@ -89,19 +89,22 @@ The application follows a standard RAG pipeline:
 
 ```
 .
-├── Dockerfile          # Defines how to build the Docker image for the Streamlit application.
-├── README.md           # This README file, providing an overview and instructions.
-├── app.py              # Main entry point for the Streamlit application.
-├── chat.py             # Contains the core RAG chain logic, handles conversation history, and displays chat messages.
-├── document_handler.py # Manages loading various document types and processing them for the RAG pipeline.
-├── embeddings.py       # Responsible for document chunking, creating vector embeddings, and interacting with ChromaDB.
-├── requirements.txt    # Lists all Python dependencies required by the project.
-├── setup.sh            # A shell script to automate the setup of the Python virtual environment and dependencies.
-├── ui/                 # Contains Streamlit UI components to separate concerns.
-│   ├── main.py         # Renders the main body of the Streamlit application, including document upload and chat columns.
-│   ├── sidebar_config.py # Renders the sidebar of the Streamlit application, allowing users to configure parameters.
-│   └── footer.py       # Renders the footer section of the Streamlit application.
-└── utils.py            # Provides general utility functions, such as session state initialization for Streamlit.
+├── Dockerfile
+├── README.md
+├── app.py
+├── chat.py
+├── document_handler.py
+├── embeddings.py
+├── requirements.txt
+├── setup.sh
+├── ui/
+│   ├── __pycache__/
+│   ├── footer.py
+│   ├── main.py
+│   └── sidebar_config.py
+├── utils.py
+├── __pycache__/
+└── venv/
 ```
 
 ## Deployment

@@ -29,38 +29,44 @@ The project is structured as a standard FastAPI application:
 
 ```
 .
-├── app/                      # Source code for the FastAPI application.
-│   ├── __init__.py           # Initializes the app package.
-│   ├── config.py             # Configuration settings for the application.
-│   ├── main.py               # Main entry point of the FastAPI application.
-│   ├── models/               # Contains Pydantic models for data validation.
-│   │   ├── __init__.py       # Initializes the models package.
-│   │   ├── prompts.py        # Pydantic models related to prompts.
-│   │   └── schemas.py        # Pydantic schemas for API requests and responses.
-│   ├── services/             # Contains business logic and services.
-│   │   ├── __init__.py       # Initializes the services package.
-│   │   ├── analyzer.py       # Service for analyzing queries.
-│   │   ├── llm_client.py     # Client for interacting with the LLM.
-│   │   └── prompt_manager.py # Service for managing prompt versions.
-│   ├── strategies/           # Implements various prompt engineering strategies.
-│   │   ├── __init__.py       # Initializes the strategies package.
-│   │   ├── base.py           # Base class for prompt strategies.
-│   │   ├── chain_of_thought.py # Implementation of Chain of Thought strategy.
-│   │   ├── react.py          # Implementation of ReAct strategy.
-│   │   └── self_consistency.py # Implementation of Self-Consistency strategy.
-│   └── utils/                # Utility functions.
-│       ├── __init__.py       # Initializes the utils package.
-│       └── logger.py         # Logging configuration.
-├── data/                     # Data directory.
-│   └── prompts.db            # SQLite database for storing prompt versions.
-├── logs/                     # Log directory.
-│   └── app.log               # Log file for the application.
-├── .env.example              # Example environment file for API keys and configurations.
-├── .gitignore                # Specifies intentionally untracked files to ignore.
-├── docker-compose.dev.yml    # Docker Compose configuration for development.
-├── Dockerfile                # Defines how to build the Docker image for the application.
-├── README.md                 # This README file.
-└── requirements.txt          # Lists all Python dependencies.
+├── .env.example
+├── .gitignore
+├── Dockerfile
+├── README.md
+├── app/
+│   ├── __init__.py
+│   ├── __pycache__/
+│   ├── config.py
+│   ├── main.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── __pycache__/
+│   │   ├── prompts.py
+│   │   └── schemas.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── __pycache__/
+│   │   ├── analyzer.py
+│   │   ├── llm_client.py
+│   │   └── prompt_manager.py
+│   ├── strategies/
+│   │   ├── __init__.py
+│   │   ├── __pycache__/
+│   │   ├── base.py
+│   │   ├── chain_of_thought.py
+│   │   ├── react.py
+│   │   └── self_consistency.py
+│   └── utils/
+│       ├── __init__.py
+│       ├── __pycache__/
+│       └── logger.py
+├── data/
+│   └── prompts.db
+├── docker-compose.dev.yml
+├── logs/
+│   └── reasoning_traces.jsonl
+├── __pycache__/
+└── requirements.txt
 ```
 
 *   `app/main.py`: The entry point of the FastAPI application, defining the API endpoints.

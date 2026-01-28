@@ -44,42 +44,41 @@ The primary purpose of this demo is to showcase a robust implementation of a fun
 
 ```
 .
-├── .env.example              # Example environment file for API keys and configurations.
-├── .gitignore                # Specifies intentionally untracked files to ignore.
-├── docker-compose.dev.yml    # Docker Compose configuration for development with hot-reloading.
-├── docker-compose.yml        # Docker Compose configuration for production deployment.
-├── Dockerfile                # Defines how to build the Docker image for the application.
-├── README.md                 # This README file.
-├── requirements.txt          # Lists all Python dependencies.
-├── app/                      # Source code for the application.
-│   ├── __init__.py           # Initializes the app package.
-│   ├── main.py               # Main entry point for the FastAPI application.
-│   ├── api/                  # API endpoint definitions.
+├── Dockerfile
+├── README.md
+├── app/
+│   ├── __init__.py
+│   ├── api/
 │   │   ├── __init__.py
-│   │   ├── chat.py           # Chat endpoint for LLM interaction.
-│   │   ├── health.py         # Health check endpoint.
-│   │   └── tools.py          # Endpoint to list available tools.
+│   │   ├── chat.py
+│   │   ├── health.py
+│   │   └── tools.py
 │   ├── core/
 │   │   ├── __init__.py
-│   │   └── config.py           # Application settings and configuration.
+│   │   └── config.py
+│   ├── main.py
 │   ├── models/
 │   │   ├── __init__.py
-│   │   └── schemas.py          # Pydantic schemas for API requests and responses.
+│   │   └── schemas.py
 │   ├── services/
 │   │   ├── __init__.py
-│   │   ├── llm_client.py       # Client for interacting with the LLM (e.g., Ollama).
-│   │   └── tool_executor.py    # Logic for executing tools.
-│   ├── tools/                  # Directory for all the external tools.
+│   │   ├── llm_client.py
+│   │   └── tool_executor.py
+│   ├── tools/
 │   │   ├── __init__.py
-│   │   ├── base.py             # Base class for defining new tools.
-│   │   ├── calculator.py       # Calculator tool implementation.
-│   │   ├── registry.py         # Centralized registry for managing tools.
-│   │   ├── weather.py          # Weather service tool implementation.
-│   │   └── web_search.py       # Web search tool implementation.
+│   │   ├── base.py
+│   │   ├── calculator.py
+│   │   ├── registry.py
+│   │   ├── weather.py
+│   │   └── web_search.py
 │   └── utils/
 │       ├── __init__.py
-│       └── logger.py           # Logging configuration.
-└── logs/                     # Directory for application logs.
+│       └── logger.py
+├── docker-compose.dev.yml
+├── docker-compose.yml
+├── logs/
+│   └── tool_execution.jsonl
+└── requirements.txt
 ```
 
 ## API Documentation

@@ -50,27 +50,33 @@ The following tools are available to the agent:
 - **`check_inventory(product_id: str)`:** Checks if a product is in stock.
 
 ## Project Structure
+
 ```
 .
-├── .env.example              # Example environment file for API keys and configuration.
-├── .gitignore                # Specifies intentionally untracked files to ignore.
-├── Dockerfile                # Dockerfile for building the application container.
-├── README.md                 # This README file.
-├── app/                      # Source code for the application.
-│   ├── api/                  # Defines API endpoints and their dependencies.
-│   │   ├── dependencies.py   # Dependency injection for API endpoints.
-│   │   └── endpoints.py      # Actual API endpoints for chat, streaming, and health checks.
-│   ├── core/                 # Contains core application logic and configurations.
-│   │   ├── agents.py         # Defines the LangChain agent and its behavior.
-│   │   ├── config.py         # Application configuration settings.
-│   │   └── tools.py          # Definitions of tools the LangChain agent can use.
-│   ├── main.py               # Main entry point for the FastAPI application.
-│   ├── schemas/              # Pydantic schemas for request and response validation.
-│   │   └── chat.py           # Pydantic models specifically for chat-related data.
-│   └── utils/                # Utility functions.
-│       └── streaming.py      # Utilities related to Server-Sent Events (SSE) streaming.
-├── docker-compose.dev.yml    # Docker Compose configuration for development with hot-reloading.
-└── requirements.txt          # Lists all Python dependencies.
+├── .env.example
+├── .gitignore
+├── Dockerfile
+├── README.md
+├── app/
+│   ├── api/
+│   │   ├── __pycache__/
+│   │   ├── dependencies.py
+│   │   └── endpoints.py
+│   ├── core/
+│   │   ├── __pycache__/
+│   │   ├── agents.py
+│   │   ├── config.py
+│   │   └── tools.py
+│   ├── main.py
+│   ├── schemas/
+│   │   ├── __pycache__/
+│   │   └── chat.py
+│   └── utils/
+│       ├── __pycache__/
+│       └── streaming.py
+├── docker-compose.dev.yml
+├── __pycache__/
+└── requirements.txt
 ```
 
 ## Getting Started

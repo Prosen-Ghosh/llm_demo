@@ -169,7 +169,7 @@ The following environment variables can be set to configure the application:
 
 ## API Endpoints (V2)
 
-- **`POST /v2/batch-transcribe`**
+-   **`POST /v2/batch-transcribe`**
   - **Description:** Transcribes a batch of audio files asynchronously.
   - **Request:** `multipart/form-data` with a `files` field containing the audio files.
   - **Query Parameters:**
@@ -188,7 +188,7 @@ The following environment variables can be set to configure the application:
     ]
     ```
 
-- **`GET /v2/jobs/{job_id}`**
+-   **`GET /v2/jobs/{job_id}`**
   - **Description:** Retrieves the status of a transcription job.
   - **Example:**
     ```bash
@@ -231,28 +231,43 @@ docker-compose exec whisper-api pytest
 
 ```
 .
-├── app/                      # Source code for the FastAPI application.
-│   ├── __init__.py           # Initializes the app package.
-│   ├── caching.py            # Caching utilities.
-│   ├── config.py             # Configuration settings for the application.
-│   ├── jobs.py               # Asynchronous job management.
-│   ├── main.py               # Main FastAPI application entry point.
-│   ├── monitoring.py         # Application monitoring and health checks.
-│   ├── preprocessing.py      # Audio preprocessing utilities.
-│   ├── test_main.py          # Unit tests for the main application logic.
-│   ├── utils.py              # Utility functions.
-│   ├── whisper.py            # Integration with the faster-whisper library.
-│   └── worker.py             # Background worker for processing tasks.
-├── tests/                    # Additional tests for the project.
-├── .dockerignore             # Specifies files and directories to exclude from the Docker build context.
-├── .gitignore                # Specifies intentionally untracked files to ignore.
-├── CHANGELOG.md              # Project changelog.
-├── docker-compose.yml        # Docker Compose configuration.
-├── Dockerfile                # Dockerfile for building the application container.
-├── Makefile                  # Makefile for common development tasks.
-├── README.md                 # This README file.
-├── requirements.txt          # Lists Python package dependencies.
-└── whisper-api-arc.png       # Architectural diagram of the Whisper API.
+├── .dockerignore
+├── .gitignore
+├── CHANGELOG.md
+├── Dockerfile
+├── README.md
+├── Makefile
+├── app/
+│   ├── __init__.py
+│   ├── caching.py
+│   ├── config.py
+│   ├── jobs.py
+│   ├── main.py
+│   ├── monitoring.py
+│   ├── preprocessing.py
+│   ├── test_main.py
+│   ├── utils.py
+│   ├── whisper.py
+│   └── worker.py
+├── docker-compose.yml
+├── linkedin.md
+├── requirements.txt
+├── tests/
+│   ├── __init__.py
+│   ├── conftest.py
+│   ├── test_api.py
+│   ├── test_async_flow.py
+│   ├── test_benchmark.py
+│   ├── test_caching.py
+│   ├── test_language_detection.py
+│   ├── test_model_switching.py
+│   ├── test_multilingual.py
+│   ├── test_preprocessing.py
+│   ├── test_streaming.py
+│   ├── test_vocabulary.py
+│   └── test_whisper.py
+├── whisper-api-arc.png
+└── __pycache__/
 ```
 
 ## Future Improvements

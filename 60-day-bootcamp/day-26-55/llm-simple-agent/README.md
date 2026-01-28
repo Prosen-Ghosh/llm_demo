@@ -63,18 +63,20 @@ curl -X POST "http://localhost:8000/ask" -H "Content-Type: application/json" -d 
 
 ```
 .
+├── .env.example
+├── .gitignore
+├── Dockerfile
+├── README.md
 ├── app/
-│   ├── __init__.py         # Initializes the app package.
-│   ├── agents.py           # Defines the LangChain agent with its tools and logic.
-│   └── main.py             # FastAPI application entry point, setting up endpoints.
-├── .env.example            # Example environment variables for configuration.
-├── .gitignore              # Specifies intentionally untracked files to ignore.
-├── docker-compose.yml      # Docker Compose configuration for multi-container Docker applications.
-├── Dockerfile              # Defines how to build the Docker image for the application.
-├── linkedin.md             # LinkedIn article related to the project.
-├── llm-simple-agent.png    # Diagram or image illustrating the LLM simple agent.
-├── README.md               # Project README file.
-└── requirements.txt        # Lists Python package dependencies.
+│   ├── __init__.py
+│   ├── __pycache__/
+│   ├── agents.py
+│   └── main.py
+├── docker-compose.yml
+├── linkedin.md
+├── llm-simple-agent.png
+├── __pycache__/
+└── requirements.txt
 ```
 
 ## Future Improvements

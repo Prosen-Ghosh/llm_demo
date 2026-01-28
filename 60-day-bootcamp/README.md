@@ -23,7 +23,6 @@ The primary goal of this bootcamp is to rapidly prototype and learn by building.
 
 *   **[Async LLM Orchestrator](./day-1-5/async_llm_orchestrator/README.md):** A service designed to orchestrate asynchronous calls to various Large Language Models (LLMs).
     *   **Why we built this:** To manage the complexity of interacting with multiple LLM providers, handle concurrent requests efficiently, and provide a unified interface for downstream services.
-
 *   **[Profile Enricher](./day-1-5/profile-enricher/README.md):** A FastAPI-based microservice that takes a user's profile, validates it, and enriches it with additional information.
     *   **Why we built this:** To demonstrate data enrichment patterns, where initial data is augmented from external sources, a common task in building comprehensive user profiles.
 
@@ -54,17 +53,15 @@ The primary goal of this bootcamp is to rapidly prototype and learn by building.
 
 ### Day 26-55: LLM Agents, Middleware, and Finetuning
 
+*   **[Context Engineering](./day-26-55/context-engineering/README.md):** A Retrieval-Augmented Generation (RAG) API built with FastAPI. It allows users to ingest documents, chunk them, and perform semantic searches.
+    *   **Why we built this:** To provide a robust and scalable solution for building RAG pipelines, with a focus on different chunking strategies and a modern tech stack.
 *   **[LangChain Streaming with SSE](./day-26-55/langchain-streaming-sse/README.md):** A project demonstrating real-time LLM token streaming using Server-Sent Events (SSE) with FastAPI and LangChain.
     *   **Why we built this:** To showcase how to build a responsive, real-time application that streams data from a large language model to a client.
-
 *   **[LLM Finetune](./day-26-55/llm-finetune/README.md):** A project demonstrating various techniques for finetuning Large Language Models.
-
 *   **[LLM Middleware with FastAPI](./day-26-55/llm-middleware-fastapi/README.md):** A project demonstrating how to build a FastAPI application with a custom middleware for processing requests and a simple LangGraph agent.
     *   **Why we built this:** To showcase a simple example of how to add custom middleware to a FastAPI application to process incoming requests and add context to them.
-
 *   **[LLM Simple Agent](./day-26-55/llm-simple-agent/README.md):** A simple demonstration of a tool-calling agent built with LangChain and FastAPI. The agent is capable of understanding user queries and routing them to the appropriate tool, either a calculator or a web search tool.
     *   **Why we built this:** To illustrate the concept of LLM agents and how they can use external tools to perform actions.
-
 *   **[Whisper Finetune](./day-26-55/whisper-finetune/README.md):** A project demonstrating fine-tuning of the OpenAI Whisper model for speech-to-text transcription.
 
 ### Day 56-60: Speech-to-Text

@@ -51,7 +51,7 @@ The application provides a web interface where you can ask a question. The agent
 3.  **Set up your API keys:**
     - Create a `.env` file by copying the example file:
     ```bash
-    cp .env.example .env
+    cp example.env .env
     ```
     - Edit the `.env` file and add your API keys:
         - `SERPAPI_API_KEY`: Get this from [SerpApi](https://serpapi.com/manage-api-key).
@@ -79,16 +79,18 @@ The application provides a web interface where you can ask a question. The agent
 
 ```
 .
-├── .gitignore          # Git ignore file.
-├── Dockerfile          # Dockerfile for building the application container.
-├── README.md           # This README file.
-├── agent_tools.py      # Defines the tools available to the LangChain agent (e.g., web search).
-├── app.py              # Main entry point for the Streamlit application.
-├── .env.example        # Example environment file for API keys.
-├── requirements.txt    # Lists all Python dependencies.
-├── setup.sh            # A shell script to automate the setup process.
-├── simple_agent.py     # Contains the core logic for the LangChain agent.
-└── utils.py            # Utility functions for the application.
+├── .gitignore
+├── agent_tools.py
+├── app.py
+├── Dockerfile
+├── example.env
+├── README.md
+├── requirements.txt
+├── setup.sh
+├── simple_agent.py
+├── utils.py
+├── __pycache__/
+└── venv/
 ```
 
 ## Deployment

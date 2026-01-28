@@ -31,19 +31,20 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
 
 ```
 .
-├── .env.example              # Example environment file for API keys.
-├── .gitignore                # Git ignore file.
-├── docker-compose.yml        # Docker compose file for development.
-├── Dockerfile                # Dockerfile for building the application container.
-├── README.md                 # This README file.
-├── app/                      # Source code for the application.
-│   ├── __init__.py           # Initializes the app package.
-│   ├── agent.py              # LangGraph agent.
-│   ├── graph.py              # LangGraph graph.
-│   ├── main.py               # Main entry point for the FastAPI application.
-│   ├── middleware.py         # Custom middleware.
-│   └── tools.py              # Tools for the LangGraph agent.
-└── requirements.txt          # Lists all Python dependencies.
+├── Dockerfile
+├── README.md
+├── __init__.py
+├── app/
+│   ├── __init__.py
+│   ├── agent.py
+│   ├── graph.py
+│   ├── main.py
+│   ├── middleware.py
+│   └── tools.py
+├── docker-compose.yml
+├── linkedin.md
+├── requirements.txt
+└── __pycache__/
 ```
 
 ## Getting Started

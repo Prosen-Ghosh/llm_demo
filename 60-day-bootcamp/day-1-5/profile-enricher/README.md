@@ -46,25 +46,20 @@ This Profile Enricher service was built to:
 
 ### Local Development
 
-1.  **Navigate to the project directory**:
-    ```bash
-    cd 60-day-bootcamp/day-1/profile-enricher
-    ```
-
-2.  **Create a virtual environment and install dependencies**:
+1.  **Create a virtual environment and install dependencies**:
     ```bash
     python -m venv .profile-enricher-env
     source .profile-enricher-env/bin/activate
     pip install -r requirements.txt
     ```
 
-3.  **Set up environment variables**:
+2.  **Set up environment variables**:
     Copy the `.env.example` to a new file named `.env` and fill in the required values if necessary.
     ```bash
     cp .env.example .env
     ```
 
-4.  **Run the application**:
+3.  **Run the application**:
     ```bash
     uvicorn app.main:app --reload
     ```
@@ -147,26 +142,32 @@ If the request is successful, you will receive a JSON response containing the or
 .
 ├── .env.example
 ├── .gitignore
-├── docker-compose.yml
 ├── Dockerfile
 ├── README.md
-├── requirements.txt
-└── app/
-    ├── __init__.py
-    ├── main.py
-    ├── models/
-    │   ├── __init__.py
-    │   ├── address.py
-    │   └── user_profile.py
-    ├── routers/
-    │   ├── __init__.py
-    │   ├── enrich.py
-    │   ├── health.py
-    │   └── users.py
-    └── utils/
-        ├── __init__.py
-        ├── enrichment.py
-        └── logging.py
+├── app/
+│   ├── __init__.py
+│   ├── __pycache__/
+│   ├── main.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── __pycache__/
+│   │   ├── address.py
+│   │   └── user_profile.py
+│   ├── routers/
+│   │   ├── __init__.py
+│   │   ├── __pycache__/
+│   │   ├── enrich.py
+│   │   ├── health.py
+│   │   └── users.py
+│   └── utils/
+│       ├── __init__.py
+│       ├── __pycache__/
+│       ├── enrichment.py
+│       └── logging.py
+├── docker-compose.yml
+├── .profile-enricher-env/
+├── .pytest_cache/
+└── requirements.txt
 ```
 **Note:**
 * The `.env.example` file serves as a template for the environment variables required by the application. Copy this file to `.env` and customize it with your specific settings.

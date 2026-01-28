@@ -87,19 +87,22 @@ Training progress and metrics are logged to TensorBoard.
 
 ```
 .
-├── . dockerignore          # Specifies files and directories to exclude from the Docker build context.
-├── .gitignore              # Specifies intentionally untracked files to ignore.
-├── docker-compose.yml      # Docker Compose configuration for multi-container Docker applications.
-├── Dockerfile              # Defines how to build the Docker image for the application.
-├── linkedin.md             # LinkedIn article related to the project.
-├── README.md               # This README file.
-├── requirements.txt        # Lists all Python dependencies.
-├── train.py                # Main script for fine-tuning the Whisper model.
-├── data/                   # Directory for storing dataset-related files (e.g., cached data, processed data).
-├── final_model/            # Directory where the final fine-tuned model will be saved.
-├── huggingface_cache/      # Cache directory for Hugging Face models and datasets.
-├── output/                 # Output directory for training logs and checkpoints.
-└── tensorboard_logs/       # Directory for TensorBoard logs.
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
+├── README.md
+├── __pycache__/
+├── data/
+├── docker-compose.yml
+├── final_model/
+├── huggingface_cache/
+├── linkedin.md
+├── output/
+├── requirements.txt
+├── tensorboard_logs/
+├── train.py
+├── venv/
+└── whisper-test/
 ```
 
 ## Future Improvements

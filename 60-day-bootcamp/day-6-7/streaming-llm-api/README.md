@@ -52,42 +52,51 @@ The project is organized as follows:
 .
 ├── .env.example
 ├── .gitignore
-├── docker-compose.dev.yml
-├── docker-compose.yml
 ├── Dockerfile
 ├── README.md
-├── requirements.txt
 ├── app/
 │   ├── __init__.py
-│   ├── main.py
+│   ├── __pycache__/
 │   ├── api/
 │   │   ├── __init__.py
+│   │   ├── __pycache__/
 │   │   ├── deps.py
 │   │   └── v1/
 │   │       ├── __init__.py
-│   │       ├── router.py
-│   │       └── endpoints/
-│   │           ├── __init__.py
-│   │           ├── chat.py
-│   │           ├── health.py
-│   │           └── usage.py
+│   │       ├── __pycache__/
+│   │       ├── endpoints/
+│   │       │   ├── __init__.py
+│   │       │   ├── __pycache__/
+│   │       │   ├── chat.py
+│   │       │   ├── health.py
+│   │       │   └── usage.py
+│   │       └── router.py
 │   ├── core/
 │   │   ├── __init__.py
+│   │   ├── __pycache__/
 │   │   ├── config.py
 │   │   └── dependencies.py
+│   ├── main.py
 │   ├── models/
 │   │   ├── __init__.py
+│   │   ├── __pycache__/
 │   │   ├── chat.py
 │   │   └── usage.py
 │   ├── providers/
 │   │   ├── __init__.py
+│   │   ├── __pycache__/
 │   │   ├── base.py
 │   │   ├── ollama.py
 │   │   └── openrouter.py
 │   └── services/
 │       ├── __init__.py
+│       ├── __pycache__/
 │       ├── cost_tracker.py
 │       └── provider_manager.py
+├── docker-compose.dev.yml
+├── docker-compose.yml
+├── requirements.txt
+├── __pycache__/
 ├── .pytest_cache/
 └── venv/
 ```
