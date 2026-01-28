@@ -89,7 +89,6 @@ The application provides a web interface where you can ask a question. The agent
 ├── setup.sh
 ├── simple_agent.py
 ├── utils.py
-├── __pycache__/
 └── venv/
 ```
 

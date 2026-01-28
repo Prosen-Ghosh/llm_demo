@@ -17,8 +17,6 @@ This project is a FastAPI application that provides a Retrieval-Augmented Genera
 
 ```
 .
-├── .env.example
-├── .gitignore
 ├── Dockerfile
 ├── README.md
 ├── data/
@@ -30,27 +28,24 @@ This project is a FastAPI application that provides a Retrieval-Augmented Genera
 │   └── demo_similarity.py
 ├── src/
 │   ├── __init__.py
-│   ├── __pycache__/
 │   ├── api/
-│   │   ├── __pycache__/
+│   │   ├── __init__.py
 │   │   └── routers.py
 │   ├── main.py
 │   ├── models/
-│   │   ├── __pycache__/
+│   │   ├── __init__.py
 │   │   └── schema.py
 │   └── utils/
-│       ├── __pycache__/
+│       ├── __init__.py
 │       ├── chunking.py
 │       ├── db_checks.py
 │       └── embeddings.py
-├── tests/
-│   ├── __pycache__/
-│   ├── test_api.py
-│   ├── test_chunking.py
-│   ├── test_embeddings.py
-│   └── test_env.py
-├── __pycache__/
-└── venv/
+└── tests/
+    ├── __init__.py
+    ├── test_api.py
+    ├── test_chunking.py
+    ├── test_embeddings.py
+    └── test_env.py
 ```
 
 ## Services

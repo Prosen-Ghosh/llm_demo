@@ -140,33 +140,25 @@ If the request is successful, you will receive a JSON response containing the or
 
 ```
 .
-├── .env.example
-├── .gitignore
 ├── Dockerfile
 ├── README.md
 ├── app/
 │   ├── __init__.py
-│   ├── __pycache__/
-│   ├── main.py
-│   ├── models/
+│   ├── api/
 │   │   ├── __init__.py
-│   │   ├── __pycache__/
-│   │   ├── address.py
-│   │   └── user_profile.py
-│   ├── routers/
-│   │   ├── __init__.py
-│   │   ├── __pycache__/
 │   │   ├── enrich.py
 │   │   ├── health.py
 │   │   └── users.py
+│   ├── main.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── address.py
+│   │   └── user_profile.py
 │   └── utils/
 │       ├── __init__.py
-│       ├── __pycache__/
 │       ├── enrichment.py
 │       └── logging.py
 ├── docker-compose.yml
-├── .profile-enricher-env/
-├── .pytest_cache/
 └── requirements.txt
 ```
 **Note:**

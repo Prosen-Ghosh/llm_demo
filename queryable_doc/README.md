@@ -98,12 +98,10 @@ The application follows a standard RAG pipeline:
 ├── requirements.txt
 ├── setup.sh
 ├── ui/
-│   ├── __pycache__/
 │   ├── footer.py
 │   ├── main.py
 │   └── sidebar_config.py
 ├── utils.py
-├── __pycache__/
 └── venv/
 ```
 

@@ -23,56 +23,109 @@ The LLM Finetune project provides a comprehensive guide to fine-tuning Large Lan
       - [Evaluate Shakespeare Model](#evaluate-shakespeare-model)
       - [Prompt Engineering Example](#prompt-engineering-example)
 
-[<- Back to Main README](../../../README.md)
-
-# LLM Finetune
-
-The LLM Finetune project provides a comprehensive guide to fine-tuning Large Language Models (LLMs) using various techniques and datasets. It covers data preparation, model training (including parameter-efficient methods), and evaluation.
-
-## Table of Contents
-
-- [LLM Finetune](#llm-finetune)
-  - [Project Structure](#project-structure)
-  - [Features](#features)
-  - [Prerequisites](#prerequisites)
-  - [How to Use](#how-to-use)
-    - [1. Setup](#1-setup)
-    - [2. Verify Hardware](#2-verify-hardware)
-    - [3. Data Preparation](#3-data-preparation)
-      - [Shakespeare Dataset](#shakespeare-dataset)
-      - [Alpaca Dataset](#alpaca-dataset)
-    - [4. Fine-Tuning](#4-fine-tuning)
-      - [Fine-Tuning on Shakespeare with LoRA](#fine-tuning-on-shakespeare-with-lora)
-      - [Fine-Tuning on Alpaca with SFT](#fine-tuning-on-alpaca-with-sft)
-    - [5. Evaluation and Inference](#5-evaluation-and-inference)
-      - [Evaluate Shakespeare Model](#evaluate-shakespeare-model)
-      - [Prompt Engineering Example](#prompt-engineering-example)
-
 ## Project Structure
 ```
 .
-├── .gitignore
 ├── README.md
-├── __pycache__/
 ├── alpaca-sft-final/
+│   ├── README.md
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── merges.txt
+│   ├── special_tokens_map.json
+│   ├── tokenizer.json
+│   ├── tokenizer_config.json
+│   ├── top_level.txt
+│   ├── training_args.bin
+│   └── vocab.json
 ├── alpaca-sft-gpt2-medium/
+│   ├── README.md
+│   └── checkpoint-32/
+│       ├── README.md
+│       ├── adapter_config.json
+│       ├── adapter_model.safetensors
+│       ├── merges.txt
+│       ├── optimizer.pt
+│       ├── rng_state.pth
+│       ├── scheduler.pt
+│       ├── special_tokens_map.json
+│       ├── tokenizer.json
+│       ├── tokenizer_config.json
+│       ├── trainer_state.json
+│       ├── training_args.bin
+│       └── vocab.json
 ├── alpaca_prepared/
+│   ├── data-00000-of-00001.arrow
+│   ├── dataset_info.json
+│   └── state.json
 ├── chat_instruction_uning.py
 ├── data/
+│   └── my_data.txt
 ├── evaluate_shakespeare.py
 ├── exercise/
+│   ├── exe1.py
+│   ├── exe2.py
+│   ├── exe3.py
+│   └── exe4.py
 ├── gpt2-lora-shakespeare/
 ├── gpt2-shakespeare-finetuned/
+│   ├── checkpoint-146/
+│   │   ├── config.json
+│   │   ├── generation_config.json
+│   │   ├── merges.txt
+│   │   ├── model.safetensors
+│   │   ├── optimizer.pt
+│   │   ├── rng_state.pth
+│   │   ├── scheduler.pt
+│   │   ├── special_tokens_map.json
+│   │   ├── tokenizer.json
+│   │   ├── tokenizer_config.json
+│   │   ├── trainer_state.json
+│   │   ├── training_args.bin
+│   │   └── vocab.json
+│   ├── checkpoint-219/
+│   │   ├── config.json
+│   │   ├── generation_config.json
+│   │   ├── merges.txt
+│   │   ├── model.safetensors
+│   │   ├── optimizer.pt
+│   │   ├── rng_state.pth
+│   │   ├── scheduler.pt
+│   │   ├── special_tokens_map.json
+│   │   ├── tokenizer.json
+│   │   ├── tokenizer_config.json
+│   │   ├── trainer_state.json
+│   │   ├── training_args.bin
+│   │   └── vocab.json
+│   └── checkpoint-73/
+│       ├── config.json
+│       ├── generation_config.json
+│       ├── merges.txt
+│       ├── model.safetensors
+│       ├── optimizer.pt
+│       ├── rng_state.pth
+│       ├── scheduler.pt
+│       ├── special_tokens_map.json
+│       ├── tokenizer.json
+│       ├── tokenizer_config.json
+│       ├── trainer_state.json
+│       ├── training_args.bin
+│       └── vocab.json
 ├── load_shakespeare.py
-├── llm-finetune-env/
 ├── prepare_alpaca.py
 ├── prepare_shakespeare.py
 ├── prompt_engineering.py
 ├── requirements.txt
 ├── sft-train.py
 ├── shakespeare-adapter/
+│   ├── README.md
+│   ├── adapter_config.json
+│   └── adapter_model.safetensors
 ├── shakespeare_prepared/
-├── train-gpt2.py
+│   └── train/
+│       ├── data-00000-of-00001.arrow
+│       ├── dataset_info.json
+│       └── state.json
 └── verify_hardware.py
 ```
 
@@ -168,103 +221,7 @@ The `prompt_engineering.py` script demonstrates how to use the fine-tuned model 
 
 ```bash
 python prompt_engineering.py
-```
-```
-
-## Features
-
-*   **Hardware Verification**: Check your hardware (CPU, CUDA, MPS) to ensure compatibility.
-*   **Data Preparation**: Scripts to prepare datasets for fine-tuning:
-    *   **Shakespeare**: For learning stylistic text generation.
-    *   **Alpaca**: For instruction-based fine-tuning.
-*   **Model Fine-Tuning**:
-    *   **PEFT with LoRA**: Fine-tune `gpt2-medium` on the Shakespeare dataset using Parameter-Efficient Fine-Tuning (PEFT) with Low-Rank Adaptation (LoRA).
-    *   **Supervised Fine-Tuning (SFT)**: Fine-tune `gpt2-medium` on the Alpaca dataset using the TRL library.
-*   **Evaluation and Inference**:
-    *   Evaluate the fine-tuned models.
-    *   Examples of prompt engineering to compare base and fine-tuned models.
-
-## Prerequisites
-
-- Python 3.8 or higher
-- `pip` for package installation
-
-## How to Use
-
-### 1. Setup
-
-First, install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Verify Hardware
-
-This project can run on CPU, Apple's Metal Performance Shaders (MPS), or CUDA-enabled GPUs. To check which hardware will be used, run:
-
-```bash
-python verify_hardware.py
-```
-
-### 3. Data Preparation
-
-#### Shakespeare Dataset
-
-The `prepare_shakespeare.py` script downloads the "tiny_shakespeare" dataset, tokenizes it using the "gpt2-medium" tokenizer, and saves the processed dataset to the `shakespeare_prepared/` directory.
-
-```bash
-python prepare_shakespeare.py
-```
-
-#### Alpaca Dataset
-
-The `prepare_alpaca.py` script downloads and processes the Alpaca dataset, saving it to the `alpaca_prepared/` directory.
-
-```bash
-python prepare_alpaca.py
-```
-
-### 4. Fine-Tuning
-
-#### Fine-Tuning on Shakespeare with LoRA
-
-The `train-gpt2.py` script fine-tunes the `gpt2-medium` model on the prepared Shakespeare dataset using LoRA.
-
-```bash
-python train-gpt2.py
-```
-
-The fine-tuned model adapter will be saved in the `gpt2-lora-shakespeare/` directory.
-
-#### Fine-Tuning on Alpaca with SFT
-
-The `sft-train.py` script fine-tunes the `gpt2-medium` model on the Alpaca dataset using Supervised Fine-Tuning (SFT) from the TRL library.
-
-```bash
-python sft-train.py
-```
-
-The final model will be saved in the `alpaca-sft-final/` directory.
-
-### 5. Evaluation and Inference
-
-#### Evaluate Shakespeare Model
-
-To generate text with the fine-tuned Shakespeare model, run:
-
-```bash
-python evaluate_shakespeare.py
-```
-
-#### Prompt Engineering Example
-
-The `prompt_engineering.py` script demonstrates how to use the fine-tuned model and compares its output to the base model.
-
-```bash
-python prompt_engineering.py
-```
-```
+``````
 
 ## Features
 

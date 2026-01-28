@@ -69,13 +69,11 @@ curl -X POST "http://localhost:8000/ask" -H "Content-Type: application/json" -d 
 ├── README.md
 ├── app/
 │   ├── __init__.py
-│   ├── __pycache__/
 │   ├── agents.py
 │   └── main.py
 ├── docker-compose.yml
 ├── linkedin.md
 ├── llm-simple-agent.png
-├── __pycache__/
 └── requirements.txt
 ```
 

@@ -91,7 +91,6 @@ Training progress and metrics are logged to TensorBoard.
 ├── .gitignore
 ├── Dockerfile
 ├── README.md
-├── __pycache__/
 ├── data/
 ├── docker-compose.yml
 ├── final_model/

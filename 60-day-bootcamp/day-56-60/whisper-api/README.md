@@ -267,7 +267,6 @@ docker-compose exec whisper-api pytest
 │   ├── test_vocabulary.py
 │   └── test_whisper.py
 ├── whisper-api-arc.png
-└── __pycache__/
 ```
 
 ## Future Improvements

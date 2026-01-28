@@ -35,15 +35,12 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 
 ```
 .
-├── .env.example
-├── .gitignore
 ├── Dockerfile
 ├── Dockerfile.seed
 ├── README.md
 ├── architecture_design.md
 ├── app/
 │   ├── __init__.py
-│   ├── __pycache__/
 │   ├── loki/
 │   │   └── promtail-config.yml
 │   ├── main.py
@@ -51,7 +48,6 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 │   └── utils.py
 ├── docker-compose.yml
 ├── grafana/
-├── linkedin.md
 ├── load_test.sh
 ├── loki/
 │   └── promtail-config.yml
@@ -62,7 +58,6 @@ The main purpose of this project is to provide a simple, ready-to-use stack for 
 ├── prometheus/
 │   ├── prometheus.yml
 │   └── rules.yml
-├── __pycache__/
 └── requirements.txt
 ```
 

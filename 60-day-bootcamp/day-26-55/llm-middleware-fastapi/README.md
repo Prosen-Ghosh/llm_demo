@@ -44,7 +44,6 @@ The `run_agent` function in `app/agent.py` creates a simple LangGraph agent with
 ├── docker-compose.yml
 ├── linkedin.md
 ├── requirements.txt
-└── __pycache__/
 ```
 
 ## Getting Started

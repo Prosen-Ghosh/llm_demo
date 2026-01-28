@@ -35,37 +35,31 @@ The project is structured as a standard FastAPI application:
 ├── README.md
 ├── app/
 │   ├── __init__.py
-│   ├── __pycache__/
 │   ├── config.py
 │   ├── main.py
 │   ├── models/
 │   │   ├── __init__.py
-│   │   ├── __pycache__/
 │   │   ├── prompts.py
 │   │   └── schemas.py
 │   ├── services/
 │   │   ├── __init__.py
-│   │   ├── __pycache__/
 │   │   ├── analyzer.py
 │   │   ├── llm_client.py
 │   │   └── prompt_manager.py
 │   ├── strategies/
 │   │   ├── __init__.py
-│   │   ├── __pycache__/
 │   │   ├── base.py
 │   │   ├── chain_of_thought.py
 │   │   ├── react.py
 │   │   └── self_consistency.py
 │   └── utils/
 │       ├── __init__.py
-│       ├── __pycache__/
 │       └── logger.py
 ├── data/
 │   └── prompts.db
 ├── docker-compose.dev.yml
 ├── logs/
 │   └── reasoning_traces.jsonl
-├── __pycache__/
 └── requirements.txt
 ```
 

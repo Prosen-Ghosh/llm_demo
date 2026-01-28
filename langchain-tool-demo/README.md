@@ -59,23 +59,18 @@ The following tools are available to the agent:
 ├── README.md
 ├── app/
 │   ├── api/
-│   │   ├── __pycache__/
 │   │   ├── dependencies.py
 │   │   └── endpoints.py
 │   ├── core/
-│   │   ├── __pycache__/
 │   │   ├── agents.py
 │   │   ├── config.py
 │   │   └── tools.py
 │   ├── main.py
 │   ├── schemas/
-│   │   ├── __pycache__/
 │   │   └── chat.py
 │   └── utils/
-│       ├── __pycache__/
 │       └── streaming.py
 ├── docker-compose.dev.yml
-├── __pycache__/
 └── requirements.txt
 ```
 

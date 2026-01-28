@@ -55,8 +55,6 @@ The API endpoints are defined using FastAPI in `app/routers/`.
 
 ```
 .
-├── .env.example
-├── .gitignore
 ├── Dockerfile
 ├── README.md
 ├── app/
@@ -333,4 +331,5 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 *   Implement a more sophisticated caching mechanism to reduce redundant API calls.
 *   Add more detailed logging and tracing for better observability.
 *   Implement user authentication and authorization.
+
 
